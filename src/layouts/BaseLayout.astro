@@ -1,0 +1,117 @@
+---
+import "../styles/global.css";
+export interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+}
+const {
+  title = 'Bath Cleaners — Local, Vetted, Sorted in Minutes | CleanerBath',
+  description = 'Tell us what you need and we\'ll match you with a vetted Bath cleaner. Regular, one-off, end-of-tenancy, deep, after-builders and Airbnb turnovers. Bath postcodes only.',
+  canonical,
+} = Astro.props;
+
+const SITE = Astro.site ?? new URL('https://cleanerbath.co.uk');
+const url = canonical ? new URL(canonical, SITE) : new URL(Astro.url.pathname, SITE);
+---
+
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="generator" content={Astro.generator} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="theme-color" content="#425a3f" />
+
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={url} />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="CleanerBath" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={url} />
+  <meta property="og:locale" content="en_GB" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+
+  <!-- JSON-LD: LocalBusiness + Service + FAQPage -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["LocalBusiness", "Service"],
+        "@id": "https://cleanerbath.co.uk/#organization",
+        "name": "CleanerBath",
+        "alternateName": "Cleaner Bath",
+        "url": "https://cleanerbath.co.uk",
+        "description": "Bath-only cleaner-matching service. Tell us what you need and we connect you with a vetted local cleaner.",
+        "image": "https://cleanerbath.co.uk/og-default.jpg",
+        "areaServed": [
+          { "@type": "City", "name": "Bath" },
+          { "@type": "AdministrativeArea", "name": "Somerset" }
+        ],
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Bath",
+          "addressRegion": "Somerset",
+          "addressCountry": "GB"
+        },
+        "priceRange": "££",
+        "openingHoursSpecification": [{
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        }],
+        "knowsAbout": [
+          "Domestic cleaning",
+          "Regular cleaning",
+          "One-off cleaning",
+          "End-of-tenancy cleaning",
+          "Deep cleaning",
+          "After-builders cleaning",
+          "Airbnb turnover cleaning",
+          "Bath",
+          "Somerset"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer service",
+          "url": "https://cleanerbath.co.uk/#book",
+          "availableLanguage": "English",
+          "areaServed": "GB"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://cleanerbath.co.uk/#faq",
+        "url": "https://cleanerbath.co.uk/#faq",
+        "mainEntity": [
+          { "@type": "Question", "name": "How does CleanerBath work?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Fill in the form above with what you need and we'll match you with a vetted Bath cleaner. They'll get in touch, usually within one working day, with a quote." }},
+          { "@type": "Question", "name": "Do you do the cleaning yourselves?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. We're a Bath-only matching service. Your booking is handled by an independent Bath cleaner we work with. We share your details with them so they can quote you." }},
+          { "@type": "Question", "name": "What areas of Bath do you cover?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Bath city centre and immediate suburbs — BA1, BA2 and parts of neighbouring postcodes. If you're unsure whether your address is in scope, just submit the form and we'll let you know." }},
+          { "@type": "Question", "name": "How much does a Bath cleaner cost?",
+            "acceptedAnswer": { "@type": "Answer", "text": "It depends on what you need. A regular weekly clean typically starts around £15–£20 per hour; one-off deep cleans and end-of-tenancy cleans are priced per job. Your matched cleaner will give you a clear quote before any work starts." }},
+          { "@type": "Question", "name": "Will I get spammed with calls?",
+            "acceptedAnswer": { "@type": "Answer", "text": "No. Your details go to one cleaner only — the one matched to your booking. You can ask them to stop contacting you at any time and we'll make sure that happens." }},
+          { "@type": "Question", "name": "Is using CleanerBath free?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. There's no charge to you. CleanerBath is paid by the cleaner for the introduction, not by you." }},
+          { "@type": "Question", "name": "What if I need to cancel or my plans change?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Tell your cleaner directly — they're flexible. If anything goes wrong, get in touch with us and we'll help sort it out." }}
+        ]
+      }
+    ]
+  })} />
+</head>
+<body class="bg-cream-50 text-ink-900">
+  <slot />
+</body>
+</html>

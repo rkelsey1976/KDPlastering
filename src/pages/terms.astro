@@ -1,0 +1,88 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Terms of Service — CleanerBath"
+  description="Terms of service for using CleanerBath.co.uk — the cleaner-matching service for Bath."
+>
+  <header class="border-b border-sage-100 bg-cream-50">
+    <div class="mx-auto max-w-3xl px-5 sm:px-8 py-5">
+      <a href="/" class="text-sage-700 text-sm hover:underline">← Back to CleanerBath</a>
+    </div>
+  </header>
+
+  <article class="mx-auto max-w-3xl px-5 sm:px-8 py-16">
+    <p class="text-xs uppercase tracking-[0.3em] text-sage-700 font-semibold">Legal</p>
+    <h1 class="mt-3 text-4xl font-bold">Terms of Service</h1>
+    <p class="mt-3 text-sm text-ink-700/70">Last updated: {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+
+    <h2 class="mt-12 text-2xl font-bold">1. What CleanerBath does</h2>
+    <p class="mt-3 text-ink-700/85 leading-relaxed">
+      CleanerBath is a <strong>matching service</strong>. We collect details about the cleaning work you need,
+      identify a Bath-based cleaner we work with who can take it on, and pass your details to them so they can contact you with a quote.
+    </p>
+    <p class="mt-3 text-ink-700/85 leading-relaxed">
+      <strong>CleanerBath does not provide cleaning services.</strong> Any cleaning work is provided by the independent cleaner
+      we match you with, under a separate contract between you and them.
+    </p>
+
+    <h2 class="mt-10 text-2xl font-bold">2. No charge to you</h2>
+    <p class="mt-3 text-ink-700/85 leading-relaxed">
+      There is no charge to you for using CleanerBath. Our matching service is paid for by the cleaner, not by you.
+      You agree any cleaning work, and any price for it, directly with the cleaner we match you with.
+    </p>
+
+    <h2 class="mt-10 text-2xl font-bold">3. Service area</h2>
+    <p class="mt-3 text-ink-700/85 leading-relaxed">
+      CleanerBath operates in <strong>Bath city centre and immediate suburbs</strong> (BA1, BA2 and parts of neighbouring postcodes).
+      We may decline to forward enquiries from outside this area.
+    </p>
+
+    <h2 class="mt-10 text-2xl font-bold">4. Your responsibilities</h2>
+    <p class="mt-3 text-ink-700/85 leading-relaxed">When using this website you agree to:</p>
+    <ul class="mt-3 space-y-1.5 text-ink-700/85">
+      <li>• Provide accurate information in the enquiry form</li>
+      <li>• Submit only genuine enquiries — not test, spam, or fraudulent submissions</li>
+      <li>• Not use the service to harass, threaten, or abuse any cleaner we put you in touch with</li>
+    </ul>
+
+    <h2 class="mt-10 text-2xl font-bold">5. The cleaner's terms</h2>
+    <p class="mt-3 text-ink-700/85 leading-relaxed">
+      Once we introduce you, the cleaner is responsible for delivering the cleaning work. Their pricing, terms, cancellation policy,
+      insurance, and any complaints are matters between you and them. CleanerBath does not act as agent for the cleaner and does not
+      warrant the quality of their work.
+    </p>
+    <p class="mt-3 text-ink-700/85 leading-relaxed">
+      If something goes wrong with the cleaning, please raise it with the cleaner first. If you can't resolve it,
+      contact us and we'll do what we can to help.
+    </p>
+
+    <h2 class="mt-10 text-2xl font-bold">6. Liability</h2>
+    <p class="mt-3 text-ink-700/85 leading-relaxed">
+      We take care to match you with a vetted Bath cleaner, but we cannot guarantee the outcome of any cleaning work.
+      To the maximum extent permitted by law, our liability to you is limited to the amount we have received from the matched cleaner for the introduction.
+    </p>
+
+    <h2 class="mt-10 text-2xl font-bold">7. Intellectual property</h2>
+    <p class="mt-3 text-ink-700/85 leading-relaxed">
+      The CleanerBath name, logo, and website content are owned by us. You may not copy or reproduce them without permission.
+    </p>
+
+    <h2 class="mt-10 text-2xl font-bold">8. Changes</h2>
+    <p class="mt-3 text-ink-700/85 leading-relaxed">
+      We may update these terms occasionally. The "last updated" date at the top will always show the current version.
+      Continuing to use the site after changes counts as acceptance.
+    </p>
+
+    <h2 class="mt-10 text-2xl font-bold">9. Governing law</h2>
+    <p class="mt-3 text-ink-700/85 leading-relaxed">
+      These terms are governed by the law of England and Wales. Any disputes are subject to the exclusive jurisdiction of the English courts.
+    </p>
+
+    <h2 class="mt-10 text-2xl font-bold">10. Contact</h2>
+    <p class="mt-3 text-ink-700/85 leading-relaxed">
+      Questions about these terms? Use the contact form on our home page.
+    </p>
+  </article>
+</BaseLayout>

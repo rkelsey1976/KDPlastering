@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Thanks — CleanerBath"
+  description="We've received your cleaning enquiry. A Bath cleaner will be in touch within one working day."
+>
+  <header class="border-b border-sage-100 bg-cream-50">
+    <div class="mx-auto max-w-3xl px-5 sm:px-8 py-5">
+      <a href="/" class="text-sage-700 text-sm hover:underline">← Back to CleanerBath</a>
+    </div>
+  </header>
+
+  <section class="wash-sage py-20">
+    <div class="mx-auto max-w-2xl px-5 sm:px-8 text-center">
+      <div class="inline-flex h-14 w-14 rounded-full bg-sage-700 text-white items-center justify-center mb-6">
+        <svg class="h-7 w-7" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>
+      </div>
+      <h1 class="text-4xl sm:text-5xl font-bold leading-tight">
+        Thanks — we've got it. <span class="font-script text-sage-700 font-normal text-4xl sm:text-6xl">On its way.</span>
+      </h1>
+      <p class="mt-5 text-lg text-ink-700/80 leading-relaxed max-w-xl mx-auto">
+        Your enquiry is on its way to a vetted Bath cleaner. They'll be in touch within one working day with a clear quote.
+        No call centre, no list — just one local cleaner.
+      </p>
+      <p class="mt-6 text-sm text-ink-700/70">
+        Didn't mean to submit? <a href="/" class="underline hover:text-sage-700">Send another</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
