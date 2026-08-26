@@ -19,7 +19,7 @@ const services = [
 <header class="site-header" data-scrolled="false">
   <div class="container site-header__inner">
     <a href="/" class="logo" aria-label="KD Plastering and Rendering Services — Home">
-      <img src="/logo.png" alt="KD Plastering &amp; Rendering Services" width="180" height="48" />
+      <img src="/logo.svg" alt="KD Plastering &amp; Rendering Services" class="logo__img" />
     </a>
 
     <button class="nav-toggle" id="nav-toggle" aria-controls="primary-nav" aria-expanded="false" type="button">
@@ -209,6 +209,12 @@ const services = [
     gap: var(--sp-3);
     text-decoration: none;
     flex-shrink: 0;
+    height: 64px;
+    transition: height 0.2s ease;
+  }
+
+  .site-header[data-scrolled="true"] .logo {
+    height: 52px;
   }
 
   .logo img {
@@ -217,8 +223,17 @@ const services = [
     transition: height 0.2s ease;
   }
 
+  /* SVG logo override — black + orange — needs bigger to be legible */
+  .logo img.logo__img {
+    height: 64px;
+  }
+
   .site-header[data-scrolled="true"] .logo img {
     height: 40px;
+  }
+
+  .site-header[data-scrolled="true"] .logo img.logo__img {
+    height: 52px;
   }
 
   /* ============== Mobile toggle ============== */

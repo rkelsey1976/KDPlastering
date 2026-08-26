@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none">
+  <!--
+    KD Favicon / App Icon — square format, just the monogram + 4-square motif
+  -->
+
+  <!-- Black background -->
+  <rect width="240" height="240" rx="40" fill="#0a0a0a" />
+
+  <!-- K — white, bold -->
+  <rect x="40" y="60" width="28" height="120" fill="#ffffff" />
+  <polygon points="68,110 112,60 144,60 92,122" fill="#ffffff" />
+  <polygon points="92,122 144,180 112,180 68,134" fill="#ffffff" />
+
+  <!-- D — orange, rounded -->
+  <path d="M 138 60 L 168 60 Q 200 60 200 120 L 200 120 Q 200 180 168 180 L 138 180 Z" fill="#ff6b1a" />
+  <path d="M 152 80 L 168 80 Q 184 80 184 120 L 184 120 Q 184 160 168 160 L 152 160 Z" fill="#0a0a0a" />
+
+  <!-- 4-square motif — white, tucked into the negative space -->
+  <rect x="156" y="104" width="11" height="11" fill="#ffffff" />
+  <rect x="169" y="104" width="11" height="11" fill="#ffffff" />
+  <rect x="156" y="117" width="11" height="11" fill="#ffffff" />
+  <rect x="169" y="117" width="11" height="11" fill="#ffffff" />
+</svg>

@@ -93,23 +93,80 @@ const schema = {
   showLeadForm={true}
   formHeading="Get Your Free Bristol & Bath Quote"
 >
-  <!-- 1. HERO — what, where, primary CTA, trust signals -->
-  <section class="hero hero--image">
-    <div class="container">
-      <div class="hero__eyebrow">Bristol &amp; Bath Plastering Specialists</div>
-      <h1 class="hero__title">Plastering &amp; Rendering Services across Bristol &amp; Bath</h1>
-      <p class="hero__lede">
-        Silicone render, monocouche, house rendering, external wall insulation and internal plastering &mdash; fitted by BBA-approved installers with a 10-year warranty. Free site visit. Fixed written quote within 48 hours.
-      </p>
-      <div class="hero__cta-row">
-        <a href="#lead-form-heading" class="btn btn--primary btn--lg">Get a Free Quote</a>
-        <a href="tel:01174094116" class="btn btn--ghost-light btn--lg">Call 0117 409 4116</a>
+  <!-- 1. HERO — bold black + orange, single signature moment -->
+  <section class="hero hero--bold">
+    <!-- Full-bleed background photo -->
+    <div class="hero__bg" aria-hidden="true">
+      <div class="hero__bg-img" style="background-image: url('/hero-home.webp')"></div>
+      <div class="hero__bg-overlay"></div>
+    </div>
+
+    <div class="container hero__container">
+      <div class="hero__inner">
+        <div class="hero__eyebrow">
+          <span class="hero__eyebrow-bar"></span>
+          <span>Bristol &amp; Bath Plastering Specialists</span>
+          <span class="hero__eyebrow-dot"></span>
+          <span>Since 2014</span>
+        </div>
+
+        <h1 class="hero__title">
+          We transform Bristol homes<br />
+          with a render that <span class="hero__title-accent">lasts 25 years.</span>
+        </h1>
+
+        <p class="hero__lede">
+          Silicone render, monocouche, house rendering and external wall insulation &mdash; fitted by Bristol's most reviewed plastering team.
+        </p>
+
+        <div class="hero__cta-row">
+          <a href="#quote" class="hero__cta-primary">
+            <span>Get Your Free Quote</span>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="tel:01174094116" class="hero__cta-secondary">
+            <span class="hero__cta-secondary-label">or call</span>
+            <span class="hero__cta-secondary-num">0117 409 4116</span>
+          </a>
+        </div>
+
+        <!-- One-line trust strip — replaces 4 cluttered badges -->
+        <div class="hero__trust">
+          <span class="hero__trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <strong>180+</strong> 5-star reviews
+          </span>
+          <span class="hero__trust-divider"></span>
+          <span class="hero__trust-item"><strong>£2m</strong> insured</span>
+          <span class="hero__trust-divider"></span>
+          <span class="hero__trust-item"><strong>10-year</strong> warranty</span>
+        </div>
       </div>
-      <div class="hero__trust-bar">
-        <span class="hero__trust-item">✓ 10+ Years Experience</span>
-        <span class="hero__trust-item">✓ 180+ Verified Reviews</span>
-        <span class="hero__trust-item">✓ £2m Public Liability</span>
-        <span class="hero__trust-item">✓ 10-Year Manufacturer Warranty</span>
+    </div>
+
+    <!-- Diagonal orange stat strip — runs across the bottom edge -->
+    <div class="hero__statbar" aria-label="KD Plastering at a glance">
+      <div class="hero__statbar-track">
+        <div class="hero__statbar-cell">
+          <span class="hero__statbar-num" data-count="10" data-suffix="+">10+</span>
+          <span class="hero__statbar-label">Years in Bristol</span>
+        </div>
+        <div class="hero__statbar-cell">
+          <span class="hero__statbar-num" data-count="180" data-suffix="+">180+</span>
+          <span class="hero__statbar-label">5-Star Reviews</span>
+        </div>
+        <div class="hero__statbar-cell">
+          <span class="hero__statbar-num" data-count="20">20</span>
+          <span class="hero__statbar-label">Areas Covered</span>
+        </div>
+        <div class="hero__statbar-cell">
+          <span class="hero__statbar-num" data-count="800" data-suffix="+">800+</span>
+          <span class="hero__statbar-label">Projects Done</span>
+        </div>
+        <div class="hero__statbar-cell">
+          <span class="hero__statbar-num" data-count="25" data-suffix=" yr">25 yr</span>
+          <span class="hero__statbar-label">System Warranty</span>
+        </div>
       </div>
     </div>
   </section>
@@ -123,7 +180,7 @@ const schema = {
         heading="Our services"
         lede="Every type of internal plastering, external rendering and external wall insulation across Bristol &amp; Bath."
       />
-      <div class="service-bento">
+      <div class="service-bento reveal-stagger">
         {featuredServices.map((service, i) => {
           // Layout: 1 large + 1 medium, 3 small, 1 wide
           let cardVariant = 'bento';
@@ -195,6 +252,34 @@ const schema = {
 </PageLayout>
 
 <style is:global>
+/* ==== SCROLL REVEAL ANIMATIONS ==== */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-stagger > * {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-stagger.is-visible > * {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-stagger.is-visible > *:nth-child(1) { transition-delay: 0.05s; }
+    .reveal-stagger.is-visible > *:nth-child(2) { transition-delay: 0.12s; }
+    .reveal-stagger.is-visible > *:nth-child(3) { transition-delay: 0.19s; }
+    .reveal-stagger.is-visible > *:nth-child(4) { transition-delay: 0.26s; }
+    .reveal-stagger.is-visible > *:nth-child(5) { transition-delay: 0.33s; }
+    .reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 0.40s; }
+  }
+
   /* ==== BENTO SERVICE GRID ==== */
   .service-bento {
     display: grid;

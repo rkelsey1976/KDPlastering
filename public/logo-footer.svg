@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 200" fill="none">
+  <!--
+    KD Plastering & Rendering Services — Brand Mark (footer variant, on dark backgrounds)
+
+    Same composition as logo.svg but with inverted colours:
+      K = white
+      D = orange (kept — orange pops on dark)
+      Squares = white
+      KD PLASTERING = white
+      RENDERING SERVICES = light grey
+  -->
+
+  <!-- K — white -->
+  <rect x="20" y="30" width="24" height="140" fill="#ffffff" />
+  <polygon points="44,75 86,30 118,30 66,90" fill="#ffffff" />
+  <polygon points="66,90 118,170 86,170 44,105" fill="#ffffff" />
+
+  <!-- D — orange -->
+  <path d="M 112 30 L 140 30 Q 190 30 190 100 L 190 100 Q 190 170 140 170 L 112 170 Z" fill="#ff6b1a" />
+  <path d="M 124 50 L 140 50 Q 172 50 172 100 L 172 100 Q 172 150 140 150 L 124 150 Z" fill="#0a0a0a" />
+
+  <!-- 4-square motif — white -->
+  <rect x="162" y="90" width="11" height="11" fill="#ffffff" />
+  <rect x="175" y="90" width="11" height="11" fill="#ffffff" />
+  <rect x="162" y="103" width="11" height="11" fill="#ffffff" />
+  <rect x="175" y="103" width="11" height="11" fill="#ffffff" />
+
+  <!-- KD Plastering — white -->
+  <text x="210" y="92"
+        font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="32"
+        font-weight="800"
+        fill="#ffffff"
+        letter-spacing="-0.5">KD Plastering</text>
+
+  <!-- Orange divider -->
+  <rect x="210" y="102" width="64" height="4" fill="#ff6b1a" />
+
+  <!-- Rendering Services — light grey -->
+  <text x="210" y="128"
+        font-family="Inter, sans-serif"
+        font-size="14"
+        font-weight="700"
+        fill="#cccccc"
+        letter-spacing="3.5">RENDERING SERVICES</text>
+</svg>
