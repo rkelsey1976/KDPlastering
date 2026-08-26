@@ -1,0 +1,435 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import BenefitGrid from '../../../components/BenefitGrid.astro';
+import CaseStudy from '../../../components/CaseStudy.astro';
+import ProcessTimeline from '../../../components/ProcessTimeline.astro';
+import PricingTable from '../../../components/PricingTable.astro';
+import MaterialGrid from '../../../components/MaterialGrid.astro';
+import ReviewCards from '../../../components/ReviewCards.astro';
+import AuthorityBio from '../../../components/AuthorityBio.astro';
+import ProblemList from '../../../components/ProblemList.astro';
+import RelatedServices from '../../../components/RelatedServices.astro';
+import ServiceBullets from '../../../components/ServiceBullets.astro';
+import { getService, getRelatedServices } from '../../../lib/services';
+import { AREAS } from '../../../lib/areas';
+import { REVIEWS } from '../../../lib/reviews';
+
+export function getStaticPaths() {
+  const slugs = [
+    'silicone-rendering',
+    'house-rendering',
+    'external-wall-rendering',
+    'monocouche-rendering',
+    'plastering-services',
+    'external-wall-insulation',
+  ];
+  return slugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug } = Astro.params;
+const service = getService(slug!);
+if (!service) throw new Error(`Service not found: ${slug}`);
+
+const relatedServices = getRelatedServices(slug!);
+const caseStudyArea = AREAS.find((a) => a.slug === service.caseStudy.location);
+const reviewsForService = REVIEWS.filter(
+  (r) => r.service.toLowerCase().includes(service.shortName.toLowerCase().split(' ')[0])
+).slice(0, 3);
+
+// Build comprehensive Service + LocalBusiness + FAQPage + Offer schema
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: service.shortName,
+    name: service.name,
+    description: service.longIntro,
+    provider: {
+      '@type': 'LocalBusiness',
+      name: 'KD Plastering & Rendering Services',
+      '@id': 'https://www.kdplasteringrenderingservices.co.uk/#organization',
+      telephone: '+441174094116',
+      email: 'kdplasteringltd@gmail.com',
+      url: 'https://www.kdplasteringrenderingservices.co.uk',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '8 Roman Way, Hanham',
+        addressLocality: 'Bristol',
+        postalCode: 'BS15 3FH',
+        addressCountry: 'GB',
+      },
+      areaServed: [
+        { '@type': 'City', name: 'Bristol' },
+        { '@type': 'City', name: 'Bath' },
+      ],
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '4.9',
+        reviewCount: '180',
+        bestRating: '5',
+      },
+    },
+    areaServed: [
+      { '@type': 'City', name: 'Bristol' },
+      { '@type': 'City', name: 'Bath' },
+    ],
+    offers: {
+      '@type': 'AggregateOffer',
+      priceCurrency: 'GBP',
+      lowPrice: service.costGuide.perPropertyType[service.costGuide.perPropertyType.length - 1].lowEnd.replace(/[^\d]/g, ''),
+      highPrice: service.costGuide.perPropertyType[0].highEnd.replace(/[^\d]/g, ''),
+      offerCount: service.costGuide.perPropertyType.length,
+    },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: `${service.shortName} by property type`,
+      itemListElement: service.costGuide.perPropertyType.map((p, i) => ({
+        '@type': 'Offer',
+        position: i + 1,
+        name: p.type,
+        priceSpecification: {
+          '@type': 'PriceSpecification',
+          priceCurrency: 'GBP',
+          minPrice: p.lowEnd.replace(/[^\d]/g, ''),
+          maxPrice: p.highEnd.replace(/[^\d]/g, ''),
+        },
+      })),
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: service.faq.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: f.answer,
+      },
+    })),
+  },
+];
+---
+
+<PageLayout
+  title={service.titleTemplate}
+  description={service.metaDescription}
+  canonical={`/our-services/${slug}-bristol/`}
+  breadcrumbs={[{ name: 'Our Services', href: '/our-services/' }, { name: service.shortName }]}
+  prefillService={service.shortName}
+  schema={schema}
+  formHeading={`Get Your Free ${service.shortName} Quote`}
+>
+  <section class="service-hero">
+    <div class="container">
+      <div class="eyebrow eyebrow--clay">{service.shortName} in Bristol &amp; Bath</div>
+      <h1>{service.name}</h1>
+      <p class="service-hero__lede">{service.intro}</p>
+      <div class="service-hero__cta">
+        <a href="#lead-form-heading" class="btn btn--primary btn--lg">Get a Free Quote</a>
+        <a href="tel:01174094116" class="btn btn--ghost-light btn--lg">Call 0117 409 4116</a>
+      </div>
+      <div class="service-hero__trust">
+        <span class="service-hero__trust-item">✓ 10+ Years Experience</span>
+        <span class="service-hero__trust-item">✓ 180+ Verified Reviews</span>
+        <span class="service-hero__trust-item">✓ £2m Public Liability</span>
+        <span class="service-hero__trust-item">✓ 10-Year Warranty</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="long-intro">
+        <p>{service.longIntro}</p>
+      </div>
+
+      <ServiceBullets
+        items={service.whatWeDo}
+        variant="do"
+        columns={4}
+        heading="What We Do"
+        lede="The silicone rendering services we deliver across Bristol and Bath — every project, every property type."
+      />
+    </div>
+  </section>
+
+  <ProblemList problems={service.problems} />
+
+  <BenefitGrid
+    benefits={service.benefits}
+    heading={`Why Choose ${service.shortName}`}
+    lede="We've installed hundreds of these systems across Bristol and Bath. Here's what makes our installations last."
+  />
+
+  <ProcessTimeline
+    steps={service.processSteps}
+    heading="Our Process"
+    lede={`Every ${service.shortName.toLowerCase()} project follows the same 8-12 step process. Here's what to expect from your free site visit to your 12-month aftercare check.`}
+  />
+
+  <PricingTable
+    perSquareMetre={service.costGuide.perSquareMetre}
+    perPropertyType={service.costGuide.perPropertyType}
+    factorsAffectingPrice={service.costGuide.factorsAffectingPrice}
+    includes={service.costGuide.includes}
+    excludes={service.costGuide.excludes}
+    heading={`How Much Does ${service.shortName} Cost?`}
+  />
+
+  <MaterialGrid
+    materials={service.materials}
+    heading={`Materials & Systems We Use for ${service.shortName}`}
+    lede="We only use BBA-certified systems from leading UK and European manufacturers. Every installation carries a manufacturer warranty as standard."
+  />
+
+  <section class="section section--alt">
+    <div class="container">
+      <CaseStudy
+        caseStudy={service.caseStudy}
+        areaName={caseStudyArea?.name}
+      />
+    </div>
+  </section>
+
+  {reviewsForService.length > 0 && (
+    <ReviewCards
+      reviews={reviewsForService}
+      heading={`${service.shortName} Reviews`}
+      lede={`Verified customer reviews from our ${service.shortName.toLowerCase()} installations across Bristol and Bath.`}
+    />
+  )}
+
+  <section class="section">
+    <div class="container">
+      <h2>Frequently Asked Questions</h2>
+      <p class="lede">Everything you need to know about our {service.shortName.toLowerCase()} service.</p>
+      <div class="faq-section">
+        {service.faq.map((f) => (
+          <details>
+            <summary>{f.question}</summary>
+            <div class="faq-answer">
+              <p>{f.answer}</p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <RelatedServices services={relatedServices} />
+
+  <section class="section section--alt">
+    <div class="container">
+      <AuthorityBio
+        name="Kyran"
+        role="Founder & Lead Installer"
+        qualifications={[
+          'NVQ Level 3 in Plastering',
+          'Johnstone\'s Stormshield Registered Installer',
+          'Parex Approved Applicator',
+          'Weber EWI Certified Installer',
+          '10+ years rendering experience across Bristol & Bath',
+        ]}
+        bio={`Kyran founded KD Plastering & Rendering Services in 2014 after 10 years working for larger Bristol contractors. Based in Hanham, he leads every project personally and is on site for the key stages of every installation. Kyran specifies every quote himself and oversees the team of four full-time installers. He holds NVQ Level 3 in Plastering and certified installer status with Johnstone's, Parex and Weber.`}
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>{service.shortName} Across Bristol &amp; Bath</h2>
+      <p class="lede">We offer {service.shortName.toLowerCase()} across all 20 neighbourhoods we serve. Pricing is consistent within BS and BA postcodes — typical quotes are listed in the cost guide above. Listed below are the areas we work in, with notes on local housing stock and any specific considerations for {service.shortName.toLowerCase()} installations.</p>
+
+      <h3 class="area-group-heading">Bristol neighbourhoods (15)</h3>
+      <div class="area-detail-grid">
+        {AREAS.filter(a => a.city === 'bristol').map((area) => (
+          <div class="area-detail">
+            <h4 class="area-detail-name">
+              {area.name}
+              <span class="area-detail-postcode">{area.postcode}</span>
+            </h4>
+            <p class="area-detail-blurb">{area.blurb}</p>
+            <p class="area-detail-meta"><strong>Properties:</strong> {area.propertyTypes.slice(0, 2).join(' · ')}</p>
+            <p class="area-detail-meta"><strong>Notes:</strong> {area.costVariation}</p>
+          </div>
+        ))}
+      </div>
+
+      <h3 class="area-group-heading">Bath neighbourhoods (5)</h3>
+      <div class="area-detail-grid">
+        {AREAS.filter(a => a.city === 'bath').map((area) => (
+          <div class="area-detail">
+            <h4 class="area-detail-name">
+              {area.name}
+              <span class="area-detail-postcode">{area.postcode}</span>
+            </h4>
+            <p class="area-detail-blurb">{area.blurb}</p>
+            <p class="area-detail-meta"><strong>Properties:</strong> {area.propertyTypes.slice(0, 2).join(' · ')}</p>
+            <p class="area-detail-meta"><strong>Notes:</strong> {area.costVariation}</p>
+          </div>
+        ))}
+      </div>
+
+      <p class="areas-footnote">Free site visits within 10 miles of BS15. Properties outside our standard coverage area can be quoted by arrangement. Listed building consent, conservation area consent and Building Control notification are handled on your behalf where required.</p>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  /* Page-local styles only — design system tokens from global.css */
+  .service-hero {
+    background: linear-gradient(180deg, var(--color-cream-warm) 0%, var(--color-cream-deep) 100%);
+    color: var(--color-walnut);
+    padding: var(--sp-9) 0 var(--sp-8);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--color-stone-deep);
+  }
+  .service-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 25% 50%, rgba(162, 93, 47, 0.06) 0%, transparent 45%),
+      radial-gradient(circle at 80% 30%, rgba(90, 122, 82, 0.06) 0%, transparent 45%);
+    pointer-events: none;
+  }
+  .service-hero .container {
+    position: relative;
+    max-width: var(--container-prose);
+    margin: 0 auto;
+    padding: 0 var(--sp-5);
+  }
+  .service-hero h1 {
+    color: var(--color-walnut);
+    margin: var(--sp-3) 0 var(--sp-5);
+    max-width: 22ch;
+  }
+  .service-hero__lede {
+    font-size: var(--fs-lg);
+    font-weight: 500;
+    margin: 0 0 var(--sp-6);
+    max-width: 56ch;
+    color: var(--color-walnut-muted);
+  }
+  .service-hero__trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-5);
+    margin-top: var(--sp-7);
+    padding-top: var(--sp-5);
+    border-top: 1px solid var(--color-border);
+  }
+  .service-hero__trust-item {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    color: var(--color-walnut-muted);
+  }
+  .service-hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    margin-top: var(--sp-5);
+  }
+
+  /* Long intro block — featured callout */
+  .long-intro {
+    background: var(--color-slate-light);
+    border-left: 4px solid var(--color-slate);
+    padding: var(--sp-5) var(--sp-6);
+    margin: 0 0 var(--sp-7);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+    font-size: var(--fs-lg);
+    line-height: 1.7;
+    color: var(--color-ink);
+  }
+  .long-intro p { margin: 0; }
+
+  /* Service bullets grid (8 bullets from service.whatWeDo) */
+  .service-bullets {
+    list-style: none;
+    padding: 0;
+    margin: var(--sp-5) 0 var(--sp-7);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--sp-3);
+  }
+  .service-bullets li {
+    background: #fff;
+    border-left: 3px solid var(--color-fern);
+    padding: var(--sp-4) var(--sp-4);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    box-shadow: var(--shadow-xs);
+    color: var(--color-ink);
+    margin: 0;
+  }
+
+  /* Section headings alignment */
+  .section-lede {
+    text-align: center;
+    color: var(--color-ink-muted);
+    font-size: var(--fs-lg);
+    max-width: 60ch;
+    margin: 0 auto var(--sp-7);
+  }
+
+  /* Areas inline detail grid (replaces 12-card grid + 120 matrix pages) */
+  .area-group-heading {
+    font-size: var(--fs-xl);
+    margin: var(--sp-7) 0 var(--sp-4);
+    color: var(--color-slate);
+    border-bottom: 2px solid var(--color-slate);
+    padding-bottom: var(--sp-3);
+  }
+  .area-group-heading:first-of-type { margin-top: var(--sp-5); }
+  .area-detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--sp-4);
+    margin: var(--sp-4) 0 var(--sp-5);
+  }
+  .area-detail {
+    background: #fff;
+    border: 1px solid var(--color-stone-deep);
+    border-radius: var(--radius-md);
+    padding: var(--sp-4) var(--sp-5);
+    transition: border-color 0.15s;
+  }
+  .area-detail:hover { border-color: var(--color-slate); }
+  .area-detail-name {
+    margin: 0 0 var(--sp-2);
+    color: var(--color-ink);
+    font-size: var(--fs-base);
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--sp-2);
+  }
+  .area-detail-postcode {
+    font-weight: 400;
+    font-size: var(--fs-xs);
+    color: var(--color-slate);
+    background: var(--color-slate-light);
+    padding: var(--sp-1) var(--sp-2);
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+  }
+  .area-detail-blurb {
+    margin: 0 0 var(--sp-3);
+    font-size: var(--fs-sm);
+    color: var(--color-ink-muted);
+    line-height: 1.5;
+  }
+  .area-detail-meta {
+    margin: var(--sp-2) 0 0;
+    font-size: var(--fs-xs);
+    color: var(--color-ink-subtle);
+    line-height: 1.5;
+  }
+  .area-detail-meta strong { color: var(--color-ink); }
+</style>

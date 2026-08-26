@@ -1,0 +1,291 @@
+---
+// Shared layout for every page on the site.
+// Sets SEO meta, OG tags, Twitter, JSON-LD, GOV.UK-ish header, footer,
+// and includes the global stylesheet.
+
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import LeadForm from '../components/LeadForm.astro';
+import Footer from '../components/Footer.astro';
+
+export type BreadcrumbItem = { name: string; href: string };
+
+type Props = {
+  title: string;
+  description: string;
+  canonical: string;
+  ogType?: 'website' | 'article';
+  ogImage?: string;
+  schema?: object | object[];
+  breadcrumbs?: BreadcrumbItem[];
+  prefillService?: string;
+  prefillArea?: string;
+  formHeading?: string;
+  showLeadForm?: boolean;
+};
+
+const {
+  title,
+  description,
+  canonical,
+  ogType = 'website',
+  ogImage = '/og-default.png',
+  schema,
+  breadcrumbs = [],
+  prefillService,
+  prefillArea,
+  formHeading,
+  showLeadForm = true,
+} = Astro.props as Props;
+
+const siteName = 'KD Plastering & Rendering Services';
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://www.kdplasteringrenderingservices.co.uk';
+const canonicalAbsolute = new URL(canonical, siteUrl).toString();
+const ogImageAbsolute = new URL(ogImage, siteUrl).toString();
+const schemaArr = Array.isArray(schema) ? schema : schema ? [schema] : [];
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <!-- Fonts: Inter (display + body, self-via Google) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalAbsolute} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalAbsolute} />
+    <meta property="og:image" content={ogImageAbsolute} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content="en_GB" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageAbsolute} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+
+    <!-- Sitemap -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    {schemaArr.map((s) => (
+      <script type="application/ld+json" set:html={JSON.stringify(s)} />
+    ))}
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <Header />
+    <main id="main-content">
+      {breadcrumbs.length > 0 && (
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="/">Home</a></li>
+            {breadcrumbs.map((b, i) => (
+              <li>
+                {i < breadcrumbs.length - 1 ? (
+                  <a href={b.href}>{b.name}</a>
+                ) : (
+                  <span aria-current="page">{b.name}</span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
+      <slot />
+      {showLeadForm && (
+        <section class="lead-form-section" aria-labelledby="lead-form-heading">
+          <div class="container">
+            <h2 id="lead-form-heading" class="lead-form-heading">
+              {formHeading ?? 'Get Your Free Bristol Rendering Quote'}
+            </h2>
+            <p class="lead-form-sub">
+              Professional plastering &amp; rendering specialists serving Bristol, Bath and surrounding areas.
+              Free quotes with fast response times.
+            </p>
+            <LeadForm />
+            <ul class="lead-form-trust">
+              <li>✓ 10+ Years Experience</li>
+              <li>✓ Fully Insured</li>
+              <li>✓ Free Quotes</li>
+              <li>✓ Bristol &amp; Bath Coverage</li>
+            </ul>
+          </div>
+        </section>
+      )}
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--color-ink);
+    color: #fff;
+    padding: 0.75rem 1rem;
+    z-index: 999;
+    text-decoration: none;
+  }
+  .skip-link:focus {
+    left: 1rem;
+    top: 1rem;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+  .breadcrumbs {
+    background: #f7f7f7;
+    border-bottom: 1px solid #e6e6e6;
+    padding: 0.75rem 0;
+    font-size: 0.95rem;
+  }
+  .breadcrumbs ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+  .breadcrumbs li:not(:last-child)::after {
+    content: " ›";
+    color: #6f7676;
+    margin-left: 0.5rem;
+  }
+  .breadcrumbs a {
+    color: var(--color-slate);
+    text-decoration: underline;
+  }
+  .breadcrumbs [aria-current="page"] {
+    color: var(--color-ink);
+  }
+
+  .lead-form-section {
+    background: linear-gradient(180deg, var(--color-cream-warm) 0%, var(--color-stone) 100%);
+    color: var(--color-walnut);
+    padding: 3.5rem 0;
+  }
+  .lead-form-heading {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    text-align: center;
+    color: var(--color-walnut);
+  }
+  .lead-form-sub {
+    text-align: center;
+    margin: 0 0 2rem;
+    color: var(--color-walnut-muted);
+  }
+  .lead-form {
+    background: #fff;
+    color: var(--color-ink);
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .lead-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .lead-form-col-span {
+    grid-column: 1 / -1;
+  }
+  .lead-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .lead-form label em {
+    color: var(--color-rust);
+    font-style: normal;
+  }
+  .lead-form input,
+  .lead-form select,
+  .lead-form textarea {
+    font: inherit;
+    padding: 0.6rem 0.75rem;
+    border: 2px solid var(--color-ink);
+    border-radius: 4px;
+    background: #fff;
+    color: var(--color-ink);
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .lead-form textarea {
+    font-family: inherit;
+    resize: vertical;
+  }
+  .lead-form-submit {
+    background: var(--color-fern);
+    color: #fff;
+    border: 0;
+    padding: 0.85rem 1.5rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 1rem;
+  }
+  .lead-form-submit:hover {
+    background: var(--color-fern-deep);
+  }
+  .lead-form-meta {
+    text-align: center;
+    font-size: 0.85rem;
+    color: var(--color-ink-muted);
+    margin: 0.75rem 0 1rem;
+  }
+  .lead-form-trust {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    justify-content: center;
+    color: var(--color-walnut-muted);
+    font-size: 0.95rem;
+  }
+  .hidden {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  @media (max-width: 700px) {
+    .lead-form-grid {
+      grid-template-columns: 1fr;
+    }
+    .lead-form-heading {
+      font-size: 1.5rem;
+    }
+  }
+</style>

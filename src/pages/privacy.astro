@@ -1,95 +1,68 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import PageLayout from '../layouts/PageLayout.astro';
+
+const lastUpdated = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
 
-<BaseLayout
-  title="Privacy Policy — CleanerBath"
-  description="How CleanerBath handles your personal data under UK GDPR and the Data Protection Act 2018. What we collect, who we share it with, your rights."
+<PageLayout
+  title="Privacy Policy | KD Plastering & Rendering Services"
+  description="How KD Plastering & Rendering Services handles your personal data under UK GDPR and the Data Protection Act 2018."
+  canonical="/privacy/"
+  showLeadForm={false}
+  breadcrumbs={[{ name: 'Privacy Policy', href: '/privacy/' }]}
 >
-  <header class="border-b border-sage-100 bg-cream-50">
-    <div class="mx-auto max-w-3xl px-5 sm:px-8 py-5">
-      <a href="/" class="text-sage-700 text-sm hover:underline">← Back to CleanerBath</a>
+  <section class="section">
+    <div class="container" style="max-width: 800px;">
+      <h1>Privacy Policy</h1>
+      <p style="color: var(--color-text-muted);">Last updated: {lastUpdated}</p>
+
+      <h2>Who we are</h2>
+      <p>KD Plastering &amp; Rendering Services ("we", "us", "our") is a plastering and rendering contractor based at 8 Roman Way, Hanham, Bristol BS15 3FH. We provide plastering, rendering and external wall insulation services to homeowners, landlords and developers across Bristol, Bath and surrounding areas.</p>
+      <p>For the purposes of UK data protection law, KD Plastering &amp; Rendering Services is the <strong>data controller</strong> for the personal information collected through this website.</p>
+
+      <h2>What we collect</h2>
+      <p>When you fill in our quote form, contact us by phone or email, or book our services, we collect:</p>
+      <ul>
+        <li>Your name</li>
+        <li>Your phone number</li>
+        <li>Your email address</li>
+        <li>Your postcode and address</li>
+        <li>Details about your project (property type, size, service required)</li>
+        <li>Standard technical data (your IP address, the pages you visited, browser type)</li>
+      </ul>
+
+      <h2>How we use it (legal basis)</h2>
+      <p>We use your personal data on the basis of <strong>legitimate interests</strong> — to provide quotes, deliver the services you have booked, and communicate with you about your project. We also rely on your explicit <strong>consent</strong> when you tick the consent box on our quote form.</p>
+      <p>We do not use your data for automated decision-making, profiling, or marketing to third parties.</p>
+
+      <h2>Who we share it with</h2>
+      <p>We do <strong>not</strong> sell, rent, or share your details with any third parties for marketing purposes. We share your data only with:</p>
+      <ul>
+        <li>Our scaffold partner, when scaffold erection forms part of your quoted works</li>
+        <li>Our material supplier (Johnstone’s / Parex / K Rend / Weber), only when placing a product order on your behalf</li>
+        <li>Our hosting provider (Netlify) and form-handling service, for the technical operation of this website</li>
+      </ul>
+
+      <h2>How long we keep it</h2>
+      <p>We keep your enquiry details and project records for up to 7 years for tax and contractual warranty purposes. Technical logs (IP, browser) are kept for up to 30 days for security and capacity planning, then deleted.</p>
+
+      <h2>Your rights</h2>
+      <p>Under UK GDPR you have the right to:</p>
+      <ul>
+        <li><strong>Access</strong> the personal data we hold about you</li>
+        <li><strong>Correct</strong> any data that is wrong</li>
+        <li><strong>Delete</strong> your data (the "right to be forgotten")</li>
+        <li><strong>Restrict</strong> or <strong>object to</strong> our processing of your data</li>
+        <li><strong>Withdraw consent</strong> at any time</li>
+        <li><strong>Complain</strong> to the Information Commissioner's Office (ICO)</li>
+      </ul>
+      <p>To exercise any of these rights, email us at <a href="mailto:kdplasteringltd@gmail.com">kdplasteringltd@gmail.com</a>. We will respond within one month.</p>
+
+      <h2>Cookies</h2>
+      <p>We do not use analytics cookies or advertising cookies. The site is a static bundle served over HTTPS. We do not load any third-party tracking scripts.</p>
+
+      <h2>Contact</h2>
+      <p>For any privacy-related question, email <a href="mailto:kdplasteringltd@gmail.com">kdplasteringltd@gmail.com</a> or call 0117 409 4116. You can also complain to the Information Commissioner's Office at <a href="https://ico.org.uk/make-a-complaint/" rel="noopener">ico.org.uk</a>.</p>
     </div>
-  </header>
-
-  <article class="mx-auto max-w-3xl px-5 sm:px-8 py-16 prose-cleaner">
-    <p class="text-xs uppercase tracking-[0.3em] text-sage-700 font-semibold">Legal</p>
-    <h1 class="mt-3 text-4xl font-bold">Privacy Policy</h1>
-    <p class="mt-3 text-sm text-ink-700/70">Last updated: {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-
-    <h2 class="mt-12 text-2xl font-bold">Who we are</h2>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      CleanerBath ("we", "us", "our") is a cleaner-matching service operated by CleanerBath Limited,
-      a company registered in England and Wales. We match people in Bath who want a domestic cleaner with
-      independent, vetted local cleaners.
-    </p>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      For the purposes of UK data protection law, CleanerBath Limited is the <strong>data controller</strong>
-      for the personal information collected through this website.
-    </p>
-
-    <h2 class="mt-10 text-2xl font-bold">What we collect</h2>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">When you fill in our lead form, we collect:</p>
-    <ul class="mt-3 space-y-1.5 text-ink-700/85">
-      <li>• Your name</li>
-      <li>• Your phone number</li>
-      <li>• Your email address</li>
-      <li>• Your postcode</li>
-      <li>• The type of cleaning you need</li>
-      <li>• Your property size (number of bedrooms)</li>
-      <li>• Any notes you add (pets, access instructions, preferred days)</li>
-      <li>• Standard technical data (your IP address, the pages you visited, browser type)</li>
-    </ul>
-
-    <h2 class="mt-10 text-2xl font-bold">How we use it (legal basis)</h2>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      We use your personal data on the basis of <strong>legitimate interests</strong> — to introduce you to a Bath cleaner
-      who can quote you for the work you need. We also rely on your explicit <strong>consent</strong> when you tick the
-      consent box on the form.
-    </p>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      We do not use your data for automated decision-making or profiling.
-    </p>
-
-    <h2 class="mt-10 text-2xl font-bold">Who we share it with</h2>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      We share your details with <strong>one vetted Bath cleaner</strong> — the one matched to your booking — so they can contact you with a quote.
-      That cleaner becomes a separate data controller for the details they hold about you.
-    </p>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      We do <strong>not</strong> sell, rent, or share your details with any other third parties.
-    </p>
-
-    <h2 class="mt-10 text-2xl font-bold">How long we keep it</h2>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      We keep your enquiry details for up to 12 months so the matched cleaner can refer back if you book with them again.
-      After 12 months we delete them. Technical logs (IP, browser) are kept for up to 30 days for security.
-    </p>
-
-    <h2 class="mt-10 text-2xl font-bold">Your rights</h2>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">Under UK GDPR you have the right to:</p>
-    <ul class="mt-3 space-y-1.5 text-ink-700/85">
-      <li>• <strong>Access</strong> the personal data we hold about you</li>
-      <li>• <strong>Correct</strong> any data that is wrong</li>
-      <li>• <strong>Delete</strong> your data (the "right to be forgotten")</li>
-      <li>• <strong>Restrict</strong> or <strong>object to</strong> our processing of your data</li>
-      <li>• <strong>Withdraw consent</strong> at any time</li>
-      <li>• <strong>Complain</strong> to the Information Commissioner's Office (ICO)</li>
-    </ul>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      To exercise any of these rights, email us at the address on our contact page. We will respond within one month.
-    </p>
-
-    <h2 class="mt-10 text-2xl font-bold">Cookies</h2>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      We do not use analytics cookies or advertising cookies. We do not load any third-party tracking scripts.
-      See our <a href="/cookies" class="underline hover:text-sage-700">Cookies page</a> for the full technical detail.
-    </p>
-
-    <h2 class="mt-10 text-2xl font-bold">Contact</h2>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      For any privacy-related question, please use the contact form on our home page.
-      You can also complain to the Information Commissioner's Office at <a href="https://ico.org.uk/make-a-complaint/" class="underline hover:text-sage-700" rel="noopener">ico.org.uk</a>.
-    </p>
-  </article>
-</BaseLayout>
+  </section>
+</PageLayout>

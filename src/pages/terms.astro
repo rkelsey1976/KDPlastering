@@ -1,88 +1,65 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import PageLayout from '../layouts/PageLayout.astro';
+
+const lastUpdated = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
 
-<BaseLayout
-  title="Terms of Service — CleanerBath"
-  description="Terms of service for using CleanerBath.co.uk — the cleaner-matching service for Bath."
+<PageLayout
+  title="Terms & Conditions | KD Plastering & Rendering Services"
+  description="Terms and conditions for using kdplasteringrenderingservices.co.uk and engaging KD Plastering & Rendering Services for plastering, rendering or insulation works."
+  canonical="/terms/"
+  showLeadForm={false}
+  breadcrumbs={[{ name: 'Terms & Conditions', href: '/terms/' }]}
 >
-  <header class="border-b border-sage-100 bg-cream-50">
-    <div class="mx-auto max-w-3xl px-5 sm:px-8 py-5">
-      <a href="/" class="text-sage-700 text-sm hover:underline">← Back to CleanerBath</a>
+  <section class="section">
+    <div class="container" style="max-width: 800px;">
+      <h1>Terms &amp; Conditions</h1>
+      <p style="color: var(--color-text-muted);">Last updated: {lastUpdated}</p>
+
+      <h2>1. Who we are</h2>
+      <p>These terms govern your use of kdplasteringrenderingservices.co.uk and any contract you enter into with KD Plastering &amp; Rendering Services for plastering, rendering or external wall insulation works. KD Plastering &amp; Rendering Services is based at 8 Roman Way, Hanham, Bristol BS15 3FH.</p>
+
+      <h2>2. Quotes</h2>
+      <p>All quotes are free and provided in writing following a site visit. Quotes are valid for 30 days from the date of issue unless otherwise stated. A quote becomes a contract once you confirm acceptance in writing (email is fine) and we confirm a start date.</p>
+
+      <h2>3. Pricing and payment</h2>
+      <p>Prices are fixed for the scope described in the quote. Variations must be agreed in writing before additional work is carried out. Payment terms:</p>
+      <ul>
+        <li>Jobs under £1,000: due on completion</li>
+        <li>Jobs over £1,000: 30% deposit on booking, balance on completion</li>
+        <li>Larger projects (typically EWI): staged payments as agreed in your contract</li>
+      </ul>
+      <p>We accept bank transfer, debit card and cheque. We do not accept cash for any amount over £500.</p>
+
+      <h2>4. Insurance and warranty</h2>
+      <p>We carry full public liability insurance (£2m). All render and EWI installations come with a 10-year workmanship warranty as standard. Manufacturer system warranties (typically 25 years for silicone and EWI) apply where installations meet the manufacturer’s specification — your quote will state which.</p>
+
+      <h2>5. Cancellations</h2>
+      <p>You may cancel a booked job up to 7 working days before the agreed start date without charge. Cancellations within 7 working days may incur a charge to cover committed materials and scaffold costs. We will always try to be reasonable — talk to us first.</p>
+
+      <h2>6. Access and site</h2>
+      <p>You agree to provide reasonable access to the property during working hours (typically 8am–5pm, Mon–Fri). You are responsible for clearing the work area of personal items, vehicles and pets before our arrival. We will confirm any specific access requirements at quote stage.</p>
+
+      <h2>7. Planning and building regulations</h2>
+      <p>For most Bristol and Bath homes, rendering and EWI are permitted development and do not need planning permission. Exceptions include listed buildings, properties in conservation areas, and some post-2020 new-builds. We will advise at the site visit. EWI installations do not require Building Regulations approval but should comply with PAS 2030 / PAS 2035 for any grant-funded work.</p>
+
+      <h2>8. Subcontracting</h2>
+      <p>We sometimes use trusted subcontractors for scaffold, rendering spraying, or specialist heritage work. All subcontractors are vetted, insured and work to our specifications. We remain your point of contact throughout.</p>
+
+      <h2>9. Complaints</h2>
+      <p>If something goes wrong, please call us first — most issues are resolved on the same day. If we can’t resolve it, we’ll put it in writing with a clear plan to put it right. We are Checkatrade members, and Checkatrade’s dispute resolution service is available to you.</p>
+
+      <h2>10. Intellectual property</h2>
+      <p>The KD Plastering &amp; Rendering Services name, logo and website content are owned by us. You may not copy or reproduce them without permission.</p>
+
+      <h2>11. Liability</h2>
+      <p>To the maximum extent permitted by law, our liability to you in respect of any contract is limited to the contract value. Nothing in these terms excludes liability for death or personal injury caused by our negligence, or for fraud.</p>
+
+      <h2>12. Governing law</h2>
+      <p>These terms are governed by the law of England and Wales. Any disputes are subject to the exclusive jurisdiction of the English courts.</p>
+
+      <h2>13. Contact</h2>
+      <p>Questions about these terms? Email <a href="mailto:kdplasteringltd@gmail.com">kdplasteringltd@gmail.com</a> or call 0117 409 4116.</p>
     </div>
-  </header>
-
-  <article class="mx-auto max-w-3xl px-5 sm:px-8 py-16">
-    <p class="text-xs uppercase tracking-[0.3em] text-sage-700 font-semibold">Legal</p>
-    <h1 class="mt-3 text-4xl font-bold">Terms of Service</h1>
-    <p class="mt-3 text-sm text-ink-700/70">Last updated: {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-
-    <h2 class="mt-12 text-2xl font-bold">1. What CleanerBath does</h2>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      CleanerBath is a <strong>matching service</strong>. We collect details about the cleaning work you need,
-      identify a Bath-based cleaner we work with who can take it on, and pass your details to them so they can contact you with a quote.
-    </p>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      <strong>CleanerBath does not provide cleaning services.</strong> Any cleaning work is provided by the independent cleaner
-      we match you with, under a separate contract between you and them.
-    </p>
-
-    <h2 class="mt-10 text-2xl font-bold">2. No charge to you</h2>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      There is no charge to you for using CleanerBath. Our matching service is paid for by the cleaner, not by you.
-      You agree any cleaning work, and any price for it, directly with the cleaner we match you with.
-    </p>
-
-    <h2 class="mt-10 text-2xl font-bold">3. Service area</h2>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      CleanerBath operates in <strong>Bath city centre and immediate suburbs</strong> (BA1, BA2 and parts of neighbouring postcodes).
-      We may decline to forward enquiries from outside this area.
-    </p>
-
-    <h2 class="mt-10 text-2xl font-bold">4. Your responsibilities</h2>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">When using this website you agree to:</p>
-    <ul class="mt-3 space-y-1.5 text-ink-700/85">
-      <li>• Provide accurate information in the enquiry form</li>
-      <li>• Submit only genuine enquiries — not test, spam, or fraudulent submissions</li>
-      <li>• Not use the service to harass, threaten, or abuse any cleaner we put you in touch with</li>
-    </ul>
-
-    <h2 class="mt-10 text-2xl font-bold">5. The cleaner's terms</h2>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      Once we introduce you, the cleaner is responsible for delivering the cleaning work. Their pricing, terms, cancellation policy,
-      insurance, and any complaints are matters between you and them. CleanerBath does not act as agent for the cleaner and does not
-      warrant the quality of their work.
-    </p>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      If something goes wrong with the cleaning, please raise it with the cleaner first. If you can't resolve it,
-      contact us and we'll do what we can to help.
-    </p>
-
-    <h2 class="mt-10 text-2xl font-bold">6. Liability</h2>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      We take care to match you with a vetted Bath cleaner, but we cannot guarantee the outcome of any cleaning work.
-      To the maximum extent permitted by law, our liability to you is limited to the amount we have received from the matched cleaner for the introduction.
-    </p>
-
-    <h2 class="mt-10 text-2xl font-bold">7. Intellectual property</h2>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      The CleanerBath name, logo, and website content are owned by us. You may not copy or reproduce them without permission.
-    </p>
-
-    <h2 class="mt-10 text-2xl font-bold">8. Changes</h2>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      We may update these terms occasionally. The "last updated" date at the top will always show the current version.
-      Continuing to use the site after changes counts as acceptance.
-    </p>
-
-    <h2 class="mt-10 text-2xl font-bold">9. Governing law</h2>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      These terms are governed by the law of England and Wales. Any disputes are subject to the exclusive jurisdiction of the English courts.
-    </p>
-
-    <h2 class="mt-10 text-2xl font-bold">10. Contact</h2>
-    <p class="mt-3 text-ink-700/85 leading-relaxed">
-      Questions about these terms? Use the contact form on our home page.
-    </p>
-  </article>
-</BaseLayout>
+  </section>
+</PageLayout>

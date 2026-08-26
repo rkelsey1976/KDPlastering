@@ -1,0 +1,378 @@
+---
+// ServiceCard — premium service card with icon + name + tagline + price hint.
+// Variants:
+//   - 'default'  — standard card (used on /our-services/, related services)
+//   - 'featured' — bigger version with stronger visual treatment (used in hero blocks)
+//   - 'bento'    — minimal card for bento-grid layouts (image-free, number-led)
+//   - 'bento-lg' — large bento card with hero treatment (number + tagline + price)
+
+export type ServiceCardData = {
+  slug: string;
+  shortName: string;
+  tagline: string;
+  longTagline?: string;        // longer description for bento-large variant
+  priceHint?: string;
+  number?: string;            // '01', '02' — for bento variants
+  icon?: string;
+  variant?: 'default' | 'featured' | 'bento' | 'bento-lg';
+  imageSrc?: string;          // hero photo for bento variants
+  imageAlt?: string;          // alt text for the hero photo
+};
+
+const {
+  slug,
+  shortName,
+  tagline,
+  longTagline,
+  priceHint,
+  number,
+  icon = 'default',
+  variant = 'default',
+  imageSrc,
+  imageAlt,
+} = Astro.props as ServiceCardData;
+
+const iconMap: Record<string, string> = {
+  'silicone-rendering': 'silicone',
+  'house-rendering': 'house',
+  'external-wall-rendering': 'wall',
+  'monocouche-rendering': 'mono',
+  'plastering-services': 'plaster',
+  'external-wall-insulation': 'ewi',
+};
+const resolvedIcon = icon !== 'default' ? icon : (iconMap[slug] ?? 'default');
+
+const icons: Record<string, string> = {
+  silicone: '<path d="M3 21h18M5 21V8l5-3v16M14 21V4l5 3v14"/>',
+  house: '<path d="M3 12L12 3l9 9M5 10v10h14V10M9 20v-6h6v6"/>',
+  wall: '<rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>',
+  mono: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/>',
+  plaster: '<path d="M3 3h18v18H3z"/><path d="M3 12h18M12 3v18"/><circle cx="6" cy="6" r="1"/><circle cx="18" cy="6" r="1"/>',
+  ewi: '<path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-7h6v7M12 4v3"/>',
+  default: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/>',
+};
+const svgInner = icons[resolvedIcon] ?? icons.default;
+
+// Numbered prefix for bento variants (01, 02, etc.)
+const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
+---
+
+<a
+  href={`/our-services/${slug}-bristol/`}
+  class:list={[
+    'service-card',
+    `service-card--${variant}`,
+    `service-card--${resolvedIcon}`,
+  ]}
+  data-variant={variant}
+>
+  {variant.startsWith('bento') && (
+    <span class="service-card__number">{displayNumber}</span>
+  )}
+
+  {imageSrc && (
+    <div class="service-card__image" aria-hidden="true">
+      <img
+        src={imageSrc}
+        alt={imageAlt || `${shortName} — recent project in Bristol & Bath`}
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+  )}
+
+  {variant !== 'bento' && variant !== 'bento-lg' && !imageSrc && (
+    <div class="service-card__icon" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={svgInner} />
+    </div>
+  )}
+
+  {variant === 'bento-lg' && !imageSrc && (
+    <div class="service-card__icon service-card__icon--lg" aria-hidden="true">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" set:html={svgInner} />
+    </div>
+  )}
+
+  <div class="service-card__body">
+    <h3 class="service-card__name">{shortName}</h3>
+    <p class="service-card__tagline">
+      {variant === 'bento-lg' && longTagline ? longTagline : tagline}
+    </p>
+  </div>
+
+  {priceHint && (
+    <div class="service-card__price">
+      <span class="service-card__price-from">From</span>
+      <span class="service-card__price-value">{priceHint}</span>
+    </div>
+  )}
+
+  <div class="service-card__cta">
+    <span class="service-card__cta-text">Explore service</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M5 12h14M12 5l7 7-7 7"/>
+    </svg>
+  </div>
+</a>
+
+<style>
+  /* ==== Default card ==== */
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+    padding: var(--sp-5);
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: var(--color-walnut);
+    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--color-clay));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .service-card:hover {
+    border-color: var(--card-accent, var(--color-clay));
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+    color: var(--color-walnut);
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+
+  /* Per-service accent colours */
+  .service-card--silicone { --card-accent: #a25d2f; }
+  .service-card--house    { --card-accent: #c47a0a; }
+  .service-card--wall     { --card-accent: #5a7a52; }
+  .service-card--mono     { --card-accent: #3e5b3a; }
+  .service-card--plaster  { --card-accent: #7e4319; }
+  .service-card--ewi      { --card-accent: #1d3a8c; }
+
+  /* ==== Image (for bento/bento-lg with imageSrc) ==== */
+  .service-card__image {
+    width: calc(100% + var(--sp-5) * 2);
+    margin: calc(-1 * var(--sp-5)) calc(-1 * var(--sp-5)) var(--sp-3);
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    background: var(--color-stone);
+    position: relative;
+  }
+
+  .service-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .service-card:hover .service-card__image img {
+    transform: scale(1.04);
+  }
+
+  /* ==== Icon ==== */
+  .service-card__icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: var(--card-accent-light, var(--color-clay-light));
+    color: var(--card-accent, var(--color-clay-deep));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+  }
+  .service-card--silicone .service-card__icon { background: #f5ede4; color: #a25d2f; }
+  .service-card--house    .service-card__icon { background: #fdf3e1; color: #c47a0a; }
+  .service-card--wall     .service-card__icon { background: #ecf0e6; color: #5a7a52; }
+  .service-card--mono     .service-card__icon { background: #ecf0e6; color: #3e5b3a; }
+  .service-card--plaster  .service-card__icon { background: #f5ede4; color: #7e4319; }
+  .service-card--ewi      .service-card__icon { background: #eef2fb; color: #1d3a8c; }
+
+  .service-card__icon--lg {
+    width: 64px;
+    height: 64px;
+  }
+
+  /* ==== Body ==== */
+  .service-card__body { flex-grow: 1; }
+
+  .service-card__name {
+    margin: 0 0 var(--sp-2);
+    font-size: var(--fs-lg);
+    font-weight: 700;
+    color: var(--color-walnut);
+    letter-spacing: -0.02em;
+  }
+
+  .service-card__tagline {
+    margin: 0;
+    font-size: var(--fs-sm);
+    line-height: 1.55;
+    color: var(--color-walnut-muted);
+  }
+
+  /* ==== Price ==== */
+  .service-card__price {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-2);
+    padding: var(--sp-3) 0;
+    border-top: 1px dashed var(--color-border);
+    border-bottom: 1px dashed var(--color-border);
+  }
+  .service-card__price-from {
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-walnut-muted);
+    font-weight: 600;
+  }
+  .service-card__price-value {
+    font-size: var(--fs-md);
+    font-weight: 700;
+    color: var(--card-accent, var(--color-clay-deep));
+    font-feature-settings: 'tnum';
+  }
+
+  /* ==== CTA ==== */
+  .service-card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--card-accent, var(--color-clay-deep));
+    margin-top: auto;
+  }
+  .service-card__cta svg { transition: transform 0.2s ease; }
+  .service-card:hover .service-card__cta svg { transform: translateX(4px); }
+
+  /* ==== Featured variant ==== */
+  .service-card--featured { padding: var(--sp-6); }
+  .service-card--featured .service-card__icon { width: 56px; height: 56px; }
+  .service-card--featured .service-card__name { font-size: var(--fs-xl); }
+
+  /* ==== BENTO VARIANTS ==== */
+
+  /* Number badge */
+  .service-card__number {
+    position: absolute;
+    top: var(--sp-4);
+    right: var(--sp-5);
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    color: var(--card-accent, var(--color-clay-deep));
+    font-feature-settings: 'tnum';
+    letter-spacing: 0.1em;
+    opacity: 0.55;
+  }
+
+  /* Small bento card — minimal, tight */
+  .service-card--bento {
+    padding: var(--sp-5);
+    gap: var(--sp-3);
+  }
+
+  /* Bento with image — image sits at top, content below */
+  .service-card--bento .service-card__image {
+    aspect-ratio: 16 / 10;
+  }
+  .service-card--bento .service-card__name {
+    font-size: var(--fs-md);
+    margin-bottom: var(--sp-1);
+  }
+  .service-card--bento .service-card__tagline {
+    font-size: var(--fs-sm);
+    color: var(--color-walnut-muted);
+    line-height: 1.5;
+  }
+  .service-card--bento .service-card__cta {
+    margin-top: var(--sp-2);
+    font-size: var(--fs-xs);
+  }
+
+  /* Large bento card — hero treatment */
+  .service-card--bento-lg {
+    padding: var(--sp-7);
+    gap: var(--sp-5);
+    background: linear-gradient(135deg, #fbf8f1 0%, var(--card-accent-light, #f5ede4) 100%);
+    border-color: var(--card-accent, var(--color-clay));
+    border-width: 1.5px;
+    position: relative;
+  }
+
+  /* Bento-lg with image — pull image edge-to-edge */
+  .service-card--bento-lg .service-card__image {
+    width: calc(100% + var(--sp-7) * 2);
+    margin: calc(-1 * var(--sp-7)) calc(-1 * var(--sp-7)) var(--sp-4);
+    aspect-ratio: 16 / 9;
+  }
+
+  /* Subtle texture overlay for bento-lg */
+  .service-card--bento-lg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 90% 10%, var(--card-accent, var(--color-clay)) 0%, transparent 30%),
+      radial-gradient(circle at 10% 90%, var(--card-accent, var(--color-clay)) 0%, transparent 35%);
+    opacity: 0.06;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .service-card--bento-lg > * { position: relative; z-index: 1; }
+
+  .service-card--bento-lg .service-card__icon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .service-card--bento-lg .service-card__name {
+    font-size: var(--fs-3xl);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--sp-3);
+  }
+
+  .service-card--bento-lg .service-card__tagline {
+    font-size: var(--fs-md);
+    line-height: 1.6;
+    color: var(--color-walnut);
+    max-width: 40ch;
+  }
+
+  .service-card--bento-lg .service-card__price {
+    padding: var(--sp-4) 0;
+    border-color: rgba(61, 46, 31, 0.15);
+  }
+
+  .service-card--bento-lg .service-card__price-value {
+    font-size: var(--fs-xl);
+  }
+
+  .service-card--bento-lg .service-card__cta {
+    font-size: var(--fs-base);
+    margin-top: var(--sp-3);
+  }
+
+  .service-card--bento-lg:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 50px rgba(15, 20, 25, 0.12);
+  }
+</style>

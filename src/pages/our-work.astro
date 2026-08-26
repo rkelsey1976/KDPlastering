@@ -1,0 +1,54 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+
+const projects = [
+  { alt: 'Silicone render finish on a 1930s Bristol semi-detached', caption: '1930s semi, Hanham — full re-render in cream silicone' },
+  { alt: 'Monocouche render on a modern Bristol detached', caption: 'Detached new-build, Emerson’s Green — monocouche in light grey' },
+  { alt: 'External wall insulation in progress on a Bristol property', caption: 'EWI installation, Kingswood — 100mm EPS with silicone top coat' },
+  { alt: 'Pebbledash removal and re-render on a Brislington home', caption: 'Pebbledash removal, Brislington — through-colour monocouche' },
+  { alt: 'Internal plastering and skimming on a Bristol refurbishment', caption: 'Full house re-plaster, St George — boarding and skimming throughout' },
+  { alt: 'Heritage lime-render repair on a Bath Georgian townhouse', caption: 'Bath City Centre — sympathetic lime-render restoration' },
+  { alt: 'House rendering in two-tone finish on a Downend property', caption: 'Detached home, Downend — two-tone monocouche' },
+  { alt: 'Feature reveals and beading cut into fresh external render', caption: 'Detached home, Fishponds — feature reveals in silicone' },
+  { alt: 'Bath stone colour render on a Bathwick period property', caption: 'Bathwick townhouse — Bath stone colour monocouche' },
+  { alt: 'Silicone render in white on a modern apartment block', caption: 'Apartments, Widcombe — white silicone over-coat' },
+  { alt: 'Artex ceiling removal and re-skim to a flat finish', caption: 'Artex removal, Knowle — flat skim finish' },
+  { alt: 'External wall rendering on a commercial unit in Bristol', caption: 'Commercial unit, Stapleton Road — silicone render refresh' },
+];
+---
+
+<PageLayout
+  title="Our Work | KD Plastering & Rendering Services"
+  description="A gallery of recent plastering, rendering and external wall insulation projects across Bristol and Bath."
+  canonical="/our-work/"
+  breadcrumbs={[{ name: 'Our Work', href: '/our-work/' }]}
+>
+  <section class="hero">
+    <div class="container">
+      <h1>Our Work</h1>
+      <p class="lede">A selection of recent plastering, rendering and external wall insulation projects across Bristol and Bath.</p>
+      <p>We’ve delivered 1,000+ projects over the last 10 years. Here are a small sample — including full house renders, pebbledash removals, EWI installations, heritage work and internal plastering.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="gallery-grid">
+        {projects.map(p => (
+          <figure>
+            <img src="/placeholder-project.jpg" alt={p.alt} loading="lazy" />
+            <figcaption>{p.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-banner">
+    <div class="container">
+      <h2>Like what you see?</h2>
+      <p>Tell us about your project — we’ll send a fixed written quote within 48 hours.</p>
+      <a href="/#lead-form-heading">Get Your Free Quote</a>
+    </div>
+  </section>
+</PageLayout>

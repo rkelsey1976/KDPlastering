@@ -1,0 +1,111 @@
+---
+// ReviewCards — renders an array of testimonial cards with
+// 5-star ratings, name, location, date, and quote.
+
+export type Review = {
+  name: string;
+  area: string;
+  rating: number;       // 1-5
+  date: string;         // human-readable
+  service: string;
+  quote: string;
+};
+
+type Props = {
+  reviews: Review[];
+  heading?: string;
+  lede?: string;
+};
+
+const { reviews, heading = 'What Our Customers Say', lede } = Astro.props as Props;
+---
+
+<section class="reviews-section" aria-labelledby="reviews-heading">
+  <div class="container">
+    {heading && <h2 id="reviews-heading">{heading}</h2>}
+    {lede && <p class="lede">{lede}</p>}
+    <div class="reviews-grid">
+      {reviews.map((r) => (
+        <article class="review-card">
+          <div class="review-stars" aria-label={`${r.rating} out of 5 stars`}>
+            {'★'.repeat(r.rating)}{'☆'.repeat(5 - r.rating)}
+          </div>
+          <blockquote class="review-quote">
+            <p>{r.quote}</p>
+          </blockquote>
+          <div class="review-meta">
+            <p class="review-name">— {r.name}</p>
+            <p class="review-area">{r.area} · {r.service}</p>
+            <p class="review-date">{r.date}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .reviews-section {
+    padding: 3rem 0;
+    background: #fff;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+  .reviews-section h2 {
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  .lede {
+    text-align: center;
+    color: #505a5f;
+    font-size: 1.1rem;
+    max-width: 760px;
+    margin: 0 auto 2rem;
+  }
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .review-card {
+    background: #f7fbff;
+    border-left: 4px solid #00703c;
+    padding: 1.5rem;
+    border-radius: 0 6px 6px 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .review-stars {
+    color: #f47738;
+    font-size: 1.25rem;
+    letter-spacing: 0.1rem;
+    margin-bottom: 0.75rem;
+  }
+  .review-quote {
+    margin: 0 0 1rem;
+    padding: 0;
+  }
+  .review-quote p {
+    margin: 0;
+    font-style: italic;
+    color: #2c2c2c;
+    line-height: 1.6;
+  }
+  .review-meta {
+    border-top: 1px solid #d9e2ec;
+    padding-top: 0.75rem;
+  }
+  .review-name {
+    margin: 0;
+    font-weight: 700;
+    color: #0b0c0c;
+  }
+  .review-area,
+  .review-date {
+    margin: 0.2rem 0 0;
+    font-size: 0.85rem;
+    color: #505a5f;
+  }
+</style>

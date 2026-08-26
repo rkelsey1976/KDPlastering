@@ -1,0 +1,56 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+
+const faqs = [
+  { q: 'What’s the difference between plastering and rendering?', a: 'Plastering is for internal walls and ceilings — usually multi-finish plaster applied over plasterboard or bonding. Rendering is for external walls — a cement-based or silicone system designed to weatherproof the building. Different products, different trades in some respects, but we do both.' },
+  { q: 'How much does rendering cost in Bristol?', a: 'It depends on the system. Silicone and monocouche typically cost £55-£90 per m² installed; sand-and-cement is cheaper but needs painting. A typical 3-bed semi costs £6,500-£11,000 fully quoted. We give fixed written quotes after a free site visit.' },
+  { q: 'How long does rendering take?', a: 'A typical 3-bed semi takes 5-7 working days from scaffold erection to final coat. Detached homes and larger properties take 7-14 days. EWI installations take 2-4 weeks.' },
+  { q: 'Do I need planning permission for rendering or EWI?', a: 'For most Bristol and Bath homes, no — rendering and EWI are permitted development. Exceptions include listed buildings, properties in conservation areas with specific Article 4 restrictions, and some post-2020 new-builds. We’ll advise at the site visit.' },
+  { q: 'What render system should I choose?', a: 'It depends on your substrate, budget and the look you want. Silicone is the most popular modern system — self-cleaning, water-repellent, 25+ year lifespan. Monocouche is slightly cheaper and gives a more traditional mineral finish. Acrylic is cost-effective for over-coats. We’ll recommend the right one at your free site visit.' },
+  { q: 'Can you render over pebbledash?', a: 'Yes. We typically scrape off loose stones, key the surface, then apply a base coat before the chosen topcoat. For very thick or well-bonded pebbledash we may apply a mesh-reinforced base coat directly over.' },
+  { q: 'What warranty do you offer?', a: 'Every installation comes with a 10-year workmanship warranty as standard. Manufacturer system warranties (typically 25 years for silicone, monocouche and EWI) apply where installations meet the manufacturer’s specification — your quote will state which.' },
+  { q: 'Are you insured?', a: 'Yes. We carry £2m public liability insurance and full employer’s liability cover. Documentation available on request.' },
+];
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+
+<PageLayout
+  title="FAQs | KD Plastering & Rendering Services"
+  description="Common questions about plastering, rendering and external wall insulation in Bristol and Bath. Cost, time, materials, planning permission and more."
+  canonical="/faqs/"
+  schema={faqSchema}
+  breadcrumbs={[{ name: 'FAQs', href: '/faqs/' }]}
+>
+  <section class="hero">
+    <div class="container">
+      <h1>Frequently Asked Questions</h1>
+      <p class="lede">Common questions about plastering, rendering and external wall insulation in Bristol and Bath.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="max-width: 800px;">
+      <div class="faq-section">
+        {faqs.map(f => (
+          <details>
+            <summary>{f.q}</summary>
+            <div class="faq-answer">{f.a}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-banner">
+    <div class="container">
+      <h2>Got a question we haven’t answered?</h2>
+      <p>Call us on 0117 409 4116 or send a message and we’ll get back to you the same day.</p>
+      <a href="/#lead-form-heading">Get in touch</a>
+    </div>
+  </section>
+</PageLayout>

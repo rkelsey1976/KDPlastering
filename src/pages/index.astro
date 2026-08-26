@@ -1,364 +1,316 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import PageLayout from '../layouts/PageLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import ReviewCards from '../components/ReviewCards.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import { SERVICES } from '../lib/services';
+import { REVIEWS } from '../lib/reviews';
 
-const services = [
-  "Regular weekly / fortnightly",
-  "One-off clean",
-  "End-of-tenancy",
-  "Deep clean",
-  "After-builders",
-  "Airbnb turnover",
+const featuredServices = SERVICES;
+const featuredReviews = REVIEWS.slice(0, 3);
+
+// Short price hints for the home page bento cards
+const priceHints: Record<string, string> = {
+  'silicone-rendering':         '£60/m²',
+  'house-rendering':            '£55/m²',
+  'external-wall-rendering':    '£55/m²',
+  'monocouche-rendering':       '£50/m²',
+  'plastering-services':        '£18/m²',
+  'external-wall-insulation':   '£120/m²',
+};
+
+// Hero photo per service for the bento grid
+const serviceImages: Record<string, string> = {
+  'silicone-rendering':         '/services/silicone-rendering-hero.jpg',
+  'house-rendering':            '/services/house-rendering-hero.jpg',
+  'external-wall-rendering':    '/services/ewall-rendering-hero.jpg',
+  'monocouche-rendering':       '/services/monocouche-rendering-hero.jpg',
+  'plastering-services':        '/services/plastering-hero.jpg',
+  'external-wall-insulation':   '/services/ewi-hero.jpg',
+};
+
+// Gallery photos for the "Recent work" section
+const galleryImages = [
+  { src: '/services/silicone-rendering-1.jpg', caption: 'Silicone render, Hanham' },
+  { src: '/services/monocouche-rendering-2.jpg', caption: 'Monocouche render, Bathwick' },
+  { src: '/services/ewi-1.jpg',                caption: 'EWI installation, Kingswood' },
+  { src: '/services/plastering-1.jpg',         caption: 'Internal plastering, Fishponds' },
 ];
 
-const howItWorks = [
-  {
-    step: "01",
-    title: "Tell us what you need",
-    body: "Two-minute form — property size, type of clean, your postcode and when you'd like to start.",
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': ['LocalBusiness', 'Plasterer'],
+  name: 'KD Plastering & Rendering Services',
+  '@id': 'https://www.kdplasteringrenderingservices.co.uk/#organization',
+  telephone: '+441174094116',
+  email: 'kdplasteringltd@gmail.com',
+  url: 'https://www.kdplasteringrenderingservices.co.uk',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '8 Roman Way, Hanham',
+    addressLocality: 'Bristol',
+    postalCode: 'BS15 3FH',
+    addressCountry: 'GB',
   },
-  {
-    step: "02",
-    title: "We match you with a Bath cleaner",
-    body: "Your booking goes to one vetted local cleaner who covers your area. Not five. Not a call centre.",
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 51.4486,
+    longitude: -2.5107,
   },
-  {
-    step: "03",
-    title: "They contact you, you book",
-    body: "The cleaner gets in touch, usually within one working day, with a clear quote. You book direct with them.",
+  areaServed: [
+    { '@type': 'City', name: 'Bristol' },
+    { '@type': 'City', name: 'Bath' },
+  ],
+  priceRange: '££',
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '08:00',
+      closes: '18:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Saturday',
+      opens: '09:00',
+      closes: '13:00',
+    },
+  ],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    reviewCount: '180',
+    bestRating: '5',
   },
-];
-
-const whyUs = [
-  { title: "Bath only", body: "We don't try to cover the whole country. Just Bath and the immediate BA postcodes." },
-  { title: "One cleaner, not a list", body: "Your details go to a single matched cleaner — no spam, no comparison site." },
-  { title: "All domestic cleaning", body: "Regular, one-off, end-of-tenancy, deep, after-builders, Airbnb turnovers. Anything domestic." },
-  { title: "Free to you", body: "CleanerBath is paid by the cleaner, not by you. You never see a charge from us." },
-];
+};
 ---
 
-<BaseLayout>
-  <!-- ============ HEADER (minimal) ============ -->
-  <header class="border-b border-sage-100 bg-cream-50/95 backdrop-blur sticky top-0 z-40">
-    <div class="mx-auto max-w-6xl px-5 sm:px-8 py-4 flex items-center justify-between">
-      <a href="/" class="flex items-center gap-3">
-        <div class="h-10 w-10 rounded-xl bg-sage-600 grid place-items-center text-white font-bold text-lg">B</div>
-        <span class="flex flex-col leading-tight">
-          <span class="font-script text-2xl text-sage-700 leading-none">CleanerBath</span>
-          <span class="text-[0.65rem] tracking-[0.25em] uppercase font-semibold text-sage-700 mt-1">Bath cleaners</span>
-        </span>
-      </a>
-      <a href="#book" class="btn-primary text-sm hidden sm:inline-flex">Get a quote</a>
-      <a href="#book" class="btn-primary text-sm sm:hidden">Quote</a>
-    </div>
-  </header>
-
-  <!-- ============ HERO + FORM ============ -->
-  <section class="wash-sage pt-12 pb-16 sm:pt-20 sm:pb-24">
-    <div class="mx-auto max-w-6xl px-5 sm:px-8">
-      <div class="grid lg:grid-cols-12 gap-10 items-start">
-        <!-- Copy column -->
-        <div class="lg:col-span-6">
-          <p class="text-xs uppercase tracking-[0.3em] text-sage-700 font-semibold">Bath cleaners · vetted · local</p>
-          <h1 class="mt-4 text-5xl sm:text-6xl font-bold leading-[1.05]">
-            Bath cleaners.<br />
-            <span class="font-script text-sage-700 font-normal text-5xl sm:text-7xl">Sorted in minutes.</span>
-          </h1>
-          <p class="mt-6 text-lg text-ink-700/80 leading-relaxed max-w-xl">
-            Tell us what you need and we'll match you with a vetted Bath cleaner.
-            Regular, one-off, end-of-tenancy, deep, after-builders, Airbnb turnovers — all domestic cleaning across BA1, BA2 and the immediate suburbs.
-          </p>
-          <ul class="mt-7 grid sm:grid-cols-2 gap-2 text-sm text-ink-800">
-            {services.map(s => (
-              <li class="flex items-start gap-2">
-                <svg class="mt-1 h-4 w-4 flex-none text-sage-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                  <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/>
-                </svg>
-                <span>{s}</span>
-              </li>
-            ))}
-          </ul>
-          <p class="mt-7 text-sm text-ink-700/70">
-            Free to you. CleanerBath is paid by the cleaner, not by you.
-          </p>
-        </div>
-
-        <!-- Form card -->
-        <div class="lg:col-span-6">
-          <div id="book" class="rounded-3xl bg-white border border-sage-100 shadow-lg shadow-sage-100/60 p-7 sm:p-9">
-            <p class="text-xs uppercase tracking-[0.25em] text-sage-700 font-semibold">Get a quote</p>
-            <h2 class="mt-2 text-2xl font-bold">Tell us what you need.</h2>
-            <p class="mt-2 text-sm text-ink-700/70">Two minutes. We'll be in touch within one working day.</p>
-
-            <form
-              class="mt-6 space-y-4"
-              name="cleanerbath-lead"
-              method="POST"
-              action="/thanks"
-              data-netlify="true"
-              netlify-honeypot="_gotcha"
-            >
-              <!-- Honeypot for spam bots -->
-              <p class="hidden">
-                <label>Don't fill this out: <input name="_gotcha" /></label>
-              </p>
-
-              <div class="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label for="name" class="block text-sm font-medium text-ink-800 mb-1.5">Your name</label>
-                  <input id="name" name="name" type="text" required autocomplete="name" class="form-input" placeholder="Jane Smith" />
-                </div>
-                <div>
-                  <label for="phone" class="block text-sm font-medium text-ink-800 mb-1.5">Phone</label>
-                  <input id="phone" name="phone" type="tel" required autocomplete="tel" class="form-input" placeholder="07700 000 000" />
-                </div>
-              </div>
-
-              <div>
-                <label for="email" class="block text-sm font-medium text-ink-800 mb-1.5">Email</label>
-                <input id="email" name="email" type="email" required autocomplete="email" class="form-input" placeholder="jane@example.com" />
-              </div>
-
-              <div class="grid sm:grid-cols-2 gap-4">
-                <div>
-                  <label for="postcode" class="block text-sm font-medium text-ink-800 mb-1.5">Postcode</label>
-                  <input id="postcode" name="postcode" type="text" required pattern="^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$" autocomplete="postal-code" class="form-input uppercase" placeholder="BA1 1AA" />
-                </div>
-                <div>
-                  <label for="service" class="block text-sm font-medium text-ink-800 mb-1.5">Type of clean</label>
-                  <select id="service" name="service" required class="form-select">
-                    <option value="">Choose one</option>
-                    <option>Regular (weekly/fortnightly)</option>
-                    <option>One-off clean</option>
-                    <option>End-of-tenancy</option>
-                    <option>Deep clean</option>
-                    <option>After-builders</option>
-                    <option>Airbnb turnover</option>
-                    <option>Not sure yet</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label for="bedrooms" class="block text-sm font-medium text-ink-800 mb-1.5">Bedrooms</label>
-                <select id="bedrooms" name="bedrooms" class="form-select">
-                  <option value="">Choose size</option>
-                  <option>Studio / 1 bed</option>
-                  <option>2 bed</option>
-                  <option>3 bed</option>
-                  <option>4 bed</option>
-                  <option>5+ bed</option>
-                </select>
-              </div>
-
-              <div>
-                <label for="notes" class="block text-sm font-medium text-ink-800 mb-1.5">Anything else? <span class="text-ink-700/50 font-normal">(optional)</span></label>
-                <textarea id="notes" name="notes" rows="3" class="form-textarea" placeholder="Pets, access instructions, preferred days…"></textarea>
-              </div>
-
-              <label class="flex items-start gap-2 text-sm text-ink-700 leading-relaxed">
-                <input type="checkbox" name="consent" value="yes" required class="mt-1 h-4 w-4 flex-none rounded border-sage-300 text-sage-700 focus:ring-sage-500" />
-                <span>I'm happy for CleanerBath to share my details with a vetted local Bath cleaner so they can quote me. See our <a href="/privacy" class="underline hover:text-sage-700">privacy policy</a>.</span>
-              </label>
-
-              <button type="submit" class="btn-clay w-full text-base py-3 mt-2">
-                Send &amp; get matched
-                <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clip-rule="evenodd"/></svg>
-              </button>
-
-              <p class="text-xs text-ink-700/60 text-center pt-2">
-                Free to you. We don't share your details with anyone except the matched cleaner.
-              </p>
-            </form>
-          </div>
-        </div>
+<PageLayout
+  title="Bristol's Trusted Plastering & Rendering Specialists | KD Plastering"
+  description="Professional plastering, rendering and external wall insulation across Bristol and Bath. 10+ years experience, fully insured, 180+ verified reviews. Free quotes within 48 hours."
+  canonical="/"
+  schema={schema}
+  showLeadForm={true}
+  formHeading="Get Your Free Bristol & Bath Quote"
+>
+  <!-- 1. HERO — what, where, primary CTA, trust signals -->
+  <section class="hero hero--image">
+    <div class="container">
+      <div class="hero__eyebrow">Bristol &amp; Bath Plastering Specialists</div>
+      <h1 class="hero__title">Plastering &amp; Rendering Services across Bristol &amp; Bath</h1>
+      <p class="hero__lede">
+        Silicone render, monocouche, house rendering, external wall insulation and internal plastering &mdash; fitted by BBA-approved installers with a 10-year warranty. Free site visit. Fixed written quote within 48 hours.
+      </p>
+      <div class="hero__cta-row">
+        <a href="#lead-form-heading" class="btn btn--primary btn--lg">Get a Free Quote</a>
+        <a href="tel:01174094116" class="btn btn--ghost-light btn--lg">Call 0117 409 4116</a>
+      </div>
+      <div class="hero__trust-bar">
+        <span class="hero__trust-item">✓ 10+ Years Experience</span>
+        <span class="hero__trust-item">✓ 180+ Verified Reviews</span>
+        <span class="hero__trust-item">✓ £2m Public Liability</span>
+        <span class="hero__trust-item">✓ 10-Year Manufacturer Warranty</span>
       </div>
     </div>
   </section>
 
-  <!-- ============ HOW IT WORKS ============ -->
+  <!-- 2. SERVICES — 6 cards, bento grid -->
   <section class="section">
-    <div class="mx-auto max-w-6xl px-5 sm:px-8">
-      <div class="max-w-2xl">
-        <p class="text-xs uppercase tracking-[0.3em] text-sage-700 font-semibold">How it works</p>
-        <h2 class="mt-3 text-4xl sm:text-5xl font-bold leading-tight">
-          Three steps. <span class="font-script text-sage-700 font-normal text-5xl sm:text-6xl">No fuss.</span>
-        </h2>
-      </div>
+    <div class="container">
+      <SectionHeader
+        eyebrow="What we do"
+        eyebrowVariant="clay"
+        heading="Our services"
+        lede="Every type of internal plastering, external rendering and external wall insulation across Bristol &amp; Bath."
+      />
+      <div class="service-bento">
+        {featuredServices.map((service, i) => {
+          // Layout: 1 large + 1 medium, 3 small, 1 wide
+          let cardVariant = 'bento';
+          if (i === 0) cardVariant = 'bento-lg';          // Silicone — hero
+          else if (i === 5) cardVariant = 'featured';     // EWI — wide row
+          else if (i === 1) cardVariant = 'featured';     // House — medium
 
-      <div class="mt-14 grid md:grid-cols-3 gap-6">
-        {howItWorks.map(s => (
-          <article class="rounded-3xl bg-white border border-sage-100 p-7">
-            <span class="font-script text-5xl text-sage-700">{s.step}</span>
-            <h3 class="mt-3 text-xl font-semibold">{s.title}</h3>
-            <p class="mt-3 text-ink-700/80 leading-relaxed">{s.body}</p>
-          </article>
+          return (
+            <ServiceCard
+              slug={service.slug}
+              shortName={service.shortName}
+              tagline={service.tagline}
+              longTagline={service.longIntro}
+              priceHint={priceHints[service.slug]}
+              imageSrc={serviceImages[service.slug]}
+              number={String(i + 1).padStart(2, '0')}
+              variant={cardVariant}
+            />
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. PROJECT GALLERY — visual proof -->
+  <section class="section section--alt">
+    <div class="container">
+      <SectionHeader
+        eyebrow="Recent work"
+        eyebrowVariant="clay"
+        heading="Recent projects across Bristol &amp; Bath"
+        lede="A selection of recent rendering and plastering projects."
+      />
+      <div class="gallery-grid">
+        {galleryImages.map((img) => (
+          <figure class="gallery-card">
+            <div class="gallery-card__img" role="img" aria-label={img.caption} style={`background-image: url('${img.src}')`}></div>
+            <figcaption>{img.caption}</figcaption>
+          </figure>
         ))}
       </div>
-    </div>
-  </section>
-
-  <!-- ============ WHY US ============ -->
-  <section class="section bg-sage-50/50">
-    <div class="mx-auto max-w-6xl px-5 sm:px-8">
-      <div class="max-w-2xl">
-        <p class="text-xs uppercase tracking-[0.3em] text-sage-700 font-semibold">Why CleanerBath</p>
-        <h2 class="mt-3 text-4xl sm:text-5xl font-bold leading-tight">
-          Built for Bath. <span class="font-script text-sage-700 font-normal text-5xl sm:text-6xl">Only Bath.</span>
-        </h2>
-      </div>
-
-      <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {whyUs.map(w => (
-          <article class="rounded-2xl bg-white border border-sage-100 p-6">
-            <h3 class="text-lg font-semibold text-sage-700">{w.title}</h3>
-            <p class="mt-2 text-sm text-ink-700/80 leading-relaxed">{w.body}</p>
-          </article>
-        ))}
+      <div class="gallery-cta">
+        <a href="/our-work/" class="btn btn--ghost">See more of our work</a>
       </div>
     </div>
   </section>
 
-  <!-- ============ FAQ ============ -->
+  <!-- 4. REVIEWS + TRUST — combined trust block -->
   <section class="section">
-    <div class="mx-auto max-w-3xl px-5 sm:px-8">
-      <p class="text-xs uppercase tracking-[0.3em] text-sage-700 font-semibold">Common questions</p>
-      <h2 class="mt-3 text-4xl sm:text-5xl font-bold leading-tight">
-        Frequently asked. <span class="font-script text-sage-700 font-normal text-5xl sm:text-6xl">Plainly answered.</span>
-      </h2>
+    <div class="container">
+      <ReviewCards
+        reviews={featuredReviews}
+        heading="What Bristol &amp; Bath homeowners say"
+        lede="Three of our most recent verified reviews."
+      />
 
-      <div class="mt-12 space-y-3 rounded-2xl bg-white border border-sage-100 overflow-hidden">
-        {howItWorks.length > 0 && "" /* no-op, just keep FAQ list */ }
-        <!-- FAQ items below — kept in HTML for SSR + FAQPage schema link -->
-        <details class="faq border-b border-sage-100 last:border-b-0">
-          <summary>
-            <span>How does CleanerBath work?</span>
-            <svg class="chev h-5 w-5 flex-none text-sage-700" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 011.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
-          </summary>
-          <div class="faq-body">
-            Fill in the form on this page with what you need and we'll match you with a vetted Bath cleaner.
-            They'll get in touch — usually within one working day — with a quote.
-          </div>
-        </details>
-
-        <details class="faq border-b border-sage-100 last:border-b-0">
-          <summary>
-            <span>Do you do the cleaning yourselves?</span>
-            <svg class="chev h-5 w-5 flex-none text-sage-700" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 011.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
-          </summary>
-          <div class="faq-body">
-            No. CleanerBath is a Bath-only matching service. Your booking is handled by an independent Bath cleaner we work with. We share your details with them so they can quote you — that's the only thing we do.
-          </div>
-        </details>
-
-        <details class="faq border-b border-sage-100 last:border-b-0">
-          <summary>
-            <span>What areas of Bath do you cover?</span>
-            <svg class="chev h-5 w-5 flex-none text-sage-700" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 011.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
-          </summary>
-          <div class="faq-body">
-            Bath city centre and immediate suburbs — BA1, BA2 and parts of neighbouring postcodes. If you're unsure whether your address is in scope, just submit the form and we'll let you know.
-          </div>
-        </details>
-
-        <details class="faq border-b border-sage-100 last:border-b-0">
-          <summary>
-            <span>How much does a Bath cleaner cost?</span>
-            <svg class="chev h-5 w-5 flex-none text-sage-700" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 011.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
-          </summary>
-          <div class="faq-body">
-            It depends on what you need. A regular weekly clean typically starts around £15–£20 per hour; one-off deep cleans and end-of-tenancy cleans are priced per job. Your matched cleaner will give you a clear quote before any work starts.
-          </div>
-        </details>
-
-        <details class="faq border-b border-sage-100 last:border-b-0">
-          <summary>
-            <span>Will I get spammed with calls?</span>
-            <svg class="chev h-5 w-5 flex-none text-sage-700" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 011.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
-          </summary>
-          <div class="faq-body">
-            No. Your details go to one cleaner only — the one matched to your booking. You can ask them to stop contacting you at any time and we'll make sure that happens.
-          </div>
-        </details>
-
-        <details class="faq border-b border-sage-100 last:border-b-0">
-          <summary>
-            <span>Is using CleanerBath free?</span>
-            <svg class="chev h-5 w-5 flex-none text-sage-700" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 011.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
-          </summary>
-          <div class="faq-body">
-            Yes. There's no charge to you. CleanerBath is paid by the cleaner for the introduction, not by you.
-          </div>
-        </details>
-
-        <details class="faq">
-          <summary>
-            <span>What if I need to cancel or my plans change?</span>
-            <svg class="chev h-5 w-5 flex-none text-sage-700" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 011.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd"/></svg>
-          </summary>
-          <div class="faq-body">
-            Tell your cleaner directly — they're flexible. If anything goes wrong, get in touch with us and we'll help sort it out.
-          </div>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ GDPR / DATA DISCLOSURE ============ -->
-  <section class="section bg-sage-50/40">
-    <div class="mx-auto max-w-3xl px-5 sm:px-8">
-      <p class="text-xs uppercase tracking-[0.3em] text-sage-700 font-semibold">A small note on your data</p>
-      <h2 class="mt-3 text-3xl font-bold leading-tight">What we do with your details.</h2>
-      <div class="mt-6 space-y-4 text-ink-700/85 leading-relaxed">
-        <p>
-          When you fill in the form, we collect your name, phone, email, postcode, property size, the type of clean you need, and any notes you give us. We use this information to match you with one vetted Bath cleaner and to forward your details to them so they can quote you.
-        </p>
-        <p>
-          We don't sell, rent or share your details with anyone else. We retain your details for up to 12 months so the matched cleaner can look up the conversation if you book again, then delete them. You can ask us to delete your details at any time — see our <a href="/privacy" class="underline hover:text-sage-700">privacy policy</a> for the full details, your rights, and how to contact us.
-        </p>
-        <p class="text-sm text-ink-700/70">
-          CleanerBath is operated by CleanerBath Limited, registered in England and Wales. We are registered with the Information Commissioner's Office (ICO) under the Data Protection Act 2018 and the UK GDPR.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ FOOTER ============ -->
-  <footer class="wash-deep text-cream-50">
-    <div class="mx-auto max-w-6xl px-5 sm:px-8 py-12 grid sm:grid-cols-3 gap-8 text-sm">
-      <div>
-        <div class="flex items-center gap-3 mb-3">
-          <div class="h-9 w-9 rounded-lg bg-sage-700 grid place-items-center text-cream-50 font-bold">B</div>
-          <span class="font-script text-2xl">CleanerBath</span>
-        </div>
-        <p class="text-cream-100/70 leading-relaxed">
-          Bath-only cleaner-matching service.<br />
-          CleanerBath Limited · Registered in England and Wales.
-        </p>
-      </div>
-
-      <div>
-        <p class="text-cream-100 font-semibold uppercase tracking-[0.2em] text-xs mb-3">Site</p>
-        <ul class="space-y-2 text-cream-100/80">
-          <li><a href="/#book" class="hover:text-white">Get a quote</a></li>
-          <li><a href="/#how" class="hover:text-white">How it works</a></li>
-          <li><a href="/#faq" class="hover:text-white">FAQs</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <p class="text-cream-100 font-semibold uppercase tracking-[0.2em] text-xs mb-3">Legal</p>
-        <ul class="space-y-2 text-cream-100/80">
-          <li><a href="/privacy" class="hover:text-white">Privacy policy</a></li>
-          <li><a href="/terms" class="hover:text-white">Terms of service</a></li>
-          <li><a href="/cookies" class="hover:text-white">Cookies</a></li>
+      <!-- BBA / manufacturer row -->
+      <div class="trust-row">
+        <p class="trust-row__heading">BBA-approved installer for:</p>
+        <ul class="trust-row__logos">
+          <li><strong>Johnstone's</strong> Stormshield</li>
+          <li><strong>K Rend</strong></li>
+          <li><strong>Parex</strong></li>
+          <li><strong>Weber</strong> EWI Systems</li>
         </ul>
       </div>
     </div>
-    <div class="border-t border-sage-700/50">
-      <div class="mx-auto max-w-6xl px-5 sm:px-8 py-5 text-xs text-cream-100/60 flex flex-col sm:flex-row gap-2 sm:items-center sm:justify-between">
-        <span>© {new Date().getFullYear()} CleanerBath Limited. All rights reserved.</span>
-        <span>Bath, England</span>
-      </div>
-    </div>
-  </footer>
-</BaseLayout>
+  </section>
+</PageLayout>
+
+<style is:global>
+  /* ==== BENTO SERVICE GRID ==== */
+  .service-bento {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: minmax(160px, auto);
+    gap: var(--sp-4);
+  }
+
+  /* Place each card by index — use direct child selector for portability */
+  .service-bento > a:nth-of-type(1) {
+    grid-column: span 4;
+    grid-row: span 2;
+  }   /* Silicone — large hero */
+  .service-bento > a:nth-of-type(2) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }   /* House — medium */
+  .service-bento > a:nth-of-type(3) {
+    grid-column: span 2;
+  }   /* External wall — small */
+  .service-bento > a:nth-of-type(4) {
+    grid-column: span 2;
+  }   /* Monocouche — small */
+  .service-bento > a:nth-of-type(5) {
+    grid-column: span 2;
+  }   /* Plastering — small */
+  .service-bento > a:nth-of-type(6) {
+    grid-column: span 6;
+  }   /* EWI — full width */
+
+  @media (max-width: 900px) {
+    .service-bento {
+      grid-template-columns: 1fr;
+      grid-auto-rows: auto;
+    }
+    .service-bento > a {
+      grid-column: span 1 !important;
+      grid-row: auto !important;
+    }
+  }
+</style>
+<style>
+  /* Gallery */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-4);
+  }
+  @media (max-width: 900px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  .gallery-card {
+    margin: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .gallery-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+  .gallery-card__img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--color-stone);
+  }
+  .gallery-card figcaption {
+    padding: var(--sp-3) var(--sp-4);
+    font-size: var(--fs-sm);
+    color: var(--color-walnut-muted);
+    border-top: 1px solid var(--color-border);
+  }
+  .gallery-cta {
+    margin-top: var(--sp-5);
+    text-align: center;
+  }
+
+  /* Trust row — manufacturer logos */
+  .trust-row {
+    margin-top: var(--sp-7);
+    padding-top: var(--sp-6);
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+  }
+  .trust-row__heading {
+    margin: 0 0 var(--sp-4);
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--color-walnut-muted);
+    font-weight: 700;
+  }
+  .trust-row__logos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--sp-3) var(--sp-6);
+    font-size: var(--fs-sm);
+    color: var(--color-walnut-muted);
+  }
+  .trust-row__logos li {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+  }
+  .trust-row__logos strong {
+    color: var(--color-walnut);
+    font-weight: 700;
+  }
+</style>

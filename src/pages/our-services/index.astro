@@ -1,0 +1,300 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import { SERVICES, getService } from '../../lib/services';
+import { AREAS, getBristolAreas, getBathAreas } from '../../lib/areas';
+
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': ['LocalBusiness', 'Plasterer'],
+  name: 'KD Plastering & Rendering Services',
+  url: 'https://www.kdplasteringrenderingservices.co.uk',
+  telephone: '0117 409 4116',
+  email: 'kdplasteringltd@gmail.com',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: '8 Roman Way, Hanham',
+    addressLocality: 'Bristol',
+    postalCode: 'BS15 3FH',
+    addressCountry: 'GB',
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Bristol' },
+    { '@type': 'City', name: 'Bath' },
+  ],
+  priceRange: '££',
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    reviewCount: '180',
+  },
+};
+
+const bristol = getBristolAreas();
+const bath = getBathAreas();
+
+// Price hints per service (subset)
+const priceHints: Record<string, string> = {
+  'silicone-rendering': '£60/m²',
+  'house-rendering': '£50/m²',
+  'external-wall-rendering': '£45/m²',
+  'monocouche-rendering': '£55/m²',
+  'plastering-services': '£18/m²',
+  'external-wall-insulation': '£120/m²',
+};
+---
+
+<PageLayout
+  title="Plastering & Rendering Services in Bristol & Bath | KD Plastering"
+  description="All our plastering, rendering and external wall insulation services across Bristol and Bath. Silicone, monocouche, K Rend, Parex — 10-year warranty, fully insured, free quotes."
+  canonical="/our-services/"
+  schema={localBusiness}
+  breadcrumbs={[{ name: 'Our Services', href: '/our-services/' }]}
+  formHeading="Get Your Free Quote"
+>
+  <section class="hero hero--cream">
+    <div class="container">
+      <div class="hero__eyebrow">Our services</div>
+      <h1 class="hero__title">Plastering &amp; Rendering Services in Bristol &amp; Bath</h1>
+      <p class="hero__lede">Six specialist services covering every type of internal plastering, external rendering and external wall insulation across 20 Bristol &amp; Bath neighbourhoods.</p>
+      <div class="hero__cta-row">
+        <a href="#services-grid" class="btn btn--primary btn--lg">Explore our services</a>
+        <a href="tel:01174094116" class="btn btn--ghost btn--lg">Call 0117 409 4116</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Six services -->
+  <section class="section" id="services-grid">
+    <div class="container">
+      <header class="section-header section-header--center">
+        <span class="eyebrow eyebrow--clay">What we do</span>
+        <h2>Six core services</h2>
+        <p class="lede">Every type of internal plastering, external rendering and external wall insulation across Bristol &amp; Bath. Each service is fully insured, BBA-certified, and backed by a 10-year manufacturer warranty.</p>
+      </header>
+
+      <div class="service-grid-3">
+        {SERVICES.map(service => (
+          <ServiceCard
+            slug={service.slug}
+            shortName={service.shortName}
+            tagline={service.tagline}
+            priceHint={priceHints[service.slug]}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Service areas -->
+  <section class="section section--alt">
+    <div class="container">
+      <header class="section-header section-header--center">
+        <span class="eyebrow eyebrow--sage">Coverage</span>
+        <h2>Service areas we cover</h2>
+        <p class="lede">Every service is available in every area we cover. Pricing is consistent within BS and BA postcodes, with localised notes for listed buildings, conservation areas and access-restricted streets.</p>
+      </header>
+
+      <div class="areas-by-city">
+        <div class="area-city-card">
+          <h3 class="area-city-card__heading">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            Bristol
+          </h3>
+          <p class="area-city-card__count">{bristol.length} neighbourhoods across BS postcodes</p>
+          <ul class="area-city-card__list">
+            {bristol.map(a => (
+              <li class="area-city-card__item">
+                <span class="area-city-card__name">{a.name}</span>
+                <span class="area-city-card__postcode">{a.postcode}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="area-city-card">
+          <h3 class="area-city-card__heading">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            Bath
+          </h3>
+          <p class="area-city-card__count">{bath.length} neighbourhoods across BA postcodes</p>
+          <ul class="area-city-card__list">
+            {bath.map(a => (
+              <li class="area-city-card__item">
+                <span class="area-city-card__name">{a.name}</span>
+                <span class="area-city-card__postcode">{a.postcode}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Not sure -->
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="recommendation-card">
+        <div class="recommendation-card__icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </div>
+        <div class="recommendation-card__body">
+          <h2>Not sure which service you need?</h2>
+          <p>Tell us about your property and we'll recommend the right system — silicone, monocouche, acrylic, sand-and-cement or EWI. Free site visit, free written quote, no pressure.</p>
+        </div>
+        <a href="#lead-form-heading" class="btn btn--primary btn--lg">Get a Free Recommendation</a>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  /* Section header */
+  .section-header {
+    margin-bottom: var(--sp-7);
+  }
+  .section-header--center {
+    text-align: center;
+  }
+  .section-header--center .lede {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Service grid */
+  .service-grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-4);
+  }
+
+  @media (max-width: 1000px) {
+    .service-grid-3 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .service-grid-3 { grid-template-columns: 1fr; }
+  }
+
+  /* Areas by city */
+  .areas-by-city {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-5);
+  }
+
+  @media (max-width: 800px) {
+    .areas-by-city { grid-template-columns: 1fr; }
+  }
+
+  .area-city-card {
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-5);
+  }
+
+  .area-city-card__heading {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    margin: 0 0 var(--sp-2);
+    font-size: var(--fs-xl);
+    color: var(--color-clay-deep);
+    font-weight: 700;
+  }
+
+  .area-city-card__count {
+    margin: 0 0 var(--sp-4);
+    font-size: var(--fs-sm);
+    color: var(--color-walnut-muted);
+  }
+
+  .area-city-card__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-2);
+  }
+
+  .area-city-card__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--sp-2);
+    padding: var(--sp-2) var(--sp-3);
+    background: var(--color-cream);
+    border-radius: var(--radius-sm);
+    margin: 0;
+    font-size: var(--fs-sm);
+  }
+
+  .area-city-card__name {
+    font-weight: 600;
+    color: var(--color-walnut);
+  }
+
+  .area-city-card__postcode {
+    font-family: ui-monospace, 'SF Mono', monospace;
+    font-size: var(--fs-xs);
+    color: var(--color-walnut-muted);
+  }
+
+  /* Recommendation card */
+  .recommendation-card {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-5);
+    padding: var(--sp-6);
+    background: linear-gradient(135deg, var(--color-cream-warm) 0%, var(--color-stone) 100%);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-stone-deep);
+  }
+
+  @media (max-width: 700px) {
+    .recommendation-card {
+      flex-direction: column;
+      align-items: stretch;
+      text-align: center;
+    }
+  }
+
+  .recommendation-card__icon {
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-md);
+    background: var(--color-clay-light);
+    color: var(--color-clay-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .recommendation-card__body {
+    flex-grow: 1;
+  }
+
+  .recommendation-card__body h2 {
+    margin: 0 0 var(--sp-2);
+    font-size: var(--fs-xl);
+  }
+
+  .recommendation-card__body p {
+    margin: 0;
+    color: var(--color-walnut-muted);
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+  }
+</style>

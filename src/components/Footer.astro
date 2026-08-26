@@ -1,0 +1,215 @@
+---
+import { SERVICES } from '../lib/services';
+
+const services = SERVICES.map(s => s.slug);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="/logo.png" alt="KD Plastering &amp; Rendering Services" width="160" height="42" class="footer-logo" />
+        <p class="footer-tagline">
+          Bristol's trusted plastering &amp; rendering specialists.
+          Silicone, monocouche, plastering and external wall insulation
+          across 20 neighbourhoods.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <p class="footer-address">
+          8 Roman Way, Hanham<br />
+          Bristol BS15 3FH
+        </p>
+        <ul class="footer-contact-list">
+          <li>
+            <a href="tel:01174094116">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              0117 409 4116
+            </a>
+          </li>
+          <li>
+            <a href="mailto:kdplasteringltd@gmail.com">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              kdplasteringltd@gmail.com
+            </a>
+          </li>
+        </ul>
+        <p class="footer-hours">Mon–Fri 8am–6pm · Sat 9am–1pm</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          {services.map((slug) => (
+            <li><a href={`/our-services/${slug}-bristol/`}>{slug.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' ')}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Service Areas</h4>
+        <p class="footer-area-note">
+          Bristol — 15 neighbourhoods across BS postcodes. Bath — 5 neighbourhoods across BA postcodes. South Gloucestershire &amp; North Somerset by arrangement.
+        </p>
+        <p class="footer-area-note">
+          Free site visits within 10 miles of BS15.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about-us/">About Us</a></li>
+          <li><a href="/our-work/">Gallery</a></li>
+        <li><a href="/faqs/">FAQs</a></li>
+          <li><a href="/privacy/">Privacy Policy</a></li>
+          <li><a href="/terms/">Terms &amp; Conditions</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-accreditations">
+      <span class="accred">✓ Checkatrade Approved</span>
+      <span class="accred">✓ Johnstone's Systems</span>
+      <span class="accred">✓ Parex Installer</span>
+      <span class="accred">✓ BBA Approved Systems</span>
+      <span class="accred">✓ Fully Insured £2m</span>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; {year} KD Plastering &amp; Rendering Services Ltd. Registered in England &amp; Wales.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-walnut);
+    color: rgba(251, 248, 241, 0.78);
+    padding: var(--sp-8) 0 var(--sp-5);
+    margin-top: var(--sp-8);
+  }
+  .container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--sp-5);
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr;
+    gap: var(--sp-6);
+  }
+  .footer-brand {
+    max-width: 280px;
+  }
+  .footer-logo {
+    height: 42px;
+    width: auto;
+    margin-bottom: var(--sp-3);
+    filter: brightness(0) invert(1);
+  }
+  .footer-tagline {
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.65);
+  }
+  .footer-col h4 {
+    color: #fff;
+    font-size: var(--fs-sm);
+    margin: 0 0 var(--sp-4);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .footer-address,
+  .footer-hours,
+  .footer-area-note {
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+    margin: 0 0 var(--sp-3);
+    color: rgba(255, 255, 255, 0.65);
+  }
+  .footer-contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--sp-3);
+  }
+  .footer-contact-list li {
+    margin: 0 0 var(--sp-2);
+  }
+  .footer-contact-list a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    color: #fff;
+    text-decoration: none;
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+  .footer-contact-list a:hover {
+    color: var(--color-amber);
+  }
+  .footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .footer-col li {
+    margin: 0 0 var(--sp-2);
+  }
+  .footer-col a {
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    font-size: var(--fs-sm);
+    transition: color 0.15s;
+  }
+  .footer-col a:hover {
+    color: #fff;
+  }
+  .footer-accreditations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-5);
+    justify-content: center;
+    padding: var(--sp-5) 0;
+    margin-top: var(--sp-7);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .accred {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+  }
+  .footer-bottom {
+    text-align: center;
+    margin-top: var(--sp-5);
+    color: rgba(255, 255, 255, 0.5);
+    font-size: var(--fs-xs);
+  }
+  .footer-bottom p { margin: 0; }
+
+  @media (max-width: 900px) {
+    .footer-top {
+      grid-template-columns: 1fr 1fr;
+    }
+    .footer-brand {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 600px) {
+    .footer-top {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,32 +1,31 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import PageLayout from '../layouts/PageLayout.astro';
 ---
 
-<BaseLayout
-  title="Thanks — CleanerBath"
-  description="We've received your cleaning enquiry. A Bath cleaner will be in touch within one working day."
+<PageLayout
+  title="Thanks — we'll be in touch | KD Plastering & Rendering Services"
+  description="Thanks for your plastering or rendering enquiry. KD Plastering will be in touch within a few hours."
+  canonical="/thanks/"
+  showLeadForm={false}
+  breadcrumbs={[{ name: 'Thanks', href: '/thanks/' }]}
 >
-  <header class="border-b border-sage-100 bg-cream-50">
-    <div class="mx-auto max-w-3xl px-5 sm:px-8 py-5">
-      <a href="/" class="text-sage-700 text-sm hover:underline">← Back to CleanerBath</a>
-    </div>
-  </header>
-
-  <section class="wash-sage py-20">
-    <div class="mx-auto max-w-2xl px-5 sm:px-8 text-center">
-      <div class="inline-flex h-14 w-14 rounded-full bg-sage-700 text-white items-center justify-center mb-6">
-        <svg class="h-7 w-7" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/></svg>
-      </div>
-      <h1 class="text-4xl sm:text-5xl font-bold leading-tight">
-        Thanks — we've got it. <span class="font-script text-sage-700 font-normal text-4xl sm:text-6xl">On its way.</span>
-      </h1>
-      <p class="mt-5 text-lg text-ink-700/80 leading-relaxed max-w-xl mx-auto">
-        Your enquiry is on its way to a vetted Bath cleaner. They'll be in touch within one working day with a clear quote.
-        No call centre, no list — just one local cleaner.
-      </p>
-      <p class="mt-6 text-sm text-ink-700/70">
-        Didn't mean to submit? <a href="/" class="underline hover:text-sage-700">Send another</a>.
-      </p>
+  <section class="hero">
+    <div class="container" style="text-align: center;">
+      <h1>Thanks — we’ve got your enquiry</h1>
+      <p class="lede">We’ll be in touch within a few hours with a fixed written quote.</p>
+      <p>Need us sooner? Call <a href="tel:01174094116" style="color: #fff; text-decoration: underline;">0117 409 4116</a> (Mon–Fri 8am–6pm, Sat 9am–1pm).</p>
     </div>
   </section>
-</BaseLayout>
+
+  <section class="section">
+    <div class="container" style="max-width: 700px; text-align: center;">
+      <h2>What happens next</h2>
+      <p>One of our team will read your project details and either:</p>
+      <ul style="text-align: left; max-width: 500px; margin: 0 auto 2rem;">
+        <li>Confirm a free site visit at a time that suits you (usually within 2–3 working days), or</li>
+        <li>Send a fixed written quote straight away if your project is straightforward</li>
+      </ul>
+      <p><a href="/" class="cta-banner" style="display: inline-block; background: var(--color-brand); color: #fff; padding: 0.85rem 2rem; border-radius: 4px; text-decoration: none; font-weight: 700;">Back to home</a></p>
+    </div>
+  </section>
+</PageLayout>
