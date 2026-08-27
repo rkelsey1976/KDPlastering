@@ -83,14 +83,14 @@ export const SERVICES: Service[] = [
     intro:
       'Modern silicone render gives Bristol properties a clean, low-maintenance finish that shrugs off the British weather. Applied in one colour-through coat over a reinforced base, silicone render is breathable, water-resistant and keeps its colour for decades.',
     longIntro:
-      "Silicone render is the system we'd put on our own homes. It's the best of all worlds: through-colour, so no painting ever; hydrophobic, so Bristol's driving rain beads off; breathable, so the wall can dry out; and self-cleaning, so algae and dirt don't take hold. We install silicone systems from Johnstone's, K Rend, Parex and Weber across Bristol and Bath — typically on 1930s semis where the original sand-and-cement has failed, on detached new-builds where a clean modern finish is wanted, and on commercial buildings where a 25-year maintenance-free life matters. A silicone system on a standard Bristol semi costs £7,000-£11,000 installed and is backed by a 10-year manufacturer warranty.",
+      "Silicone render is the system we'd put on our own homes. It's the best of all worlds: through-colour, so no painting ever; hydrophobic, so Bristol's driving rain beads off; breathable, so the wall can dry out; and self-cleaning, so algae and dirt don't take hold. We install silicone systems from Johnstone's, K Rend, Parex and Weber across Bristol and Bath — typically on 1930s semis where the original sand-and-cement has failed, on detached new-builds where a clean modern finish is wanted, and on commercial buildings where a 25-year maintenance-free life matters. Every silicone system we install is backed by a 10-year manufacturer warranty, and priced with a fixed written quote after a free site visit.",
     whatWeDo: [
       'One-coat silicone render systems from Johnstone\'s, Parex, K Rend and Weber',
       'Full substrate preparation including mechanical removal of failed existing render',
       'Beading, trims and feature reveals cut in for a sharp modern finish',
       'Colour-through renders in 100+ shades — no need to paint, ever',
       'Self-cleaning silicone top coats that repel dirt, algae and organic growth',
-      'Bespoke colour matching to existing features (windows,砖, stone)',
+      'Bespoke colour matching to existing features (windows, brick, stone)',
       '10-year manufacturer system warranty on qualifying installations',
       'Insulated render systems (EWI) with silicone finish for hard-to-heat homes',
     ],
@@ -142,7 +142,7 @@ export const SERVICES: Service[] = [
         { type: 'Commercial unit (per elevation)', lowEnd: '£8,000', highEnd: '£18,000' },
       ],
       factorsAffectingPrice: [
-        'Substrate condition — failed existing render adds £10-£20/m² for strip-down',
+        'Substrate condition — failed existing render needs stripping back first',
         'Access — tight terraces with no rear access need more scaffold and labour',
         'Footprint — large detached houses need more scaffold, more time',
         'Number of storeys — second-storey work adds scaffolding cost',
@@ -183,7 +183,7 @@ export const SERVICES: Service[] = [
       {
         question: 'How much does silicone rendering cost per m² in Bristol?',
         answer:
-          'Silicone render in Bristol typically costs £60-£90 per m² installed, depending on substrate condition, access and the system chosen. A typical 3-bed semi costs £7,000-£11,000 all-in. We give fixed written quotes after a free site visit — never estimates.',
+          'It depends on the size of the property, the condition of the substrate, access, and the system chosen. We do not publish rates, because a figure given without seeing the wall is a guess. Every quote is fixed and written, given after a free site visit — never an estimate over the phone.',
       },
       {
         question: 'Is silicone render breathable enough for an old Bristol house?',
@@ -238,7 +238,7 @@ export const SERVICES: Service[] = [
       problem: 'The original 1970s pebbledash render had failed across three elevations. Multiple patches had blown off entirely, exposing bare brick in places. Water was getting behind the failed sections and causing damp patches in the front bedroom. The homeowners had been quoted £8,500 by another firm who planned to render over the failed substrate.',
       solution: 'We stripped all existing render back to bare brick (approx 105m²). Repointed areas where the mortar had degraded. Fitted a full bead-and-mesh system, then applied a Johnstone\'s Stormshield silicone through-colour render in "Cotswold Stone" — chosen to complement the existing quarry tiles and brickwork.',
       duration: '8 working days including scaffold-up and down',
-      costRange: '£8,950 (within our standard quote range for this property type)',
+      costRange: '',
       result: 'The transformation was dramatic — kerb appeal went up significantly, the damp issue resolved, and the homeowners now have a 25-year maintenance-free facade with a 10-year warranty. They later used the saved paint costs to fund a new front door.',
       beforeAlt: '1970s pebbledash render failing on a 1930s Bristol semi, showing blown sections and exposed brickwork',
       afterAlt: 'Freshly applied Johnstone\'s Stormshield silicone render in Cotswold Stone on a 1930s Hanham semi, with crisp new beading',
@@ -246,8 +246,8 @@ export const SERVICES: Service[] = [
     relatedServices: ['monocouche-rendering', 'external-wall-insulation', 'pebble-dash-removal'],
     heroImageAlt: 'Freshly applied silicone render in Cotswold Stone on a 1930s Hanham semi-detached home',
     category: 'rendering',
-    metaDescription: 'Professional silicone rendering in Bristol from £60/m². Johnstone\'s, K Rend, Parex & Weber systems. 25-year life, 10-year warranty. Free quotes.',
-    titleTemplate: 'Silicone Rendering Bristol | From £60/m² | 10-Year Warranty',
+    metaDescription: 'Professional silicone rendering in Bristol. Johnstone\'s, K Rend, Parex & Weber systems. 25-year life, 10-year warranty. Free quotes.',
+    titleTemplate: 'Silicone Rendering Bristol | 10-Year Warranty',
   },
 
   // =================================================================
@@ -321,7 +321,7 @@ export const SERVICES: Service[] = [
         { type: 'Bungalow (single storey)', lowEnd: '£5,500', highEnd: '£9,000' },
       ],
       factorsAffectingPrice: [
-        'Substrate condition — failed existing render adds £10-£20/m² for strip-down',
+        'Substrate condition — failed existing render needs stripping back first',
         'System chosen — silicone is at the top of the price range, acrylic at the bottom',
         'Property size and number of storeys',
         'Access — tight Bristol terraces add scaffold complexity',
@@ -357,7 +357,7 @@ export const SERVICES: Service[] = [
       {
         question: 'How much does house rendering cost in Bristol?',
         answer:
-          'A typical 3-bed semi in Bristol costs £6,500-£10,500 for a full house render with a silicone or monocouche system. Detached homes range from £9,500-£14,500. Every quote is fixed and written after a free site visit. The biggest cost variables are substrate condition, system chosen, and access.',
+          'It depends on the size of the property, the system chosen, the condition of the existing walls and access. Every quote is fixed and written after a free site visit — we do not give figures over the phone.',
       },
       {
         question: 'How long does it take to render a house?',
@@ -407,7 +407,7 @@ export const SERVICES: Service[] = [
       problem: 'Original lime render had failed in patches across the front and side elevations. The owner had been told by another contractor that the only option was full re-pointing at £14,000. The front elevation was unsympathetically painted in a bright white that was flaking.',
       solution: 'We stripped all failed render back to bare brick, removed the old paint chemically (avoiding high-pressure washing which damages historic substrate), re-pointed where necessary with lime mortar, then applied a Weber monocouche through-colour render in "Ivory Stone" — chosen to complement the original window surrounds. Decorative ashlar lines were cut into the base coat to maintain the Victorian character.',
       duration: '12 working days',
-      costRange: '£9,400',
+      costRange: '',
       result: 'The owner got a fully breathable, sympathetic render for less than the repointing quote from the other firm. The property is now ready for sale with estate agents commenting on the "impeccable exterior finish".',
       beforeAlt: 'Failed lime render and flaking paint on a Victorian St George terrace',
       afterAlt: 'Weber monocouche render in Ivory Stone with cut ashlar lines on a Victorian St George terrace',
@@ -415,8 +415,8 @@ export const SERVICES: Service[] = [
     relatedServices: ['silicone-rendering', 'monocouche-rendering', 'pebble-dash-removal', 'external-wall-insulation'],
     heroImageAlt: 'Fresh monocouche render finish on a Victorian terrace in St George, Bristol',
     category: 'rendering',
-    metaDescription: 'House rendering in Bristol from £55/m². Silicone, monocouche & acrylic systems. Free quotes, 10-year warranty. 25-year lifespan. Insured.',
-    titleTemplate: 'House Rendering Bristol | From £55/m² | 25-Year Lifespan',
+    metaDescription: 'House rendering in Bristol. Silicone, monocouche & acrylic systems. Free quotes, 10-year warranty. 25-year lifespan. Insured.',
+    titleTemplate: 'House Rendering Bristol | 25-Year Lifespan',
   },
 
   // =================================================================
@@ -573,7 +573,7 @@ export const SERVICES: Service[] = [
       problem: 'The north-facing side elevation had taken decades of weather and was showing significant algae growth, cracking and damp patches. The rest of the house was in good condition so the homeowners didn\'t want to re-render the whole property — just the damaged elevation.',
       solution: 'Single-elevation render with a Johnstone\'s silicone through-colour render in "Portland Stone". Scaffold on just the side elevation, full strip-off of failed render, substrate prep, bead-and-mesh system, base coat and silicone top. Matched colour to the existing front elevation render.',
       duration: '4 working days',
-      costRange: '£3,200 (single elevation)',
+      costRange: '',
       result: 'Problem solved for a fraction of the cost of a full re-render. The homeowners have since asked us to quote for the rear elevation next spring.',
       beforeAlt: 'North-facing side elevation of a Kingswood semi showing algae growth and cracking',
       afterAlt: 'Clean Johnstone\'s silicone render in Portland Stone on a Kingswood side elevation',
@@ -581,8 +581,8 @@ export const SERVICES: Service[] = [
     relatedServices: ['silicone-rendering', 'monocouche-rendering', 'house-rendering', 'pebble-dash-removal'],
     heroImageAlt: 'Johnstone\'s silicone render in Portland Stone on a north-facing elevation in Kingswood',
     category: 'rendering',
-    metaDescription: 'External wall rendering in Bristol from £55/m². Silicone, monocouche, acrylic, lime. Single elevations, full re-renders. 10-year warranty.',
-    titleTemplate: 'External Wall Rendering Bristol | From £55/m² | All Systems',
+    metaDescription: 'External wall rendering in Bristol. Silicone, monocouche, acrylic, lime. Single elevations, full re-renders. 10-year warranty.',
+    titleTemplate: 'External Wall Rendering Bristol | All Systems',
   },
 
   // =================================================================
@@ -597,7 +597,7 @@ export const SERVICES: Service[] = [
     intro:
       'Monocouche is a through-colour mineral render applied in a single coat. Hard-wearing, impact-resistant, and available in 100+ colours — it\'s the go-to system for new builds and modern re-renders.',
     longIntro:
-      "Monocouche is a through-colour mineral render — limestone aggregate, Portland cement, pigments, and additives — applied in a single 12-18mm coat and then scraped back to expose the aggregate for a textured finish. The colour goes all the way through, so unlike paint there's no top coat to maintain. Monocouche is harder-wearing than silicone (more impact-resistant, great for parking areas and alleyways), cheaper, and gives a contemporary scraped or dragged finish that's popular on modern Bristol homes. We install Weber, K Rend and Parex monocouche across Bristol and Bath. Typical install on a 3-bed semi is £6,000-£9,500 with a 25-year manufacturer warranty.",
+      "Monocouche is a through-colour mineral render — limestone aggregate, Portland cement, pigments, and additives — applied in a single 12-18mm coat and then scraped back to expose the aggregate for a textured finish. The colour goes all the way through, so unlike paint there's no top coat to maintain. Monocouche is harder-wearing than silicone (more impact-resistant, great for parking areas and alleyways), cheaper, and gives a contemporary scraped or dragged finish that's popular on modern Bristol homes. We install Weber, K Rend and Parex monocouche across Bristol and Bath. Every install carries a 25-year manufacturer warranty and a fixed written quote after a free site visit.",
     whatWeDo: [
       'Through-colour monocouche render from Weber, K Rend and Parex',
       'One-coat application, 12-18mm thick, scraped back for texture',
@@ -619,7 +619,7 @@ export const SERVICES: Service[] = [
     benefits: [
       'Through-colour — no painting ever, ever',
       'Harder than silicone — more impact-resistant',
-      'Cheaper than silicone — typically £10-£15/m² less',
+      'Generally cheaper than silicone, because application is faster',
       '25-year manufacturer warranty as standard',
       'BBA-certified systems',
       'Available in 100+ colours and 3 textures (scraped, dragged, spray)',
@@ -701,7 +701,7 @@ export const SERVICES: Service[] = [
       {
         question: 'How much does monocouche cost?',
         answer:
-          'Monocouche in Bristol typically costs £50-£75 per m² installed. A 3-bed semi costs £6,000-£9,500 all-in. It\'s typically £10-£15/m² cheaper than silicone because the application is faster.',
+          'It depends on the property size, access and the condition of the existing walls. Monocouche generally works out a little cheaper than silicone because the application is faster. We give a fixed written price after a free site visit.',
       },
       {
         question: 'Does monocouche come in different colours?',
@@ -736,7 +736,7 @@ export const SERVICES: Service[] = [
       problem: 'New-build property was finished in builder\'s sand-and-cement render that the homeowners disliked. They wanted a contemporary through-colour finish in a specific shade of grey.',
       solution: 'Stripped the builder\'s render (necessary to get the substrate flat for monocouche), fitted full bead-and-mesh system, then applied Weber monocouche in "Midnight Grey" with a scraped finish. Bespoke colour matching was needed to hit the exact grey they wanted.',
       duration: '10 working days',
-      costRange: '£13,500',
+      costRange: '',
       result: 'Transformed the appearance of the property — the homeowners\' neighbours have subsequently asked for quotes. The new owners sold the property 18 months later and the estate agent specifically mentioned the rendered exterior in the listing.',
       beforeAlt: 'New-build Emerson\'s Green home with builder\'s sand-and-cement render',
       afterAlt: 'Contemporary Weber monocouche render in Midnight Grey with scraped finish on a new-build Emerson\'s Green home',
@@ -744,8 +744,8 @@ export const SERVICES: Service[] = [
     relatedServices: ['silicone-rendering', 'house-rendering', 'external-wall-rendering', 'external-wall-insulation'],
     heroImageAlt: 'Weber monocouche render in Midnight Grey with scraped finish on a new-build Emerson\'s Green home',
     category: 'rendering',
-    metaDescription: 'Monocouche rendering in Bristol from £50/m². Weber, K Rend, Parex. Through-colour, 25-year warranty. Free quotes. BBA-certified.',
-    titleTemplate: 'Monocouche Rendering Bristol | From £50/m² | Through-Colour',
+    metaDescription: 'Monocouche rendering in Bristol. Weber, K Rend, Parex. Through-colour, 25-year warranty. Free quotes. BBA-certified.',
+    titleTemplate: 'Monocouche Rendering Bristol | Through-Colour',
   },
 
   // =================================================================
@@ -887,7 +887,7 @@ export const SERVICES: Service[] = [
       {
         question: 'How much does plastering cost?',
         answer:
-          'Plastering in Bristol typically costs £8-£18 per m² for walls, £10-£22 per m² for ceilings. A full 3-bed house re-skim is £3,500-£6,500. Single room skims are £450-£900. Patching repairs are £80-£250 per patch. Every quote is fixed and written.',
+          'It depends on the area, the condition of the existing surface and whether ceilings are included. A single room, a full house re-skim and a patch repair are very different jobs. Every quote is fixed and written after a free site visit.',
       },
       {
         question: 'What warranty do you provide?',
@@ -902,7 +902,7 @@ export const SERVICES: Service[] = [
       problem: 'The homeowners had a full rewire done and were left with channels and patches in every wall and ceiling of the house. They wanted a smooth, paint-ready finish throughout before redecorating.',
       solution: 'We boarded all the chases with plasterboard, taped and scrimmed the joints, then airless-spray skimmed the entire house (all walls and ceilings, approx 280m²) over 2 days. The homeowners moved out for 3 days while the plaster dried.',
       duration: '2 days application + 5 days drying time',
-      costRange: '£4,200',
+      costRange: '',
       result: 'A perfectly smooth, paint-ready finish throughout the house in less than half the time of traditional hand-trowel skimming. The decorator who followed on was able to start painting immediately after the 7-day drying period.',
       beforeAlt: 'Fishponds home with visible electrical chases and patches after rewiring',
       afterAlt: 'Smooth airless-spray skim finish throughout a Fishponds home ready for decorating',
@@ -910,8 +910,8 @@ export const SERVICES: Service[] = [
     relatedServices: ['external-wall-insulation', 'house-rendering'],
     heroImageAlt: 'Smooth plaster finish on walls and ceilings of a Fishponds home after rewiring',
     category: 'plastering',
-    metaDescription: 'Plastering services in Bristol from £8/m². Full re-skims, extensions, patching, airless spray. British Gypsum & Knauf. 5-year warranty.',
-    titleTemplate: 'Plastering Services Bristol | From £8/m² | Airless Spray',
+    metaDescription: 'Plastering services in Bristol. Full re-skims, extensions, patching, airless spray. British Gypsum & Knauf. 5-year warranty.',
+    titleTemplate: 'Plastering Services Bristol | Airless Spray',
   },
 
   // =================================================================
@@ -926,7 +926,7 @@ export const SERVICES: Service[] = [
     intro:
       'External Wall Insulation (EWI) is the single most effective way to insulate a Bristol home — eliminating cold bridges, cutting energy bills by 25-35%, and giving the exterior a fresh render finish at the same time.',
     longIntro:
-      "If your Bristol home was built before 1990, chances are it has no cavity wall insulation and minimal loft insulation. The result: heat loss through the walls (up to 35% of your total heat loss), cold spots around window reveals, condensation on inside walls, and high energy bills. External Wall Insulation fixes all of this in one go. We fix 80-150mm of high-performance insulation board to the outside of your property, then apply a reinforced base coat and a silicone or monocouche render finish. The result: a 25-35% reduction in heating bills, elimination of condensation, and a fresh modern exterior. EWI on a typical Bristol semi costs £12,000-£18,000 installed and pays for itself in 8-12 years through energy savings. We install Weber, K Rend and Johnstone's EWI systems.",
+      "If your Bristol home was built before 1990, chances are it has no cavity wall insulation and minimal loft insulation. The result: heat loss through the walls (up to 35% of your total heat loss), cold spots around window reveals, condensation on inside walls, and high energy bills. External Wall Insulation fixes all of this in one go. We fix 80-150mm of high-performance insulation board to the outside of your property, then apply a reinforced base coat and a silicone or monocouche render finish. The result: a 25-35% reduction in heating bills, elimination of condensation, and a fresh modern exterior. EWI typically pays for itself in 8-12 years through energy savings. We install Weber, K Rend and Johnstone's EWI systems.",
     whatWeDo: [
       'External Wall Insulation (EWI) systems from Weber, K Rend and Johnstone\'s',
       '80-150mm high-performance insulation board (EPS, mineral wool, or PIR)',
@@ -1086,7 +1086,7 @@ export const SERVICES: Service[] = [
       problem: 'The homeowners were paying £1,400/year in gas bills and had persistent black mould on the north-facing bedroom walls. The house was a 1930s solid-wall semi with no cavity. They\'d been told by another contractor that EWI was impossible on a property of this age.',
       solution: 'We installed 100mm EPS insulation board with a Weber EWI system and Johnstone\'s Stormshield silicone render finish in "Portland Stone". Total wall area approximately 110m². Pre-EWI EPC: D. Post-EWI EPC: B.',
       duration: '11 working days',
-      costRange: '£15,200',
+      costRange: '',
       result: 'First-year gas bill dropped to £950 (saving £450). Black mould completely eliminated. EPC upgraded from D to B, making the property significantly more saleable. The homeowners have since recommended us to two neighbours.',
       beforeAlt: '1930s Kingswood semi before EWI installation with old pebbledash render',
       afterAlt: 'Weber EWI with Johnstone\'s silicone render in Portland Stone on a 1930s Kingswood semi',
@@ -1094,8 +1094,8 @@ export const SERVICES: Service[] = [
     relatedServices: ['silicone-rendering', 'monocouche-rendering', 'house-rendering', 'plastering-services'],
     heroImageAlt: 'Weber EWI with Johnstone\'s silicone render on a 1930s Kingswood semi — fresh finish, modern performance',
     category: 'insulation',
-    metaDescription: 'External Wall Insulation (EWI) in Bristol from £120/m². Cut bills 25-35%, eliminate damp. Weber, K Rend systems. 10-year warranty. ECO4/GBIS funding help.',
-    titleTemplate: 'External Wall Insulation Bristol | From £120/m² | Cut Bills 25-35%',
+    metaDescription: 'External Wall Insulation (EWI) in Bristol. Cut bills 25-35%, eliminate damp. Weber, K Rend systems. 10-year warranty. ECO4/GBIS funding help.',
+    titleTemplate: 'External Wall Insulation Bristol | Cut Bills 25-35%',
   },
 ];
 

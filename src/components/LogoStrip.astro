@@ -37,7 +37,7 @@ const { logos, heading, variant = 'light' } = Astro.props as Props;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--color-ink-subtle);
+    color: var(--text-muted);
   }
   .logo-strip__list {
     list-style: none;
@@ -58,15 +58,15 @@ const { logos, heading, variant = 'light' } = Astro.props as Props;
     font-size: var(--fs-lg);
     font-weight: 700;
     letter-spacing: -0.02em;
-    color: var(--color-ink);
+    color: var(--text);
   }
   .logo-strip__sub {
     font-size: var(--fs-xs);
-    color: var(--color-ink-muted);
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.08em;
   }
-  .logo-strip--dark .logo-strip__name { color: #fff; }
+  .logo-strip--dark .logo-strip__name { color: var(--text-inverse); }
   .logo-strip--dark .logo-strip__sub { color: rgba(255, 255, 255, 0.7); }
   .logo-strip--dark .logo-strip__heading { color: rgba(255, 255, 255, 0.6); }
 </style>

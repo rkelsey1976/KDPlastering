@@ -11,12 +11,25 @@ type Material = {
 };
 
 type Props = {
+  eyebrow?: string;
   materials: Material[];
   heading?: string;
   lede?: string;
 };
 
-const { materials, heading, lede } = Astro.props as Props;
+// Manufacturer logos, keyed on the name in services.ts. Files come from
+// scripts/prepare-logos.sh, which trims the padding off the source images —
+// several arrive as square canvases with the mark small in the middle.
+// Anything without a file falls back to the generic icon — so only add a
+// key here once the file exists, or it 404s instead of falling back.
+const LOGOS: Record<string, string> = {
+  "Johnstone's":    '/logos/johnstones.png',
+  'K Rend':         '/logos/k-rend.png',
+  'Parex':          '/logos/parex.png',
+  'Weber':          '/logos/weber.png',
+};
+
+const { eyebrow, materials, heading, lede } = Astro.props as Props;
 
 // Manufacturer icon (factory-style)
 const iconPaths: Record<string, string> = {
@@ -25,7 +38,8 @@ const iconPaths: Record<string, string> = {
 ---
 
 {heading && (
-  <header class="materials-header">
+  <header class="materials-header section-header section-header--center">
+    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
     <h2>{heading}</h2>
     {lede && <p class="lede">{lede}</p>}
   </header>
@@ -35,9 +49,19 @@ const iconPaths: Record<string, string> = {
   {materials.map((m) => (
     <article class="material-card">
       <div class="material-card__top">
-        <div class="material-card__icon" aria-hidden="true">
+        {LOGOS[m.manufacturer] ? (
+          <img
+            class="material-card__logo"
+            src={LOGOS[m.manufacturer]}
+            alt={`${m.manufacturer} logo`}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div class="material-card__icon" aria-hidden="true">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={iconPaths.factory} />
-        </div>
+          </div>
+        )}
         {m.bba && (
           <span class="material-card__badge" aria-label="BBA certified">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
@@ -65,7 +89,7 @@ const iconPaths: Record<string, string> = {
 
 <style>
   .materials-header {
-    margin-bottom: var(--sp-7);
+    margin-bottom: var(--sp-6);
     text-align: center;
     max-width: 60ch;
     margin-left: auto;
@@ -84,7 +108,7 @@ const iconPaths: Record<string, string> = {
 
   .material-card {
     background: #fff;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     padding: var(--sp-5);
     transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
@@ -94,7 +118,7 @@ const iconPaths: Record<string, string> = {
   }
 
   .material-card:hover {
-    border-color: var(--color-clay);
+    border-color: var(--accent);
     box-shadow: var(--shadow-md);
     transform: translateY(-2px);
   }
@@ -109,11 +133,23 @@ const iconPaths: Record<string, string> = {
     width: 48px;
     height: 48px;
     border-radius: var(--radius-md);
-    background: var(--color-clay-light);
-    color: var(--color-clay-deep);
+    background: var(--accent-tint);
+    color: var(--accent-text);
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  /* Logos arrive at wildly different aspect ratios and colours. A fixed
+     box with contain, plus a max-width, keeps a row of them level whatever
+     the source files look like. */
+  .material-card__logo {
+    height: 34px;
+    max-width: 150px;
+    width: auto;
+    object-fit: contain;
+    object-position: left center;
+    display: block;
   }
 
   .material-card__badge {
@@ -121,8 +157,8 @@ const iconPaths: Record<string, string> = {
     align-items: center;
     gap: 4px;
     padding: var(--sp-1) var(--sp-2);
-    background: var(--color-sage-light);
-    color: var(--color-sage-deep);
+    background: var(--accent-tint);
+    color: var(--accent-text);
     border-radius: var(--radius-sm);
     font-size: var(--fs-xs);
     font-weight: 700;
@@ -132,14 +168,14 @@ const iconPaths: Record<string, string> = {
     margin: 0;
     font-size: var(--fs-xl);
     font-weight: 700;
-    color: var(--color-walnut);
+    color: var(--text);
     letter-spacing: -0.01em;
   }
 
   .material-card__notes {
     margin: 0;
     font-size: var(--fs-sm);
-    color: var(--color-walnut-muted);
+    color: var(--text-muted);
     line-height: 1.55;
   }
 
@@ -155,11 +191,11 @@ const iconPaths: Record<string, string> = {
   .material-card__product {
     margin: 0;
     padding: var(--sp-1) var(--sp-3);
-    background: var(--color-cream);
-    border: 1px solid var(--color-border);
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: var(--radius-full);
     font-size: var(--fs-xs);
-    color: var(--color-walnut);
+    color: var(--text);
     font-weight: 500;
   }
 </style>

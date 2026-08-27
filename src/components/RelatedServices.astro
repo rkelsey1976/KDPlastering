@@ -10,25 +10,42 @@ type Service = {
   tagline: string;
 };
 
+// Card photography, matching the homepage grid, the services index and the
+// mega menu. Without this the cards fell back to a generic icon — the only
+// place left on the site showing a service without a picture of it.
+const cardImages: Record<string, string> = {
+  'silicone-rendering':       '/services/cards/silicone-rendering.webp',
+  'house-rendering':          '/services/cards/house-rendering.webp',
+  'external-wall-rendering':  '/services/cards/ewall-rendering.webp',
+  'monocouche-rendering':     '/services/cards/monocouche-rendering.webp',
+  'plastering-services':      '/services/cards/plastering.webp',
+  'external-wall-insulation': '/services/cards/ewi.webp',
+};
+
 type Props = {
+  eyebrow?: string;
   services: Service[];
   heading?: string;
   lede?: string;
 };
 
-const { services, heading = 'Related Services', lede = 'Customers who book this service often add one of these.' } = Astro.props as Props;
+const { eyebrow, services, heading = 'Related Services', lede = 'Customers who book this service often add one of these.' } = Astro.props as Props;
 ---
 
 <section class="related-services" aria-labelledby="related-services-heading">
   <div class="container">
-    {heading && <h2 id="related-services-heading">{heading}</h2>}
-    {lede && <p class="lede">{lede}</p>}
+    <header class="section-header section-header--center">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      {heading && <h2 id="related-services-heading">{heading}</h2>}
+      {lede && <p class="lede">{lede}</p>}
+    </header>
     <div class="related-services__grid">
       {services.map((s) => (
         <ServiceCard
           slug={s.slug}
           shortName={s.shortName}
           tagline={s.tagline}
+          imageSrc={cardImages[s.slug]}
         />
       ))}
     </div>
@@ -38,9 +55,9 @@ const { services, heading = 'Related Services', lede = 'Customers who book this 
 <style>
   .related-services {
     padding: var(--sp-8) 0;
-    background: var(--color-cream);
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
   }
 
   .container {
@@ -57,7 +74,7 @@ const { services, heading = 'Related Services', lede = 'Customers who book this 
   .related-services .lede {
     text-align: center;
     max-width: 60ch;
-    margin: 0 auto var(--sp-7);
+    margin: 0 auto var(--sp-6);
   }
 
   .related-services__grid {

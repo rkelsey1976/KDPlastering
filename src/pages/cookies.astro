@@ -1,15 +1,24 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import PageLayout from '../layouts/PageLayout.astro';
+
+const lastUpdated = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 ---
-<BaseLayout
-  title="Cookies — KD Plastering & Rendering Services"
+
+<PageLayout
+  title="Cookies | KD Plastering & Rendering Services"
   description="KD Plastering doesn't use any tracking or advertising cookies. Read our short cookies policy."
   canonical="/cookies/"
+  showLeadForm={false}
+  breadcrumbs={[{ name: 'Cookies', href: '/cookies/' }]}
 >
-  <article class="mx-auto max-w-3xl px-5 sm:px-8 py-16">
-    <h1 class="text-4xl font-bold">Cookies</h1>
-    <p class="mt-3 text-sm text-ink-700/70">Last updated: {new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-    <p class="mt-6 text-ink-700/85 leading-relaxed">We don't use any analytics, advertising, or tracking cookies. We don't load Google Analytics, Meta Pixel, or any other third-party scripts. The site is fully usable without cookies.</p>
-    <p class="mt-4 text-ink-700/85 leading-relaxed">Our hosting provider (Netlify) records standard request logs for up to 30 days for security and capacity planning. See our <a href="/privacy/" class="underline">privacy policy</a> for the full details.</p>
-  </article>
-</BaseLayout>
+  <section class="section">
+    <div class="container container--reading">
+      <h1>Cookies</h1>
+      <p style="color: var(--text-muted);">Last updated: {lastUpdated}</p>
+
+      <p>We don't use any analytics, advertising, or tracking cookies. We don't load Google Analytics, Meta Pixel, or any other third-party scripts. The site is fully usable without cookies.</p>
+
+      <p>Our hosting provider (Netlify) records standard request logs for up to 30 days for security and capacity planning. See our <a href="/privacy/">privacy policy</a> for the full details.</p>
+    </div>
+  </section>
+</PageLayout>

@@ -1,5 +1,27 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import AuthorityBio from '../components/AuthorityBio.astro';
+import AreaCoverage from '../components/AreaCoverage.astro';
+import ServiceBullets from '../components/ServiceBullets.astro';
+import Hero from '../components/Hero.astro';
+
+const whatWeDo = [
+  'Internal plastering — boarding, skimming, Artex removal, patch plastering, screeding',
+  'External rendering — silicone, monocouche, acrylic, sand-and-cement',
+  'External wall insulation (EWI) — BBA-approved systems with 25-year manufacturer warranty',
+  'Pebbledash removal and re-rendering',
+  'Heritage and lime-render work',
+  'Commercial rendering',
+];
+
+const accreditations = [
+  'Checkatrade approved with 180+ verified five-star reviews',
+  'TrustATrader member',
+  '£2m public liability insurance',
+  "Johnstone's, Parex, K Rend and Weber approved installer",
+  'BBA-approved system specifications',
+  "Full public liability and employer's liability cover",
+];
 ---
 
 <PageLayout
@@ -7,52 +29,140 @@ import PageLayout from '../layouts/PageLayout.astro';
   description="KD Plastering & Rendering Services — Bristol-based plastering, rendering and external wall insulation specialists. 10+ years experience, fully insured, 5-star rated."
   canonical="/about-us/"
   breadcrumbs={[{ name: 'About Us', href: '/about-us/' }]}
+  ctaHeading="Get a free quote for your project"
+  ctaText="Free site visit, fixed written quote, no pressure."
 >
-  <section class="hero">
-    <div class="container">
-      <h1>About KD Plastering &amp; Rendering Services</h1>
-      <p class="lede">A well established Bristol plastering and rendering business, covering Bath and all surrounding areas.</p>
-    </div>
-  </section>
+  <Hero
+    size="compact"
+    eyebrow={['About us', 'Since 2014']}
+    title="Bristol plastering and rendering,"
+    titleAccent="done properly."
+    lede="A well established Bristol plastering and rendering business, covering Bath and all surrounding areas."
+    primaryCta={{ label: 'Get a Free Quote', href: '/contact/' }}
+    phone={{ number: '01174094116', display: '0117 409 4116' }}
+    image="/heroes/about-us.webp"
+    imageAlt=""
+    trust={['10+ years in Bristol', '180+ verified reviews', 'Fully insured']}
+  />
 
+  <!-- Who we are -->
   <section class="section">
-    <div class="container" style="max-width: 800px;">
-      <p>KD Plastering &amp; Rendering Services is a well established business within the heart of Bristol with coverage over Bath and all surrounding areas. We are specialists in all types of plastering, rendering and external wall insulation, with over 10 years of trade experience.</p>
-
-      <h2>What we do</h2>
-      <p>We deliver professional plastering, rendering and external wall insulation to homeowners, landlords and developers across the BS and BA postcode areas. Our services include:</p>
-      <ul>
-        <li>Internal plastering — boarding, skimming, Artex removal, patch plastering, screeding</li>
-        <li>External rendering — silicone, monocouche, acrylic, sand-and-cement</li>
-        <li>External wall insulation (EWI) — BBA-approved systems with 25-year manufacturer warranty</li>
-        <li>Pebbledash removal and re-rendering</li>
-        <li>Heritage and lime-render work</li>
-        <li>Commercial rendering</li>
-      </ul>
-
-      <h2>How we work</h2>
-      <p>Every quote is free, written and fixed. We use only BBA-accredited systems from Johnstone’s, Parex, K Rend and Weber. Every installation comes with a 10-year workmanship warranty as standard, plus the relevant manufacturer system warranty (typically 25 years for silicone and EWI).</p>
-
-      <h2>Accreditations</h2>
-      <ul>
-        <li>Checkatrade approved with 180+ verified five-star reviews</li>
-        <li>TrustATrader member</li>
-        <li>£2m public liability insurance</li>
-        <li>Johnstone’s, Parex, K Rend and Weber approved installer</li>
-        <li>BBA-approved system specifications</li>
-        <li>Full public liability and employer’s liability cover</li>
-      </ul>
-
-      <h2>Where we work</h2>
-      <p>Based in Hanham (Bristol BS15), we cover 20 neighbourhoods across Bristol and Bath — 15 in Bristol (including Hanham, Brislington, Kingswood, Downend, Emerson's Green, Stapleton, Frenchay, Fishponds, Knowle, St George and more) and 5 in Bath (Bath City Centre, Bathwick, Widcombe, Newbridge, Odd Down). Each service page lists the full coverage and pricing for your specific area.</p>
+    <div class="container">
+      <div class="media-split">
+        <div class="media-split__copy">
+          <p>
+            KD Plastering &amp; Rendering Services is a well established business in the
+            heart of Bristol, covering Bath and all surrounding areas. We are specialists
+            in every type of plastering, rendering and external wall insulation, with over
+            ten years of trade experience.
+          </p>
+          <p>
+            We are a small team by choice. Four full-time installers, every project led
+            personally by the founder, and no subcontracting — which is why the person who
+            quotes your job is the person who turns up to do it.
+          </p>
+        </div>
+        <figure class="media-split__media">
+          <img
+            src="/services/gallery/ewall-rendering-1.webp"
+            alt="KD Plastering applying sprayed cream monocouche render to a house exterior"
+            width="920" height="613" loading="lazy" decoding="async"
+          />
+        </figure>
+      </div>
     </div>
   </section>
 
-  <section class="cta-banner">
+  <!-- Founder -->
+  <section class="section section--alt">
     <div class="container">
-      <h2>Get a free quote for your project</h2>
-      <p>Free site visit, fixed written quote, no pressure.</p>
-      <a href="/#lead-form-heading">Get Your Free Quote</a>
+      <header class="section-header section-header--center">
+        <span class="eyebrow">The team</span>
+        <h2>Who runs KD Plastering</h2>
+      </header>
+      <AuthorityBio
+        name="Kyran"
+        role="Founder & Lead Installer"
+        qualifications={[
+          'NVQ Level 3 in Plastering',
+          "Johnstone's Stormshield Registered Installer",
+          'Parex Approved Applicator',
+          'Weber EWI Certified Installer',
+          '10+ years plastering and rendering experience across Bristol & Bath',
+        ]}
+        bio={`Kyran founded KD Plastering & Rendering Services in 2014 after 10 years working for larger Bristol contractors. Based in Hanham, he leads every project personally and is on site for the key stages of every installation. Kyran specifies every quote himself and oversees the team of four full-time installers. He holds NVQ Level 3 in Plastering and certified installer status with Johnstone's, Parex and Weber.`}
+      />
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="section">
+    <div class="container">
+      <ServiceBullets
+        items={whatWeDo}
+        variant="do"
+        columns={3}
+        eyebrow="What we do"
+        heading="Every type of plastering and rendering"
+        lede="We work for homeowners, landlords and developers across the BS and BA postcode areas."
+      />
+    </div>
+  </section>
+
+  <!-- How we work -->
+  <section class="section section--alt">
+    <div class="container">
+      <header class="section-header section-header--center">
+        <span class="eyebrow">How we work</span>
+        <h2>Fixed quotes, no surprises</h2>
+      </header>
+      <div class="media-split media-split--reverse">
+        <div class="media-split__copy">
+          <p>
+            Every quote is free, written and fixed. We come and look at the property, take
+            measurements, and price the job properly — so the number you get is the number
+            you pay.
+          </p>
+          <p>
+            We use only BBA-accredited systems from Johnstone's, Parex, K Rend and Weber.
+            Every installation carries a 10-year workmanship warranty as standard, plus the
+            relevant manufacturer system warranty — typically 25 years for silicone and EWI.
+          </p>
+        </div>
+        <figure class="media-split__media">
+          <img
+            src="/services/gallery/ewall-rendering-2.webp"
+            alt="Close-up of a steel trowel smoothing cream render"
+            width="920" height="613" loading="lazy" decoding="async"
+          />
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Accreditations -->
+  <section class="section">
+    <div class="container">
+      <ServiceBullets
+        items={accreditations}
+        variant="benefit"
+        columns={3}
+        eyebrow="Credentials"
+        heading="Accreditations and cover"
+        lede="Every claim on this page is one you can check."
+      />
+    </div>
+  </section>
+
+  <!-- Coverage -->
+  <section class="section section--alt">
+    <div class="container">
+      <AreaCoverage
+        eyebrow="Coverage"
+        heading="Where we work"
+        lede="Based in Hanham (Bristol BS15), covering 20 neighbourhoods across Bristol and Bath."
+        note="Each service page lists the full coverage for your area. Outside it? Ask — we travel."
+      />
     </div>
   </section>
 </PageLayout>

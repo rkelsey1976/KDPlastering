@@ -9,6 +9,7 @@ export type Bullet = {
 };
 
 type Props = {
+  eyebrow?: string;
   items: string[] | Bullet[];
   variant?: 'do' | 'problem' | 'benefit';
   columns?: 2 | 3 | 4;
@@ -17,6 +18,7 @@ type Props = {
 };
 
 const {
+  eyebrow,
   items,
   variant = 'do',
   columns = 4,
@@ -75,7 +77,8 @@ const iconPaths: Record<string, string> = {
 ---
 
 {heading && (
-  <header class={`service-bullets__heading service-bullets__heading--${variant}`}>
+  <header class={`service-bullets__heading service-bullets__heading--${variant} section-header section-header--center`}>
+    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
     <h2>{heading}</h2>
     {lede && <p class="lede">{lede}</p>}
   </header>
@@ -100,7 +103,11 @@ const iconPaths: Record<string, string> = {
 
 <style>
   .service-bullets__heading {
-    margin-bottom: var(--sp-7);
+    margin-bottom: var(--sp-6);
+    text-align: center;
+    max-width: 60ch;
+    margin-left: auto;
+    margin-right: auto;
   }
   .service-bullets__heading h2 {
     margin: 0 0 var(--sp-3);
@@ -132,7 +139,7 @@ const iconPaths: Record<string, string> = {
 
   .service-bullets__item {
     background: #fff;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--border);
     border-radius: var(--radius-md);
     padding: var(--sp-5);
     transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
@@ -143,7 +150,7 @@ const iconPaths: Record<string, string> = {
   }
 
   .service-bullets__item:hover {
-    border-color: var(--color-clay);
+    border-color: var(--accent);
     box-shadow: var(--shadow-sm);
     transform: translateY(-2px);
   }
@@ -160,25 +167,25 @@ const iconPaths: Record<string, string> = {
   }
 
   .service-bullets__icon--do {
-    background: var(--color-clay-light);
-    color: var(--color-clay-deep);
+    background: var(--accent-tint);
+    color: var(--accent-text);
   }
 
   .service-bullets__icon--problem {
-    background: var(--color-rust-light);
-    color: var(--color-rust);
+    background: var(--accent-tint);
+    color: var(--accent-text);
   }
 
   .service-bullets__icon--benefit {
-    background: var(--color-sage-light);
-    color: var(--color-sage-deep);
+    background: var(--accent-tint);
+    color: var(--accent-text);
   }
 
   .service-bullets__title {
     margin: 0;
     font-size: var(--fs-base);
     font-weight: 700;
-    color: var(--color-walnut);
+    color: var(--text);
     line-height: 1.3;
   }
 
@@ -186,6 +193,6 @@ const iconPaths: Record<string, string> = {
     margin: 0;
     font-size: var(--fs-sm);
     line-height: 1.55;
-    color: var(--color-walnut-muted);
+    color: var(--text-muted);
   }
 </style>

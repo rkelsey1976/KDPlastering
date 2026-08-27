@@ -6,6 +6,7 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import LeadForm from '../components/LeadForm.astro';
+import CtaBand from '../components/CtaBand.astro';
 import Footer from '../components/Footer.astro';
 
 export type BreadcrumbItem = { name: string; href: string };
@@ -22,6 +23,15 @@ type Props = {
   prefillArea?: string;
   formHeading?: string;
   showLeadForm?: boolean;
+  /** Keep the page out of the index (style guide, thank-you pages). */
+  noindex?: boolean;
+  /** Full-bleed CTA band above the footer. Defaults to the opposite of
+      showLeadForm: the quote form lives on /contact, every other page
+      drives there via the band. */
+  showCta?: boolean;
+  ctaHeading?: string;
+  ctaText?: string;
+  ctaLabel?: string;
 };
 
 const {
@@ -35,7 +45,17 @@ const {
   prefillService,
   prefillArea,
   formHeading,
-  showLeadForm = true,
+  showLeadForm = false,
+  noindex = false,
+  // The band and the form are two asks in the same slot. On a page with a
+  // form the band sits directly beneath it, and its button pointed at that
+  // very form — a call-to-action whose only job was scrolling up one
+  // section. So they are mutually exclusive: the form IS the ask where it
+  // exists, and the band covers the pages that have none.
+  showCta = !showLeadForm,
+  ctaHeading,
+  ctaText,
+  ctaLabel,
 } = Astro.props as Props;
 
 const siteName = 'KD Plastering & Rendering Services';
@@ -54,7 +74,9 @@ const schemaArr = Array.isArray(schema) ? schema : schema ? [schema] : [];
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+    {noindex
+      ? <meta name="robots" content="noindex, nofollow" />
+      : <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />}
 
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -77,6 +99,8 @@ const schemaArr = Array.isArray(schema) ? schema : schema ? [schema] : [];
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
     <!-- Sitemap -->
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -127,6 +151,15 @@ const schemaArr = Array.isArray(schema) ? schema : schema ? [schema] : [];
         </section>
       )}
     </main>
+    {showCta && (
+      <CtaBand
+        heading={ctaHeading}
+        text={ctaText}
+        ctaLabel={ctaLabel}
+        ctaHref="/contact/"
+      />
+    )}
+
     <Footer />
   </body>
 </html>
@@ -136,8 +169,8 @@ const schemaArr = Array.isArray(schema) ? schema : schema ? [schema] : [];
     position: absolute;
     left: -9999px;
     top: 0;
-    background: var(--color-ink);
-    color: #fff;
+    background: var(--surface-inverse);
+    color: var(--text-inverse);
     padding: 0.75rem 1rem;
     z-index: 999;
     text-decoration: none;
@@ -152,8 +185,8 @@ const schemaArr = Array.isArray(schema) ? schema : schema ? [schema] : [];
     padding: 0 1.25rem;
   }
   .breadcrumbs {
-    background: #f7f7f7;
-    border-bottom: 1px solid #e6e6e6;
+    background: var(--surface-alt);
+    border-bottom: 1px solid var(--border);
     padding: 0.75rem 0;
     font-size: 0.95rem;
   }
@@ -174,16 +207,16 @@ const schemaArr = Array.isArray(schema) ? schema : schema ? [schema] : [];
     margin-left: 0.5rem;
   }
   .breadcrumbs a {
-    color: var(--color-slate);
+    color: var(--text);
     text-decoration: underline;
   }
   .breadcrumbs [aria-current="page"] {
-    color: var(--color-ink);
+    color: var(--text);
   }
 
   .lead-form-section {
-    background: linear-gradient(180deg, var(--color-cream-warm) 0%, var(--color-stone) 100%);
-    color: var(--color-walnut);
+    background: linear-gradient(180deg, var(--surface-alt) 0%, var(--border) 100%);
+    color: var(--text);
     padding: 3.5rem 0;
   }
   .lead-form-heading {
@@ -191,16 +224,16 @@ const schemaArr = Array.isArray(schema) ? schema : schema ? [schema] : [];
     font-weight: 700;
     margin: 0 0 0.5rem;
     text-align: center;
-    color: var(--color-walnut);
+    color: var(--text);
   }
   .lead-form-sub {
     text-align: center;
     margin: 0 0 2rem;
-    color: var(--color-walnut-muted);
+    color: var(--text-muted);
   }
   .lead-form {
     background: #fff;
-    color: var(--color-ink);
+    color: var(--text);
     padding: 2rem;
     border-radius: 8px;
     max-width: 800px;
@@ -222,7 +255,7 @@ const schemaArr = Array.isArray(schema) ? schema : schema ? [schema] : [];
     font-size: 0.95rem;
   }
   .lead-form label em {
-    color: var(--color-rust);
+    color: var(--accent-text);
     font-style: normal;
   }
   .lead-form input,
@@ -230,10 +263,10 @@ const schemaArr = Array.isArray(schema) ? schema : schema ? [schema] : [];
   .lead-form textarea {
     font: inherit;
     padding: 0.6rem 0.75rem;
-    border: 2px solid var(--color-ink);
+    border: 2px solid var(--surface-inverse);
     border-radius: 4px;
     background: #fff;
-    color: var(--color-ink);
+    color: var(--text);
     width: 100%;
     box-sizing: border-box;
   }
@@ -242,8 +275,8 @@ const schemaArr = Array.isArray(schema) ? schema : schema ? [schema] : [];
     resize: vertical;
   }
   .lead-form-submit {
-    background: var(--color-fern);
-    color: #fff;
+    background: var(--accent);
+    color: var(--on-accent);
     border: 0;
     padding: 0.85rem 1.5rem;
     font-weight: 700;
@@ -254,12 +287,12 @@ const schemaArr = Array.isArray(schema) ? schema : schema ? [schema] : [];
     margin-top: 1rem;
   }
   .lead-form-submit:hover {
-    background: var(--color-fern-deep);
+    background: var(--accent-text);
   }
   .lead-form-meta {
     text-align: center;
     font-size: 0.85rem;
-    color: var(--color-ink-muted);
+    color: var(--text-muted);
     margin: 0.75rem 0 1rem;
   }
   .lead-form-trust {
@@ -270,7 +303,7 @@ const schemaArr = Array.isArray(schema) ? schema : schema ? [schema] : [];
     flex-wrap: wrap;
     gap: 0.5rem 1.5rem;
     justify-content: center;
-    color: var(--color-walnut-muted);
+    color: var(--text-muted);
     font-size: 0.95rem;
   }
   .hidden {

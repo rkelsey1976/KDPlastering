@@ -3,40 +3,53 @@ import PageLayout from '../layouts/PageLayout.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import ReviewCards from '../components/ReviewCards.astro';
 import ServiceCard from '../components/ServiceCard.astro';
+import Hero from '../components/Hero.astro';
 import { SERVICES } from '../lib/services';
 import { REVIEWS } from '../lib/reviews';
 
 const featuredServices = SERVICES;
 const featuredReviews = REVIEWS.slice(0, 3);
 
-// Short price hints for the home page bento cards
-const priceHints: Record<string, string> = {
-  'silicone-rendering':         '£60/m²',
-  'house-rendering':            '£55/m²',
-  'external-wall-rendering':    '£55/m²',
-  'monocouche-rendering':       '£50/m²',
-  'plastering-services':        '£18/m²',
-  'external-wall-insulation':   '£120/m²',
-};
+const heroStats = [
+  { value: 10,  suffix: '+',   label: 'Years in Bristol' },
+  { value: 180, suffix: '+',   label: '5-Star Reviews' },
+  { value: 20,                 label: 'Areas Covered' },
+  { value: 800, suffix: '+',   label: 'Projects Done' },
+  { value: 25,  suffix: ' yr', label: 'System Warranty' },
+];
 
 // Hero photo per service for the bento grid
+// Card-sized WebP (760x475), not the full 1600px heroes. The grid was
+// pulling 2.17MB of JPEG to fill six ~380px cards.
 const serviceImages: Record<string, string> = {
-  'silicone-rendering':         '/services/silicone-rendering-hero.jpg',
-  'house-rendering':            '/services/house-rendering-hero.jpg',
-  'external-wall-rendering':    '/services/ewall-rendering-hero.jpg',
-  'monocouche-rendering':       '/services/monocouche-rendering-hero.jpg',
-  'plastering-services':        '/services/plastering-hero.jpg',
-  'external-wall-insulation':   '/services/ewi-hero.jpg',
+  'silicone-rendering':         '/services/cards/silicone-rendering.webp',
+  'house-rendering':            '/services/cards/house-rendering.webp',
+  'external-wall-rendering':    '/services/cards/ewall-rendering.webp',
+  'monocouche-rendering':       '/services/cards/monocouche-rendering.webp',
+  'plastering-services':        '/services/cards/plastering.webp',
+  'external-wall-insulation':   '/services/cards/ewi.webp',
 };
 
 // Gallery photos for the "Recent work" section
+// Captions describe what is actually in each frame (see
+// public/services/MANIFEST.md) rather than inventing locations.
+// Each slide links to the service it demonstrates — real project photos
+// become internal links to the pages that need them.
 const galleryImages = [
-  { src: '/services/silicone-rendering-1.jpg', caption: 'Silicone render, Hanham' },
-  { src: '/services/monocouche-rendering-2.jpg', caption: 'Monocouche render, Bathwick' },
-  { src: '/services/ewi-1.jpg',                caption: 'EWI installation, Kingswood' },
-  { src: '/services/plastering-1.jpg',         caption: 'Internal plastering, Fishponds' },
+  { src: '/services/gallery/ewall-rendering-1.webp',      slug: 'external-wall-rendering',  service: 'External Wall Rendering', caption: 'Spraying monocouche render',            alt: 'KD Plastering applying sprayed cream monocouche render to a house exterior' },
+  { src: '/services/gallery/silicone-rendering-2.webp',   slug: 'silicone-rendering',       service: 'Silicone Rendering',      caption: 'Smooth silicone render, new build',      alt: 'New-build home finished in smooth off-white silicone render with anthracite cladding' },
+  { src: '/services/gallery/ewi-1.webp',                  slug: 'external-wall-insulation', service: 'External Wall Insulation', caption: 'External wall insulation going on',     alt: 'EPS insulation boards being mechanically fixed to an external wall' },
+  { src: '/services/gallery/monocouche-rendering-2.webp', slug: 'monocouche-rendering',     service: 'Monocouche Rendering',    caption: 'Traditional detached, finished',         alt: 'Large traditional detached house finished in cream monocouche render' },
+  { src: '/services/gallery/ewall-rendering-2.webp',      slug: 'external-wall-rendering',  service: 'External Wall Rendering', caption: 'Trowel finish, close up',                alt: 'Close-up of a steel trowel smoothing cream render' },
+  { src: '/services/gallery/house-rendering-1.webp',      slug: 'house-rendering',          service: 'House Rendering',         caption: 'Rear elevation, render and dormer',      alt: 'Rear elevation with render, timber dormer and bi-fold doors' },
+  { src: '/services/gallery/plastering-1.webp',           slug: 'plastering-services',      service: 'Plastering',              caption: 'Internal plastering, finished',          alt: 'Finished interior room with smooth white plastered walls' },
+  { src: '/services/gallery/monocouche-rendering-1.webp', slug: 'monocouche-rendering',     service: 'Monocouche Rendering',    caption: 'Textured render, hand applied',          alt: 'Applying textured beige render with a steel trowel' },
+  { src: '/services/gallery/ewi-2.webp',                  slug: 'external-wall-insulation', service: 'External Wall Insulation', caption: 'Completed EWI and render',              alt: 'Completed cream rendered home following external wall insulation' },
+  { src: '/services/gallery/house-rendering-3.webp',      slug: 'house-rendering',          service: 'House Rendering',         caption: 'Detached front, smooth render',          alt: 'Front of a detached house in smooth off-white render with a bow bay window' },
+  { src: '/services/gallery/ewall-rendering-3.webp',      slug: 'external-wall-rendering',  service: 'External Wall Rendering', caption: 'Finished in cream render',               alt: 'Finished house front in cream render' },
+  { src: '/services/gallery/silicone-rendering-1.webp',   slug: 'silicone-rendering',       service: 'Silicone Rendering',      caption: 'Silicone render, colour finish',         alt: 'Mustard yellow silicone render with a charcoal accent panel' },
+  { src: '/services/gallery/monocouche-rendering-3.webp', slug: 'monocouche-rendering',     service: 'Monocouche Rendering',    caption: 'White render, bay window',               alt: 'Semi-detached house in white render with a bay window' },
 ];
-
 const schema = {
   '@context': 'https://schema.org',
   '@type': ['LocalBusiness', 'Plasterer'],
@@ -90,85 +103,26 @@ const schema = {
   description="Professional plastering, rendering and external wall insulation across Bristol and Bath. 10+ years experience, fully insured, 180+ verified reviews. Free quotes within 48 hours."
   canonical="/"
   schema={schema}
-  showLeadForm={true}
-  formHeading="Get Your Free Bristol & Bath Quote"
 >
-  <!-- 1. HERO — bold black + orange, single signature moment -->
-  <section class="hero hero--bold">
-    <!-- Full-bleed background photo -->
-    <div class="hero__bg" aria-hidden="true">
-      <div class="hero__bg-img" style="background-image: url('/hero-home.webp')"></div>
-      <div class="hero__bg-overlay"></div>
-    </div>
-
-    <div class="container hero__container">
-      <div class="hero__inner">
-        <div class="hero__eyebrow">
-          <span class="hero__eyebrow-bar"></span>
-          <span>Bristol &amp; Bath Plastering Specialists</span>
-          <span class="hero__eyebrow-dot"></span>
-          <span>Since 2014</span>
-        </div>
-
-        <h1 class="hero__title">
-          We transform Bristol homes<br />
-          with a render that <span class="hero__title-accent">lasts 25 years.</span>
-        </h1>
-
-        <p class="hero__lede">
-          Silicone render, monocouche, house rendering and external wall insulation &mdash; fitted by Bristol's most reviewed plastering team.
-        </p>
-
-        <div class="hero__cta-row">
-          <a href="#quote" class="hero__cta-primary">
-            <span>Get Your Free Quote</span>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </a>
-          <a href="tel:01174094116" class="hero__cta-secondary">
-            <span class="hero__cta-secondary-label">or call</span>
-            <span class="hero__cta-secondary-num">0117 409 4116</span>
-          </a>
-        </div>
-
-        <!-- Trust signals live in the orange statbar below — no duplicate strip here -->
-      </div>
-    </div>
-
-    <!-- Diagonal orange stat strip — runs across the bottom edge -->
-    <div class="hero__statbar" aria-label="KD Plastering at a glance">
-      <div class="hero__statbar-track">
-        <div class="hero__statbar-cell">
-          <span class="hero__statbar-num" data-count="10" data-suffix="+">10+</span>
-          <span class="hero__statbar-label">Years in Bristol</span>
-        </div>
-        <div class="hero__statbar-cell">
-          <span class="hero__statbar-num" data-count="180" data-suffix="+">180+</span>
-          <span class="hero__statbar-label">5-Star Reviews</span>
-        </div>
-        <div class="hero__statbar-cell">
-          <span class="hero__statbar-num" data-count="20">20</span>
-          <span class="hero__statbar-label">Areas Covered</span>
-        </div>
-        <div class="hero__statbar-cell">
-          <span class="hero__statbar-num" data-count="800" data-suffix="+">800+</span>
-          <span class="hero__statbar-label">Projects Done</span>
-        </div>
-        <div class="hero__statbar-cell">
-          <span class="hero__statbar-num" data-count="25" data-suffix=" yr">25 yr</span>
-          <span class="hero__statbar-label">System Warranty</span>
-        </div>
-      </div>
-    </div>
-  </section>
+  <Hero
+    eyebrow={['Bristol & Bath Plastering Specialists', 'Since 2014']}
+    title="We transform Bristol homes with a render that"
+    titleAccent="lasts 25 years."
+    lede="Silicone render, monocouche, house rendering and external wall insulation — fitted by Bristol's most reviewed plastering team."
+    primaryCta={{ label: 'Get Your Free Quote', href: '/contact/' }}
+    phone={{ number: '01174094116', display: '0117 409 4116' }}
+    image="/hero-home.webp"
+    rotateWith={['/hero-2.webp', '/hero-3.webp', '/hero-4.webp']}
+    stats={heroStats}
+  />
 
   <!-- 2. SERVICES — 6 cards, uniform grid -->
   <section class="section">
     <div class="container">
       <SectionHeader
         eyebrow="What we do"
-        eyebrowVariant="clay"
-        heading="Our services"
-        lede="Every type of internal plastering, external rendering and external wall insulation across Bristol &amp; Bath."
+                heading="Our services"
+        lede="Every type of internal plastering, external rendering and external wall insulation across Bristol & Bath."
       />
       <div class="service-grid reveal-stagger">
         {featuredServices.map((service, i) => (
@@ -176,7 +130,6 @@ const schema = {
             slug={service.slug}
             shortName={service.shortName}
             tagline={service.tagline}
-            priceHint={priceHints[service.slug]}
             imageSrc={serviceImages[service.slug]}
             number={String(i + 1).padStart(2, '0')}
             variant="default"
@@ -191,17 +144,44 @@ const schema = {
     <div class="container">
       <SectionHeader
         eyebrow="Recent work"
-        eyebrowVariant="clay"
-        heading="Recent projects across Bristol &amp; Bath"
+                heading="Recent projects across Bristol & Bath"
         lede="A selection of recent rendering and plastering projects."
       />
-      <div class="gallery-grid">
-        {galleryImages.map((img) => (
-          <figure class="gallery-card">
-            <div class="gallery-card__img" role="img" aria-label={img.caption} style={`background-image: url('${img.src}')`}></div>
-            <figcaption>{img.caption}</figcaption>
-          </figure>
-        ))}
+      <div class="slider">
+        <div class="slider__track" id="work-slider" tabindex="0" role="region"
+             aria-label="Recent projects — scrollable">
+          {galleryImages.map((img, i) => (
+            <figure class="slide">
+              <a
+                href={`/our-services/${img.slug}-bristol/`}
+                class="slide__link"
+                aria-label={`${img.service}: ${img.caption}`}
+              >
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  width="920"
+                  height="613"
+                  loading={i < 2 ? 'eager' : 'lazy'}
+                  decoding="async"
+                />
+                <figcaption class="slide__caption">
+                  <span class="slide__service">{img.service}</span>
+                  <span class="slide__title">{img.caption}</span>
+                </figcaption>
+              </a>
+            </figure>
+          ))}
+        </div>
+
+        <div class="slider__controls">
+          <button type="button" class="slider__btn" data-dir="-1" aria-controls="work-slider" aria-label="Previous projects">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button type="button" class="slider__btn" data-dir="1" aria-controls="work-slider" aria-label="More projects">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
       </div>
       <div class="gallery-cta">
         <a href="/our-work/" class="btn btn--ghost">See more of our work</a>
@@ -214,7 +194,7 @@ const schema = {
     <div class="container">
       <ReviewCards
         reviews={featuredReviews}
-        heading="What Bristol &amp; Bath homeowners say"
+        heading="What Bristol & Bath homeowners say"
         lede="Three of our most recent verified reviews."
       />
 
@@ -251,33 +231,190 @@ const schema = {
 
     document.querySelectorAll('.reveal, .reveal-stagger').forEach((el) => observer.observe(el));
 
-    // Animated stat counters
-    const stats = document.querySelectorAll('.hero__statbar-num');
-    const statObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        const el = entry.target;
-        const target = parseInt(el.dataset.count || '0', 10);
-        const prefix = el.dataset.prefix || '';
-        const suffix = el.dataset.suffix || '';
-        const duration = 1500;
-        const start = performance.now();
-        const animate = (now) => {
-          const t = Math.min((now - start) / duration, 1);
-          const eased = 1 - Math.pow(1 - t, 3);
-          const value = Math.floor(eased * target);
-          el.textContent = `${prefix}${value}${suffix}`;
-          if (t < 1) requestAnimationFrame(animate);
-          else el.textContent = `${prefix}${target}${suffix}`;
-        };
-        requestAnimationFrame(animate);
-        statObserver.unobserve(el);
-      });
-    }, { threshold: 0.5 });
-    stats.forEach((el) => statObserver.observe(el));
+    // Recent-work slider — enhancement only. The track already scrolls by
+    // swipe, trackpad and arrow keys with no JS; this just wires the
+    // buttons and greys them out at each end.
+    const track = document.getElementById('work-slider');
+    if (track) {
+      const step = () => {
+        const slide = track.querySelector('.slide');
+        return slide ? slide.getBoundingClientRect().width + 16 : track.clientWidth * 0.8;
+      };
+      const buttons = document.querySelectorAll('.slider__btn');
+      const sync = () => {
+        // The track has 2px of inline padding for the focus ring, and snap
+        // points land on sub-pixel offsets, so scrollLeft never settles at
+        // exactly 0 or exactly max. Without this tolerance the buttons
+        // never grey out at either end.
+        const EDGE = 6;
+        const max = track.scrollWidth - track.clientWidth;
+        buttons.forEach((b) => {
+          const dir = Number(b.getAttribute('data-dir'));
+          b.toggleAttribute(
+            'disabled',
+            dir < 0 ? track.scrollLeft <= EDGE : track.scrollLeft >= max - EDGE
+          );
+        });
+      };
+      buttons.forEach((b) => b.addEventListener('click', () => {
+        track.scrollBy({ left: Number(b.getAttribute('data-dir')) * step(), behavior: 'smooth' });
+      }));
+      track.addEventListener('scroll', sync, { passive: true });
+      window.addEventListener('resize', sync, { passive: true });
+      sync();
+    }
+
   });
 </script>
 
+
+<style>
+  /* ==== RECENT WORK SLIDER ====
+     Native CSS scroll-snap, not a carousel library. It scrolls with a
+     swipe, a trackpad, the arrow keys or the buttons, and it works with
+     JavaScript off — so it adds nothing to INP and can't block rendering.
+     Every slide is a real <img> with alt text in the server-rendered HTML,
+     so all thirteen stay crawlable and eligible for image search. */
+  .slider { position: relative; }
+
+  .slider__track {
+    display: grid;
+    grid-auto-flow: column;
+    /* A percentage as the max of minmax() collapses to the min in a
+       scrolling grid track, which pinned every slide at 420px. clamp()
+       against the viewport gives the intended slide-and-a-half. */
+    grid-auto-columns: clamp(280px, 54vw, 760px);
+    gap: var(--sp-4);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    overscroll-behavior-x: contain;
+    padding-bottom: var(--sp-4);
+    /* room for the focus ring, which the overflow would otherwise clip */
+    padding-inline: 2px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
+  }
+  .slider__track:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+    border-radius: var(--radius-md);
+  }
+  .slider__track::-webkit-scrollbar { height: 6px; }
+  .slider__track::-webkit-scrollbar-thumb {
+    background: var(--border-strong);
+    border-radius: var(--radius-full);
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    margin: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface-inverse);
+  }
+
+  .slide__link {
+    position: relative;
+    display: block;
+    color: var(--text-inverse);
+    text-decoration: none;
+  }
+  .slide__link:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+    border-radius: var(--radius-lg);
+  }
+
+  /* width/height on the img plus this ratio reserves the box before the
+     file arrives, so lazy loading can't shift the layout (CLS) */
+  .slide img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+  .slide__link:hover img { transform: scale(1.03); }
+
+  /* Caption sits on the photograph. The gradient is tall and opaque enough
+     at the base to hold white text over any of the shots — several are
+     bright renders, so a light scrim would not have been safe. */
+  .slide__caption {
+    position: absolute;
+    inset: auto 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+    padding: var(--sp-8) var(--sp-5) var(--sp-5);
+    background: linear-gradient(to top,
+      rgba(10, 10, 10, 0.92) 0%,
+      rgba(10, 10, 10, 0.72) 42%,
+      rgba(10, 10, 10, 0) 100%);
+  }
+
+  .slide__service {
+    font-size: var(--fs-xs);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-eyebrow);
+    color: var(--accent-on-dark);
+  }
+
+  .slide__title {
+    font-size: var(--fs-lg);
+    font-weight: var(--weight-semi);
+    letter-spacing: var(--tracking-heading);
+    line-height: 1.25;
+    color: var(--text-inverse);
+  }
+
+  .slider__controls {
+    display: flex;
+    gap: var(--sp-2);
+    justify-content: flex-end;
+    margin-top: var(--sp-3);
+  }
+  .slider__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-strong);
+    background: var(--surface-raised);
+    color: var(--text);
+    cursor: pointer;
+    transition: background var(--dur-fast) var(--ease),
+                border-color var(--dur-fast) var(--ease),
+                color var(--dur-fast) var(--ease);
+  }
+  .slider__btn:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
+  }
+  .slider__btn[disabled] { opacity: 0.35; cursor: default; }
+  .slider__btn[disabled]:hover {
+    background: var(--surface-raised);
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+
+  @media (max-width: 640px) {
+    .slider__track { grid-auto-columns: 86%; }
+    .slide__title { font-size: var(--fs-md); }
+    .slide__caption { padding: var(--sp-7) var(--sp-4) var(--sp-4); }
+    .slider__controls { justify-content: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slider__track { scroll-behavior: auto; }
+  }
+
+</style>
 <style is:global>
 /* ==== SCROLL REVEAL ANIMATIONS ==== */
   @media (prefers-reduced-motion: no-preference) {
@@ -329,13 +466,7 @@ const schema = {
 </style>
 <style>
   /* Gallery */
-  .gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--sp-4);
-  }
   @media (max-width: 900px) {
-    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   .gallery-card {
@@ -343,7 +474,7 @@ const schema = {
     border-radius: var(--radius-lg);
     overflow: hidden;
     background: #fff;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--border);
     transition: transform 0.2s, box-shadow 0.2s;
   }
   .gallery-card:hover {
@@ -355,13 +486,13 @@ const schema = {
     aspect-ratio: 4 / 3;
     background-size: cover;
     background-position: center;
-    background-color: var(--color-stone);
+    background-color: var(--border);
   }
   .gallery-card figcaption {
     padding: var(--sp-3) var(--sp-4);
     font-size: var(--fs-sm);
-    color: var(--color-walnut-muted);
-    border-top: 1px solid var(--color-border);
+    color: var(--text-muted);
+    border-top: 1px solid var(--border);
   }
   .gallery-cta {
     margin-top: var(--sp-5);
@@ -372,7 +503,7 @@ const schema = {
   .trust-row {
     margin-top: var(--sp-7);
     padding-top: var(--sp-6);
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid var(--border);
     text-align: center;
   }
   .trust-row__heading {
@@ -380,7 +511,7 @@ const schema = {
     font-size: var(--fs-xs);
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: var(--color-walnut-muted);
+    color: var(--text-muted);
     font-weight: 700;
   }
   .trust-row__logos {
@@ -392,7 +523,7 @@ const schema = {
     justify-content: center;
     gap: var(--sp-3) var(--sp-6);
     font-size: var(--fs-sm);
-    color: var(--color-walnut-muted);
+    color: var(--text-muted);
   }
   .trust-row__logos li {
     margin: 0;
@@ -401,7 +532,7 @@ const schema = {
     gap: var(--sp-2);
   }
   .trust-row__logos strong {
-    color: var(--color-walnut);
+    color: var(--text);
     font-weight: 700;
   }
 </style>

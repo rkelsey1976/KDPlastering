@@ -126,10 +126,10 @@ const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
     gap: var(--sp-4);
     padding: var(--sp-5);
     background: #fff;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--border);
     border-radius: var(--radius-lg);
     text-decoration: none;
-    color: var(--color-walnut);
+    color: var(--text);
     transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
     position: relative;
     overflow: hidden;
@@ -143,35 +143,29 @@ const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
     left: 0;
     right: 0;
     height: 3px;
-    background: var(--card-accent, var(--color-clay));
+    background: var(--accent);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease;
   }
 
   .service-card:hover {
-    border-color: var(--card-accent, var(--color-clay));
+    border-color: var(--accent);
     box-shadow: var(--shadow-md);
     transform: translateY(-3px);
-    color: var(--color-walnut);
+    color: var(--text);
   }
   .service-card:hover::before { transform: scaleX(1); }
 
   /* Per-service accent colours */
-  .service-card--silicone { --card-accent: #a25d2f; }
-  .service-card--house    { --card-accent: #c47a0a; }
-  .service-card--wall     { --card-accent: #5a7a52; }
-  .service-card--mono     { --card-accent: #3e5b3a; }
-  .service-card--plaster  { --card-accent: #7e4319; }
-  .service-card--ewi      { --card-accent: #1d3a8c; }
-
+            
   /* ==== Image (for bento/bento-lg with imageSrc) ==== */
   .service-card__image {
     width: calc(100% + var(--sp-5) * 2);
     margin: calc(-1 * var(--sp-5)) calc(-1 * var(--sp-5)) var(--sp-3);
     overflow: hidden;
     aspect-ratio: 16 / 10;
-    background: var(--color-stone);
+    background: var(--border);
     position: relative;
   }
 
@@ -192,19 +186,25 @@ const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
     width: 48px;
     height: 48px;
     border-radius: var(--radius-md);
-    background: var(--card-accent-light, var(--color-clay-light));
-    color: var(--card-accent, var(--color-clay-deep));
+    background: var(--accent-tint);
+    color: var(--accent-text);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: background 0.2s, color 0.2s;
   }
-  .service-card--silicone .service-card__icon { background: #f5ede4; color: #a25d2f; }
-  .service-card--house    .service-card__icon { background: #fdf3e1; color: #c47a0a; }
-  .service-card--wall     .service-card__icon { background: #ecf0e6; color: #5a7a52; }
-  .service-card--mono     .service-card__icon { background: #ecf0e6; color: #3e5b3a; }
-  .service-card--plaster  .service-card__icon { background: #f5ede4; color: #7e4319; }
-  .service-card--ewi      .service-card__icon { background: #eef2fb; color: #1d3a8c; }
+  /* All services share the brand accent. Differentiation comes from the
+   photograph and the number, not from six competing hues. */
+  /* All services share the brand accent. Differentiation comes from the
+   photograph and the number, not from six competing hues. */
+  /* All services share the brand accent. Differentiation comes from the
+   photograph and the number, not from six competing hues. */
+  /* All services share the brand accent. Differentiation comes from the
+   photograph and the number, not from six competing hues. */
+  /* All services share the brand accent. Differentiation comes from the
+   photograph and the number, not from six competing hues. */
+  /* All services share the brand accent. Differentiation comes from the
+   photograph and the number, not from six competing hues. */
 
   .service-card__icon--lg {
     width: 64px;
@@ -218,7 +218,7 @@ const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
     margin: 0 0 var(--sp-2);
     font-size: var(--fs-lg);
     font-weight: 700;
-    color: var(--color-walnut);
+    color: var(--text);
     letter-spacing: -0.02em;
   }
 
@@ -226,7 +226,7 @@ const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
     margin: 0;
     font-size: var(--fs-sm);
     line-height: 1.55;
-    color: var(--color-walnut-muted);
+    color: var(--text-muted);
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
@@ -239,20 +239,20 @@ const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
     align-items: baseline;
     gap: var(--sp-2);
     padding: var(--sp-3) 0;
-    border-top: 1px dashed var(--color-border);
-    border-bottom: 1px dashed var(--color-border);
+    border-top: 1px dashed var(--border);
+    border-bottom: 1px dashed var(--border);
   }
   .service-card__price-from {
     font-size: var(--fs-xs);
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--color-walnut-muted);
+    color: var(--text-muted);
     font-weight: 600;
   }
   .service-card__price-value {
     font-size: var(--fs-md);
     font-weight: 700;
-    color: var(--card-accent, var(--color-clay-deep));
+    color: var(--accent-text);
     font-feature-settings: 'tnum';
   }
 
@@ -263,7 +263,7 @@ const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
     gap: var(--sp-2);
     font-size: var(--fs-sm);
     font-weight: 600;
-    color: var(--card-accent, var(--color-clay-deep));
+    color: var(--accent-text);
     margin-top: auto;
   }
   .service-card__cta svg { transition: transform 0.2s ease; }
@@ -282,8 +282,8 @@ const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
     position: absolute;
     top: var(--sp-4);
     left: var(--sp-4);
-    background: var(--color-clay);
-    color: #fff;
+    background: var(--accent);
+    color: var(--on-accent);
     font-size: var(--fs-xs);
     font-weight: 800;
     padding: 4px 10px;
@@ -310,7 +310,7 @@ const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
   }
   .service-card--bento .service-card__tagline {
     font-size: var(--fs-sm);
-    color: var(--color-walnut-muted);
+    color: var(--text-muted);
     line-height: 1.5;
   }
   .service-card--bento .service-card__cta {
@@ -322,8 +322,8 @@ const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
   .service-card--bento-lg {
     padding: var(--sp-7);
     gap: var(--sp-5);
-    background: linear-gradient(135deg, #fbf8f1 0%, var(--card-accent-light, #f5ede4) 100%);
-    border-color: var(--card-accent, var(--color-clay));
+    background: linear-gradient(135deg, var(--surface) 0%, var(--accent-tint) 100%);
+    border-color: var(--accent);
     border-width: 1.5px;
     position: relative;
   }
@@ -341,8 +341,8 @@ const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
     position: absolute;
     inset: 0;
     background-image:
-      radial-gradient(circle at 90% 10%, var(--card-accent, var(--color-clay)) 0%, transparent 30%),
-      radial-gradient(circle at 10% 90%, var(--card-accent, var(--color-clay)) 0%, transparent 35%);
+      radial-gradient(circle at 90% 10%, var(--accent) 0%, transparent 30%),
+      radial-gradient(circle at 10% 90%, var(--accent) 0%, transparent 35%);
     opacity: 0.06;
     pointer-events: none;
     z-index: 0;
@@ -365,7 +365,7 @@ const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
   .service-card--bento-lg .service-card__tagline {
     font-size: var(--fs-md);
     line-height: 1.6;
-    color: var(--color-walnut);
+    color: var(--text);
     max-width: 40ch;
   }
 

@@ -1,0 +1,130 @@
+---
+// AreaCoverage — the single treatment for "where we work".
+//
+// This existed three different ways before: a dot-separated strip on the
+// service pages, pin-icon cards with postcode lists on /our-services, and a
+// bulleted two-column grid on /contact. Same twenty areas, three looks.
+
+import { getBristolAreas, getBathAreas } from '../lib/areas';
+
+type Props = {
+  eyebrow?: string;
+  heading?: string;
+  lede?: string;
+  /** Footnote under the panel — coverage caveats, consents, travel. */
+  note?: string;
+};
+
+const { eyebrow, heading, lede, note } = Astro.props as Props;
+
+const groups = [
+  { city: 'Bristol', areas: getBristolAreas(), postcodes: 'BS' },
+  { city: 'Bath',    areas: getBathAreas(),    postcodes: 'BA' },
+];
+---
+
+{(heading || lede) && (
+  <header class="section-header section-header--center">
+    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+    {heading && <h2>{heading}</h2>}
+    {lede && <p class="lede">{lede}</p>}
+  </header>
+)}
+
+<div class="area-coverage">
+  {groups.map((g) => (
+    <div class="area-coverage__group">
+      <h3 class="area-coverage__city">
+        {g.city}
+        <span class="area-coverage__count">{g.areas.length} areas</span>
+      </h3>
+      <ul class="area-coverage__list">
+        {g.areas.map((a) => (
+          <li class="area-coverage__area">
+            {a.name}
+            <span class="area-coverage__pcode">{a.postcode}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>
+
+{note && <p class="area-coverage__note">{note}</p>}
+
+<style>
+
+  .area-coverage {
+    display: grid;
+    /* Bristol has 15 areas to Bath's 5, so a straight 50/50 leaves one
+       column half empty. */
+    /* Chips reflow, so a fixed ratio no longer applies — let each group
+       take what it needs. */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--sp-6);
+    padding: var(--sp-6);
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+
+  .area-coverage__city {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-2);
+    margin: 0 0 var(--sp-3);
+    font-size: var(--fs-sm);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-eyebrow);
+    color: var(--text-muted);
+  }
+  .area-coverage__count {
+    font-size: var(--fs-xs);
+    font-weight: var(--weight-bold);
+    color: var(--accent-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .area-coverage__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+  }
+
+  /* Same chip as the materials cards use, so coverage reads as designed
+     content rather than a run-on sentence of place names. */
+  .area-coverage__area {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--sp-2);
+    padding: var(--sp-2) var(--sp-3);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    font-size: var(--fs-sm);
+    font-weight: var(--weight-medium);
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .area-coverage__pcode {
+    font-size: var(--fs-xs);
+    font-weight: var(--weight-body);
+    color: var(--text-subtle);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .area-coverage__note {
+    margin: var(--sp-4) auto 0;
+    text-align: center;
+    font-size: var(--fs-sm);
+    color: var(--text-muted);
+    max-width: var(--measure);
+  }
+
+  @media (max-width: 640px) {
+    .area-coverage { grid-template-columns: 1fr; gap: var(--sp-5); }
+  }
+</style>

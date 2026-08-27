@@ -120,7 +120,7 @@ const {
   /* Card container */
   .pricing-card {
     background: #fff;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--border);
     border-radius: var(--radius-xl);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
@@ -130,8 +130,8 @@ const {
 
   /* Hero metric — top band */
   .pricing-hero {
-    background: linear-gradient(135deg, var(--color-walnut) 0%, #2a1f12 100%);
-    color: var(--color-cream);
+    background: linear-gradient(135deg, var(--surface-inverse) 0%, var(--surface-inverse-raised) 100%);
+    color: var(--text-inverse);
     padding: var(--sp-7);
     text-align: center;
     position: relative;
@@ -142,7 +142,7 @@ const {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: radial-gradient(circle at 30% 50%, rgba(162, 93, 47, 0.15) 0%, transparent 50%);
+    background-image: radial-gradient(circle at 30% 50%, rgba(255, 107, 26, 0.15) 0%, transparent 50%);
     pointer-events: none;
   }
 
@@ -151,7 +151,7 @@ const {
     font-size: var(--fs-sm);
     text-transform: uppercase;
     letter-spacing: 0.18em;
-    color: var(--color-amber);
+    color: var(--accent-text);
     font-weight: 600;
     margin-bottom: var(--sp-2);
     position: relative;
@@ -163,7 +163,7 @@ const {
     font-weight: 800;
     letter-spacing: -0.04em;
     line-height: 1;
-    color: #fff;
+    color: var(--text-inverse);
     font-feature-settings: 'tnum';
     margin: var(--sp-2) 0;
     position: relative;
@@ -172,14 +172,14 @@ const {
   .pricing-hero__unit {
     display: block;
     font-size: var(--fs-sm);
-    color: rgba(251, 248, 241, 0.7);
+    color: var(--text-inverse-muted);
     position: relative;
   }
 
   /* Sections */
   .pricing-section {
     padding: var(--sp-5) var(--sp-6);
-    border-bottom: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--border);
   }
   .pricing-section:last-child {
     border-bottom: 0;
@@ -190,12 +190,12 @@ const {
     font-size: var(--fs-sm);
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--color-walnut-muted);
+    color: var(--text-muted);
     font-weight: 700;
   }
 
-  .pricing-section__heading--includes { color: var(--color-sage-deep); }
-  .pricing-section__heading--excludes { color: var(--color-rust); margin-top: var(--sp-5); }
+  .pricing-section__heading--includes { color: var(--accent-text); }
+  .pricing-section__heading--excludes { color: var(--accent-text); margin-top: var(--sp-5); }
 
   /* Property type list */
   .pricing-list {
@@ -213,26 +213,26 @@ const {
     gap: var(--sp-4);
     align-items: baseline;
     padding: var(--sp-3) var(--sp-4);
-    background: var(--color-cream);
+    background: var(--surface);
     border-radius: var(--radius-sm);
     margin: 0;
   }
 
   .pricing-list__type {
     font-weight: 600;
-    color: var(--color-walnut);
+    color: var(--text);
     font-size: var(--fs-sm);
   }
 
   .pricing-list__size {
     font-size: var(--fs-xs);
-    color: var(--color-walnut-muted);
+    color: var(--text-muted);
     font-family: ui-monospace, 'SF Mono', monospace;
   }
 
   .pricing-list__range {
     font-weight: 700;
-    color: var(--color-clay-deep);
+    color: var(--accent-text);
     font-size: var(--fs-sm);
     font-feature-settings: 'tnum';
   }
@@ -245,7 +245,7 @@ const {
   }
 
   .pricing-grid .pricing-section {
-    border-right: 1px solid var(--color-border);
+    border-right: 1px solid var(--border);
   }
   .pricing-grid .pricing-section:last-child {
     border-right: 0;
@@ -255,7 +255,7 @@ const {
     .pricing-grid { grid-template-columns: 1fr; }
     .pricing-grid .pricing-section {
       border-right: 0;
-      border-bottom: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--border);
     }
   }
 
@@ -276,15 +276,15 @@ const {
     margin: 0;
     font-size: var(--fs-sm);
     line-height: 1.5;
-    color: var(--color-walnut-muted);
+    color: var(--text-muted);
   }
 
   .pricing-factors li svg {
     flex-shrink: 0;
     margin-top: 3px;
-    color: var(--color-walnut-muted);
+    color: var(--text-muted);
   }
 
-  .pricing-factors--includes li svg { color: var(--color-sage-deep); }
-  .pricing-factors--excludes li svg { color: var(--color-rust); }
+  .pricing-factors--includes li svg { color: var(--accent-text); }
+  .pricing-factors--excludes li svg { color: var(--accent-text); }
 </style>

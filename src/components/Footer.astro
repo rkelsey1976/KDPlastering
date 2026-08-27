@@ -1,5 +1,6 @@
 ---
 import { SERVICES } from '../lib/services';
+import Logo from './Logo.astro';
 
 const services = SERVICES.map(s => s.slug);
 const year = new Date().getFullYear();
@@ -9,7 +10,7 @@ const year = new Date().getFullYear();
   <div class="container">
     <div class="footer-top">
       <div class="footer-brand">
-        <img src="/logo-footer.svg" alt="KD Plastering &amp; Rendering Services" class="footer-logo" />
+        <div class="footer-logo"><Logo variant="inline" size={26} /></div>
         <p class="footer-tagline">
           Bristol's trusted plastering &amp; rendering specialists.
           Silicone, monocouche, plastering and external wall insulation
@@ -69,7 +70,8 @@ const year = new Date().getFullYear();
         <ul>
           <li><a href="/about-us/">About Us</a></li>
           <li><a href="/our-work/">Gallery</a></li>
-        <li><a href="/faqs/">FAQs</a></li>
+          <li><a href="/faqs/">FAQs</a></li>
+          <li><a href="/contact/">Contact</a></li>
           <li><a href="/privacy/">Privacy Policy</a></li>
           <li><a href="/terms/">Terms &amp; Conditions</a></li>
         </ul>
@@ -92,10 +94,11 @@ const year = new Date().getFullYear();
 
 <style>
   .site-footer {
-    background: var(--color-walnut);
-    color: rgba(251, 248, 241, 0.78);
+    background: var(--surface-inverse);
+    color: var(--text-inverse-muted);
     padding: var(--sp-8) 0 var(--sp-5);
-    margin-top: var(--sp-8);
+    /* No margin-top: the CTA band sits directly above and both are
+       near-black, so they should read as one continuous block. */
   }
   .container {
     max-width: var(--container-max);
@@ -111,9 +114,8 @@ const year = new Date().getFullYear();
     max-width: 280px;
   }
   .footer-logo {
-    height: 42px;
-    width: auto;
-    margin-bottom: var(--sp-3);
+    margin-bottom: var(--sp-4);
+    color: var(--text-inverse);
   }
   .footer-tagline {
     font-size: var(--fs-sm);
@@ -122,7 +124,7 @@ const year = new Date().getFullYear();
     color: rgba(255, 255, 255, 0.65);
   }
   .footer-col h4 {
-    color: #fff;
+    color: var(--text-inverse);
     font-size: var(--fs-sm);
     margin: 0 0 var(--sp-4);
     font-weight: 700;
@@ -149,14 +151,14 @@ const year = new Date().getFullYear();
     display: inline-flex;
     align-items: center;
     gap: var(--sp-2);
-    color: #fff;
+    color: var(--text-inverse);
     text-decoration: none;
     font-size: var(--fs-sm);
     font-weight: 500;
     transition: color 0.15s;
   }
   .footer-contact-list a:hover {
-    color: var(--color-amber);
+    color: var(--accent-text);
   }
   .footer-col ul {
     list-style: none;
@@ -173,7 +175,7 @@ const year = new Date().getFullYear();
     transition: color 0.15s;
   }
   .footer-col a:hover {
-    color: #fff;
+    color: var(--text-inverse);
   }
   .footer-accreditations {
     display: flex;

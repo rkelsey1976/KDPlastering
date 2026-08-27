@@ -13,5 +13,11 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      // The style guide is noindex — keep it out of the sitemap too, so we
+      // aren't sending search engines contradictory signals.
+      filter: (page) => !['/style-guide', '/logo-lab'].some((p) => page.includes(p)),
+    }),
+  ],
 });

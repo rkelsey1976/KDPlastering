@@ -1,20 +1,38 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import Hero from '../components/Hero.astro';
 
+// Every entry is a real photograph with a caption describing what is
+// actually in the frame (see public/services/MANIFEST.md).
+//
+// The previous list had twelve invented projects — "Bath Georgian
+// townhouse", "Apartments, Widcombe", "Commercial unit, Stapleton Road" —
+// each pointing at /placeholder-project.jpg, a file that does not exist.
+// All twelve rendered as broken images.
 const projects = [
-  { alt: 'Silicone render finish on a 1930s Bristol semi-detached', caption: '1930s semi, Hanham — full re-render in cream silicone' },
-  { alt: 'Monocouche render on a modern Bristol detached', caption: 'Detached new-build, Emerson’s Green — monocouche in light grey' },
-  { alt: 'External wall insulation in progress on a Bristol property', caption: 'EWI installation, Kingswood — 100mm EPS with silicone top coat' },
-  { alt: 'Pebbledash removal and re-render on a Brislington home', caption: 'Pebbledash removal, Brislington — through-colour monocouche' },
-  { alt: 'Internal plastering and skimming on a Bristol refurbishment', caption: 'Full house re-plaster, St George — boarding and skimming throughout' },
-  { alt: 'Heritage lime-render repair on a Bath Georgian townhouse', caption: 'Bath City Centre — sympathetic lime-render restoration' },
-  { alt: 'House rendering in two-tone finish on a Downend property', caption: 'Detached home, Downend — two-tone monocouche' },
-  { alt: 'Feature reveals and beading cut into fresh external render', caption: 'Detached home, Fishponds — feature reveals in silicone' },
-  { alt: 'Bath stone colour render on a Bathwick period property', caption: 'Bathwick townhouse — Bath stone colour monocouche' },
-  { alt: 'Silicone render in white on a modern apartment block', caption: 'Apartments, Widcombe — white silicone over-coat' },
-  { alt: 'Artex ceiling removal and re-skim to a flat finish', caption: 'Artex removal, Knowle — flat skim finish' },
-  { alt: 'External wall rendering on a commercial unit in Bristol', caption: 'Commercial unit, Stapleton Road — silicone render refresh' },
+  { src: 'ewall-rendering-1', service: 'External Wall Rendering',      alt: 'KD Plastering spraying cream monocouche render onto a house exterior',           caption: 'Spraying monocouche render' },
+  { src: 'silicone-rendering-2', service: 'Silicone Rendering',   alt: 'Modern new-build in smooth off-white silicone render with anthracite cladding',  caption: 'Smooth silicone render, new build' },
+  { src: 'monocouche-rendering-2', service: 'Monocouche Rendering', alt: 'Large traditional detached house finished in cream monocouche render',           caption: 'Traditional detached, finished in cream' },
+  { src: 'ewi-1', service: 'External Wall Insulation',                  alt: 'EPS insulation boards being mechanically fixed to an external wall',             caption: 'External wall insulation going on' },
+  { src: 'ewi-hero', service: 'External Wall Insulation',               alt: 'Split view of external wall insulation in progress beside the finished render',  caption: 'EWI: during and after' },
+  { src: 'ewall-rendering-2', service: 'External Wall Rendering',      alt: 'Close-up of a steel trowel smoothing cream render',                              caption: 'Trowel finish, close up' },
+  { src: 'house-rendering-1', service: 'House Rendering',      alt: 'Rear elevation with render, timber dormer and bi-fold doors',                    caption: 'Rear elevation, render and dormer' },
+  { src: 'house-rendering-2', service: 'House Rendering',      alt: 'Smooth white render with sharp reveals and anthracite windows',                  caption: 'Sharp reveals, anthracite windows' },
+  { src: 'monocouche-rendering-1', service: 'Monocouche Rendering', alt: 'Applying textured beige render with a steel trowel',                             caption: 'Textured render, hand applied' },
+  { src: 'plastering-hero', service: 'Plastering',        alt: 'KD Plastering trowelling interior plaster in a room mid-renovation',             caption: 'Internal plastering in progress' },
+  { src: 'plastering-1', service: 'Plastering',           alt: 'Finished interior room with smooth white plastered walls',                       caption: 'Internal plastering, finished' },
+  { src: 'ewi-2', service: 'External Wall Insulation',                  alt: 'Completed cream rendered home following external wall insulation',               caption: 'Completed EWI and render' },
+  { src: 'house-rendering-3', service: 'House Rendering',      alt: 'Front of a detached house in smooth off-white render with a bow bay window',      caption: 'Detached front, bow bay window' },
+  { src: 'ewall-rendering-3', service: 'External Wall Rendering',      alt: 'Finished house front in cream render',                                           caption: 'Finished in cream render' },
+  { src: 'silicone-rendering-1', service: 'Silicone Rendering',   alt: 'Mustard yellow silicone render with a charcoal accent panel',                    caption: 'Silicone render, colour finish' },
+  { src: 'monocouche-rendering-3', service: 'Monocouche Rendering', alt: 'Semi-detached house in white render with a bay window',                          caption: 'White render, bay window' },
+  { src: 'silicone-rendering-3', service: 'Silicone Rendering',   alt: 'Four rendered houses compared: silicone, pebbledash, two-tone and roughcast',    caption: 'Finishes compared' },
+  { src: 'house-rendering-hero', service: 'House Rendering',   alt: 'Two-storey detached new-build in smooth cream render with a dark roof',          caption: 'Two-storey detached, cream render' },
 ];
+
+// Filter chips, derived from the photos themselves so the list can never
+// drift out of step with what is actually in the gallery.
+const services = [...new Set(projects.map((p) => p.service))].sort();
 ---
 
 <PageLayout
@@ -22,33 +40,405 @@ const projects = [
   description="A gallery of recent plastering, rendering and external wall insulation projects across Bristol and Bath."
   canonical="/our-work/"
   breadcrumbs={[{ name: 'Our Work', href: '/our-work/' }]}
+  ctaHeading="Like what you see?"
+  ctaText="Tell us about your project — we'll send a fixed written quote within 48 hours."
 >
-  <section class="hero">
-    <div class="container">
-      <h1>Our Work</h1>
-      <p class="lede">A selection of recent plastering, rendering and external wall insulation projects across Bristol and Bath.</p>
-      <p>We’ve delivered 1,000+ projects over the last 10 years. Here are a small sample — including full house renders, pebbledash removals, EWI installations, heritage work and internal plastering.</p>
-    </div>
-  </section>
+  <Hero
+    size="compact"
+    eyebrow={['Our work']}
+    title="Recent projects across"
+    titleAccent="Bristol & Bath"
+    lede="Full house renders, pebbledash removals, EWI installations, heritage work and internal plastering — a sample of the 1,000+ projects delivered over the last ten years."
+    primaryCta={{ label: 'Get a Free Quote', href: '/contact/' }}
+    phone={{ number: '01174094116', display: '0117 409 4116' }}
+    image="/heroes/our-work.webp"
+    imageAlt=""
+    trust={['1,000+ projects', '10+ years', 'Bristol & Bath']}
+  />
 
   <section class="section">
     <div class="container">
-      <div class="gallery-grid">
-        {projects.map(p => (
-          <figure>
-            <img src="/placeholder-project.jpg" alt={p.alt} loading="lazy" />
-            <figcaption>{p.caption}</figcaption>
-          </figure>
+      {/* Filters are progressive enhancement: with JS off every photo is
+          shown and the buttons simply do nothing, so the gallery still
+          works and every image stays crawlable. */}
+      <div class="gallery-filters" role="group" aria-label="Filter projects by service">
+        <button type="button" class="gallery-filter is-active" data-filter="all" aria-pressed="true">
+          All <span class="gallery-filter__count">{projects.length}</span>
+        </button>
+        {services.map((svc) => (
+          <button type="button" class="gallery-filter" data-filter={svc} aria-pressed="false">
+            {svc}
+            <span class="gallery-filter__count">
+              {projects.filter((p) => p.service === svc).length}
+            </span>
+          </button>
         ))}
       </div>
+
+      <ul class="gallery-grid" id="gallery">
+        {projects.map((p, i) => (
+          <li class="gallery-item" data-service={p.service}>
+            <button
+              type="button"
+              class="gallery-item__btn"
+              data-index={i}
+              aria-label={`View larger: ${p.caption}`}
+            >
+              <img
+                src={`/services/gallery/${p.src}.webp`}
+                data-full={`/services/full/${p.src}.webp`}
+                alt={p.alt}
+                width="920"
+                height="613"
+                loading={i < 6 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+              <span class="gallery-item__meta">
+                <span class="gallery-item__service">{p.service}</span>
+                <span class="gallery-item__caption">{p.caption}</span>
+              </span>
+              <span class="gallery-item__zoom" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3M11 8v6M8 11h6" />
+                </svg>
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+
+      <p class="gallery-empty" hidden>No projects in that category yet.</p>
     </div>
   </section>
 
-  <section class="cta-banner">
-    <div class="container">
-      <h2>Like what you see?</h2>
-      <p>Tell us about your project — we’ll send a fixed written quote within 48 hours.</p>
-      <a href="/#lead-form-heading">Get Your Free Quote</a>
-    </div>
-  </section>
+  {/* Native <dialog>: the browser handles Esc, focus trapping and the
+      backdrop, so this needs no focus-management code of its own. */}
+  <dialog class="lightbox" id="lightbox" aria-label="Project photograph">
+    <button type="button" class="lightbox__close" data-close aria-label="Close">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12" /></svg>
+    </button>
+    <button type="button" class="lightbox__nav lightbox__nav--prev" data-step="-1" aria-label="Previous">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6" /></svg>
+    </button>
+    <figure class="lightbox__figure">
+      <img class="lightbox__img" src="" alt="" />
+      <figcaption class="lightbox__caption">
+        <span class="lightbox__service"></span>
+        <span class="lightbox__text"></span>
+        <span class="lightbox__count"></span>
+      </figcaption>
+    </figure>
+    <button type="button" class="lightbox__nav lightbox__nav--next" data-step="1" aria-label="Next">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+           stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6" /></svg>
+    </button>
+  </dialog>
 </PageLayout>
+
+<script>
+  // Gallery: filtering + lightbox. Vanilla, no library — the grid renders
+  // and every photo is crawlable with JS off; this only adds interaction.
+  const grid = document.getElementById('gallery');
+  if (grid) {
+    const items = [...grid.querySelectorAll<HTMLLIElement>('.gallery-item')];
+    const empty = document.querySelector<HTMLElement>('.gallery-empty');
+
+    // ---- filtering ----
+    document.querySelectorAll<HTMLButtonElement>('.gallery-filter').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const want = btn.dataset.filter;
+        document.querySelectorAll('.gallery-filter').forEach((b) => {
+          const on = b === btn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', String(on));
+        });
+        let shown = 0;
+        items.forEach((li) => {
+          const match = want === 'all' || li.dataset.service === want;
+          li.hidden = !match;
+          if (match) shown++;
+        });
+        if (empty) empty.hidden = shown > 0;
+      });
+    });
+
+    // ---- lightbox ----
+    const dlg = document.getElementById('lightbox') as HTMLDialogElement | null;
+    if (dlg && typeof dlg.showModal === 'function') {
+      const img = dlg.querySelector<HTMLImageElement>('.lightbox__img')!;
+      const svc = dlg.querySelector<HTMLElement>('.lightbox__service')!;
+      const txt = dlg.querySelector<HTMLElement>('.lightbox__text')!;
+      const count = dlg.querySelector<HTMLElement>('.lightbox__count')!;
+      let current = 0;
+
+      // Only step through what is currently visible, so next/prev respects
+      // the active filter rather than jumping to a hidden photo.
+      const visible = () => items.filter((li) => !li.hidden);
+
+      const show = (li: HTMLLIElement) => {
+        const source = li.querySelector<HTMLImageElement>('img')!;
+        const list = visible();
+        current = list.indexOf(li);
+        // Grid thumbnails are 920px wide; the dialog is up to 1100px, so
+        // reusing them here would upscale by ~20% and look soft.
+        img.src = source.dataset.full || source.src;
+        img.alt = source.alt;
+        svc.textContent = li.dataset.service ?? '';
+        txt.textContent = li.querySelector('.gallery-item__caption')?.textContent ?? '';
+        count.textContent = `${current + 1} of ${list.length}`;
+      };
+
+      const step = (dir: number) => {
+        const list = visible();
+        if (!list.length) return;
+        current = (current + dir + list.length) % list.length;
+        show(list[current]);
+      };
+
+      grid.addEventListener('click', (e) => {
+        const btn = (e.target as HTMLElement).closest('.gallery-item__btn');
+        if (!btn) return;
+        show(btn.closest('.gallery-item') as HTMLLIElement);
+        dlg.showModal();
+      });
+
+      dlg.addEventListener('click', (e) => {
+        const t = e.target as HTMLElement;
+        if (t.closest('[data-close]')) return dlg.close();
+        const nav = t.closest<HTMLElement>('[data-step]');
+        if (nav) return step(Number(nav.dataset.step));
+        // click on the backdrop itself closes
+        if (t === dlg) dlg.close();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (!dlg.open) return;
+        if (e.key === 'ArrowRight') step(1);
+        if (e.key === 'ArrowLeft') step(-1);
+      });
+    }
+  }
+</script>
+
+<style>
+  /* ---- filters ---- */
+  .gallery-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    margin-bottom: var(--sp-6);
+  }
+  .gallery-filter {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    padding: var(--sp-2) var(--sp-4);
+    min-height: 40px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    font: inherit;
+    font-size: var(--fs-sm);
+    font-weight: var(--weight-medium);
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color var(--dur-fast) var(--ease),
+                background var(--dur-fast) var(--ease),
+                color var(--dur-fast) var(--ease);
+  }
+  .gallery-filter:hover { border-color: var(--border-strong); }
+  .gallery-filter.is-active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
+  }
+  .gallery-filter__count {
+    font-size: var(--fs-xs);
+    font-weight: var(--weight-bold);
+    font-variant-numeric: tabular-nums;
+    color: var(--text-muted);
+  }
+  .gallery-filter.is-active .gallery-filter__count { color: var(--on-accent); opacity: 0.7; }
+  .gallery-filter:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+  /* ---- grid ---- */
+  /* .gallery-grid had no rule anywhere: it was only ever styled inside the
+     homepage's scoped block, which never applied to this page, so every
+     photo rendered full width. */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--sp-4);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .gallery-item { margin: 0; }
+  .gallery-item[hidden] { display: none; }
+
+  .gallery-item__btn {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--surface-sunken);
+    cursor: pointer;
+    text-align: left;
+    transition: border-color var(--dur-fast) var(--ease),
+                box-shadow var(--dur-fast) var(--ease),
+                transform var(--dur-fast) var(--ease);
+  }
+  .gallery-item__btn:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+  }
+  .gallery-item__btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+  .gallery-item__btn img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+  .gallery-item__btn:hover img { transform: scale(1.04); }
+
+  .gallery-item__meta {
+    position: absolute;
+    inset: auto 0 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--sp-7) var(--sp-4) var(--sp-4);
+    background: linear-gradient(to top,
+      rgba(10, 10, 10, 0.92) 0%, rgba(10, 10, 10, 0.7) 45%, rgba(10, 10, 10, 0) 100%);
+  }
+  .gallery-item__service {
+    font-size: var(--fs-xs);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-eyebrow);
+    color: var(--accent-on-dark);
+  }
+  .gallery-item__caption {
+    font-size: var(--fs-sm);
+    font-weight: var(--weight-semi);
+    color: var(--text-inverse);
+    line-height: 1.35;
+  }
+
+  .gallery-item__zoom {
+    position: absolute;
+    top: var(--sp-3);
+    right: var(--sp-3);
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(10, 10, 10, 0.6);
+    color: var(--text-inverse);
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+  }
+  .gallery-item__btn:hover .gallery-item__zoom,
+  .gallery-item__btn:focus-visible .gallery-item__zoom { opacity: 1; transform: scale(1); }
+
+  .gallery-empty {
+    margin: var(--sp-6) 0 0;
+    color: var(--text-muted);
+  }
+
+  /* ---- lightbox ---- */
+  .lightbox {
+    width: min(1100px, 94vw);
+    max-width: none;
+    max-height: 92vh;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: visible;
+  }
+  .lightbox::backdrop { background: rgba(10, 10, 10, 0.9); }
+
+  .lightbox__figure {
+    margin: 0;
+    background: var(--surface-inverse);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .lightbox__img {
+    display: block;
+    width: 100%;
+    max-height: 76vh;
+    object-fit: contain;
+    background: var(--ink-900);
+  }
+  .lightbox__caption {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--sp-2) var(--sp-4);
+    padding: var(--sp-4) var(--sp-5);
+    color: var(--text-inverse);
+  }
+  .lightbox__service {
+    font-size: var(--fs-xs);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-eyebrow);
+    color: var(--accent-on-dark);
+  }
+  .lightbox__text { font-size: var(--fs-md); font-weight: var(--weight-semi); }
+  .lightbox__count {
+    margin-left: auto;
+    font-size: var(--fs-sm);
+    color: var(--text-inverse-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .lightbox__close,
+  .lightbox__nav {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(250, 250, 250, 0.12);
+    color: var(--text-inverse);
+    cursor: pointer;
+    transition: background var(--dur-fast) var(--ease);
+  }
+  .lightbox__close:hover,
+  .lightbox__nav:hover { background: var(--accent); color: var(--on-accent); }
+  .lightbox__close:focus-visible,
+  .lightbox__nav:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .lightbox__close { top: -54px; right: 0; }
+  .lightbox__nav { top: 50%; transform: translateY(-50%); }
+  .lightbox__nav--prev { left: -56px; }
+  .lightbox__nav--next { right: -56px; }
+
+  @media (max-width: 900px) {
+    /* no room outside the frame on a phone — bring the controls inside */
+    .lightbox__close { top: var(--sp-3); right: var(--sp-3); background: rgba(10,10,10,0.6); }
+    .lightbox__nav--prev { left: var(--sp-3); background: rgba(10,10,10,0.6); }
+    .lightbox__nav--next { right: var(--sp-3); background: rgba(10,10,10,0.6); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gallery-item__btn, .gallery-item__btn img, .gallery-item__zoom { transition: none; }
+    .gallery-item__btn:hover { transform: none; }
+    .gallery-item__btn:hover img { transform: none; }
+  }
+</style>

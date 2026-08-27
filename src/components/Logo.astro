@@ -1,0 +1,123 @@
+---
+// KD PLASTERING — brand lockup.
+//
+// The monogram is the letters K and D set in Inter 800, not hand-drawn
+// paths: K takes `currentColor` so the mark inverts with its surroundings,
+// D carries the brand orange. Inter is already loaded for the site's body
+// type, so the mark costs no extra request and speaks the same voice as
+// every heading on the page.
+//
+// This replaces three hand-maintained SVGs (logo.svg / logo-footer.svg /
+// favicon.svg) that had drifted apart. Two defects went with them: the D's
+// counter was a white shape painted over the background rather than a real
+// hole (a white blob on any dark surface), and the wordmark was SVG <text>
+// inside a fixed viewBox, so it clipped mid-word on narrow screens.
+
+type Props = {
+  /** `stacked` matches the original artwork; `inline` is the header lockup. */
+  variant?: 'stacked' | 'inline' | 'mark';
+  /** Cap height of the monogram in px. Everything else scales from it. */
+  size?: number;
+  showTagline?: boolean;
+  class?: string;
+};
+
+const {
+  variant = 'stacked',
+  size = 40,
+  showTagline = true,
+  class: className = '',
+} = Astro.props as Props;
+---
+
+<span
+  class:list={['kd', `kd--${variant}`, className]}
+  style={`--cap: ${size}px`}
+  role="img"
+  aria-label="KD Plastering and Rendering Services"
+>
+  <span class="kd__mark" aria-hidden="true">
+    <span class="kd__k">K</span><span class="kd__d">D</span>
+  </span>
+
+  {variant !== 'mark' && (
+    <span class="kd__words" aria-hidden="true">
+      <span class="kd__name">KD Plastering</span>
+      {showTagline && (
+        <span class="kd__tag">
+          <span class="kd__rule" aria-hidden="true"></span>
+          <span>Rendering Services</span>
+          <span class="kd__rule" aria-hidden="true"></span>
+        </span>
+      )}
+    </span>
+  )}
+</span>
+
+<style>
+  .kd {
+    display: inline-flex;
+    line-height: 1;
+    color: inherit;
+    /* Inter's cap height is ~0.727em, so this makes `size` mean cap height
+       rather than font size — the mark then optically matches whatever it
+       sits beside. */
+    --mono-size: calc(var(--cap) / 0.727);
+  }
+
+  .kd__mark {
+    display: block;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 800;
+    font-size: var(--mono-size);
+    /* Tuck the D under the K's arm. A negative margin on the D alone, not
+       letter-spacing — letter-spacing adds its gap AFTER every character,
+       so on a two-letter mark it also leaves a phantom space past the D
+       that pushes the wordmark out of alignment. */
+    letter-spacing: normal;
+    /* Trim the font's line box down to the cap so the lockup aligns on
+       real ink, not on invisible leading. */
+    line-height: 0.72;
+    font-feature-settings: 'ss01' off, 'cv11' off;
+  }
+  .kd__k { color: currentColor; }
+  .kd__d {
+    color: var(--kd-accent, #ff6b1a);
+    margin-left: var(--kd-tuck, -0.07em);
+  }
+
+  .kd__words { display: flex; flex-direction: column; }
+
+  .kd__name {
+    font-weight: 600;
+    font-size: calc(var(--cap) * 0.42);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    white-space: nowrap;
+  }
+
+  .kd__tag {
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    font-size: calc(var(--cap) * 0.2);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    white-space: nowrap;
+    opacity: 0.6;
+  }
+  .kd__rule { height: 1px; background: currentColor; opacity: 0.4; flex: 1 0 1.6em; }
+
+  /* Stacked — the original artwork's arrangement */
+  .kd--stacked { flex-direction: column; align-items: center; gap: calc(var(--cap) * 0.34); }
+  .kd--stacked .kd__words { align-items: center; gap: calc(var(--cap) * 0.22); }
+  .kd--stacked .kd__tag { align-self: stretch; justify-content: center; }
+
+  /* Inline — for the header, where vertical room is tight */
+  .kd--inline { flex-direction: row; align-items: center; gap: calc(var(--cap) * 0.42); }
+  .kd--inline .kd__words { align-items: flex-start; gap: calc(var(--cap) * 0.16); }
+  .kd--inline .kd__name { letter-spacing: 0.1em; }
+  .kd--inline .kd__rule { flex: 0 0 1.1em; }
+  .kd--inline .kd__rule:last-child { display: none; }
+</style>

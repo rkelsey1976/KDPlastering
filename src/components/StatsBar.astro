@@ -28,20 +28,20 @@ const { stats, variant = 'light' } = Astro.props as Props;
 <style>
   .stat-bar--dark .stat-bar__num,
   .stat-bar--dark .stat-bar__label {
-    color: #fff;
+    color: var(--text-inverse);
   }
   .stat-bar--dark {
     border-top-color: rgba(255, 255, 255, 0.15);
     border-bottom-color: rgba(255, 255, 255, 0.15);
   }
-  .stat-bar__num--fern { color: var(--color-fern-deep); }
-  .stat-bar__num--terracotta { color: var(--color-terracotta); }
-  .stat-bar__num--slate { color: var(--color-slate); }
+  .stat-bar__num--fern { color: var(--accent-text); }
+  .stat-bar__num--terracotta { color: var(--accent-text); }
+  .stat-bar__num--slate { color: var(--text); }
 
   .stat-bar--dark .stat-bar__num--fern,
   .stat-bar--dark .stat-bar__num--terracotta,
   .stat-bar--dark .stat-bar__num--slate {
-    color: var(--color-amber);
+    color: var(--accent-text);
   }
   .stat-bar--dark .stat-bar__label {
     color: rgba(255, 255, 255, 0.7);

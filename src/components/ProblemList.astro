@@ -3,12 +3,13 @@
 // Each problem gets a rust-red icon + headline + description.
 
 type Props = {
+  eyebrow?: string;
   problems: string[];
   heading?: string;
   lede?: string;
 };
 
-const { problems, heading, lede } = Astro.props as Props;
+const { eyebrow, problems, heading, lede } = Astro.props as Props;
 
 // Problem icons
 const problemIcons = [
@@ -27,7 +28,8 @@ const iconPaths: Record<string, string> = {
 ---
 
 {heading && (
-  <header class="problems-header">
+  <header class="problems-header section-header section-header--center">
+    {eyebrow && <span class="eyebrow">{eyebrow}</span>}
     <h2>{heading}</h2>
     {lede && <p class="lede">{lede}</p>}
   </header>
@@ -50,7 +52,7 @@ const iconPaths: Record<string, string> = {
 
 <style>
   .problems-header {
-    margin-bottom: var(--sp-7);
+    margin-bottom: var(--sp-6);
     text-align: center;
     max-width: 60ch;
     margin-left: auto;
@@ -69,8 +71,8 @@ const iconPaths: Record<string, string> = {
 
   .problem-card {
     background: #fff;
-    border: 1px solid var(--color-border);
-    border-left: 3px solid var(--color-rust);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
     border-radius: var(--radius-md);
     padding: var(--sp-4);
     display: flex;
@@ -80,7 +82,7 @@ const iconPaths: Record<string, string> = {
   }
 
   .problem-card:hover {
-    border-left-color: var(--color-clay);
+    border-left-color: var(--accent);
     transform: translateX(2px);
     box-shadow: var(--shadow-sm);
   }
@@ -89,8 +91,8 @@ const iconPaths: Record<string, string> = {
     width: 40px;
     height: 40px;
     border-radius: var(--radius-sm);
-    background: var(--color-rust-light);
-    color: var(--color-rust);
+    background: var(--accent-tint);
+    color: var(--accent-text);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -102,7 +104,7 @@ const iconPaths: Record<string, string> = {
     padding-top: var(--sp-1);
     font-size: var(--fs-sm);
     line-height: 1.55;
-    color: var(--color-walnut);
+    color: var(--text);
     font-weight: 500;
   }
 </style>

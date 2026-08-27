@@ -12,18 +12,22 @@ export type Review = {
 };
 
 type Props = {
+  eyebrow?: string;
   reviews: Review[];
   heading?: string;
   lede?: string;
 };
 
-const { reviews, heading = 'What Our Customers Say', lede } = Astro.props as Props;
+const { eyebrow, reviews, heading = 'What Our Customers Say', lede } = Astro.props as Props;
 ---
 
 <section class="reviews-section" aria-labelledby="reviews-heading">
   <div class="container">
-    {heading && <h2 id="reviews-heading">{heading}</h2>}
-    {lede && <p class="lede">{lede}</p>}
+    <header class="section-header section-header--center">
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+      {heading && <h2 id="reviews-heading">{heading}</h2>}
+      {lede && <p class="lede">{lede}</p>}
+    </header>
     <div class="reviews-grid">
       {reviews.map((r) => (
         <article class="review-card">
@@ -46,24 +50,24 @@ const { reviews, heading = 'What Our Customers Say', lede } = Astro.props as Pro
 
 <style>
   .reviews-section {
-    padding: 3rem 0;
-    background: #fff;
+    padding: var(--section-y-tight) 0;
+    background: var(--surface-raised);
   }
   .container {
-    max-width: 1200px;
+    max-width: var(--container-max);
     margin: 0 auto;
-    padding: 0 1.25rem;
+    padding: 0 var(--gutter);
   }
   .reviews-section h2 {
     text-align: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--sp-2);
   }
   .lede {
     text-align: center;
-    color: #505a5f;
-    font-size: 1.1rem;
-    max-width: 760px;
-    margin: 0 auto 2rem;
+    color: var(--text-muted);
+    font-size: var(--fs-md);
+    max-width: 60ch;
+    margin: 0 auto var(--sp-6);
   }
   .reviews-grid {
     display: grid;
@@ -71,14 +75,14 @@ const { reviews, heading = 'What Our Customers Say', lede } = Astro.props as Pro
     gap: 1.5rem;
   }
   .review-card {
-    background: #f7fbff;
-    border-left: 4px solid #00703c;
+    background: var(--surface-raised);
+    border-left: 4px solid var(--accent);
     padding: 1.5rem;
     border-radius: 0 6px 6px 0;
     box-shadow: 0 1px 4px rgba(0,0,0,0.04);
   }
   .review-stars {
-    color: #f47738;
+    color: var(--accent-text);
     font-size: 1.25rem;
     letter-spacing: 0.1rem;
     margin-bottom: 0.75rem;
@@ -90,11 +94,11 @@ const { reviews, heading = 'What Our Customers Say', lede } = Astro.props as Pro
   .review-quote p {
     margin: 0;
     font-style: italic;
-    color: #2c2c2c;
+    color: var(--text);
     line-height: 1.6;
   }
   .review-meta {
-    border-top: 1px solid #d9e2ec;
+    border-top: 1px solid var(--border);
     padding-top: 0.75rem;
   }
   .review-name {
@@ -106,6 +110,6 @@ const { reviews, heading = 'What Our Customers Say', lede } = Astro.props as Pro
   .review-date {
     margin: 0.2rem 0 0;
     font-size: 0.85rem;
-    color: #505a5f;
+    color: var(--text-muted);
   }
 </style>
