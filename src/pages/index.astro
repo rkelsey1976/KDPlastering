@@ -130,17 +130,7 @@ const schema = {
           </a>
         </div>
 
-        <!-- One-line trust strip — replaces 4 cluttered badges -->
-        <div class="hero__trust">
-          <span class="hero__trust-item">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-            <strong>180+</strong> 5-star reviews
-          </span>
-          <span class="hero__trust-divider"></span>
-          <span class="hero__trust-item"><strong>£2m</strong> insured</span>
-          <span class="hero__trust-divider"></span>
-          <span class="hero__trust-item"><strong>10-year</strong> warranty</span>
-        </div>
+        <!-- Trust signals live in the orange statbar below — no duplicate strip here -->
       </div>
     </div>
 
@@ -171,7 +161,7 @@ const schema = {
     </div>
   </section>
 
-  <!-- 2. SERVICES — 6 cards, bento grid -->
+  <!-- 2. SERVICES — 6 cards, uniform grid -->
   <section class="section">
     <div class="container">
       <SectionHeader
@@ -180,27 +170,18 @@ const schema = {
         heading="Our services"
         lede="Every type of internal plastering, external rendering and external wall insulation across Bristol &amp; Bath."
       />
-      <div class="service-bento reveal-stagger">
-        {featuredServices.map((service, i) => {
-          // Layout: 1 large + 1 medium, 3 small, 1 wide
-          let cardVariant = 'bento';
-          if (i === 0) cardVariant = 'bento-lg';          // Silicone — hero
-          else if (i === 5) cardVariant = 'featured';     // EWI — wide row
-          else if (i === 1) cardVariant = 'featured';     // House — medium
-
-          return (
-            <ServiceCard
-              slug={service.slug}
-              shortName={service.shortName}
-              tagline={service.tagline}
-              longTagline={service.longIntro}
-              priceHint={priceHints[service.slug]}
-              imageSrc={serviceImages[service.slug]}
-              number={String(i + 1).padStart(2, '0')}
-              variant={cardVariant}
-            />
-          );
-        })}
+      <div class="service-grid reveal-stagger">
+        {featuredServices.map((service, i) => (
+          <ServiceCard
+            slug={service.slug}
+            shortName={service.shortName}
+            tagline={service.tagline}
+            priceHint={priceHints[service.slug]}
+            imageSrc={serviceImages[service.slug]}
+            number={String(i + 1).padStart(2, '0')}
+            variant="default"
+          />
+        ))}
       </div>
     </div>
   </section>
@@ -251,6 +232,52 @@ const schema = {
   </section>
 </PageLayout>
 
+<script>
+  // Scroll reveal animations
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      // Skip animations — make everything visible immediately
+      document.querySelectorAll('.reveal, .reveal-stagger').forEach((el) => el.classList.add('is-visible'));
+      return;
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach((el) => observer.observe(el));
+
+    // Animated stat counters
+    const stats = document.querySelectorAll('.hero__statbar-num');
+    const statObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = parseInt(el.dataset.count || '0', 10);
+        const prefix = el.dataset.prefix || '';
+        const suffix = el.dataset.suffix || '';
+        const duration = 1500;
+        const start = performance.now();
+        const animate = (now) => {
+          const t = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - t, 3);
+          const value = Math.floor(eased * target);
+          el.textContent = `${prefix}${value}${suffix}`;
+          if (t < 1) requestAnimationFrame(animate);
+          else el.textContent = `${prefix}${target}${suffix}`;
+        };
+        requestAnimationFrame(animate);
+        statObserver.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    stats.forEach((el) => statObserver.observe(el));
+  });
+</script>
+
 <style is:global>
 /* ==== SCROLL REVEAL ANIMATIONS ==== */
   @media (prefers-reduced-motion: no-preference) {
@@ -280,44 +307,23 @@ const schema = {
     .reveal-stagger.is-visible > *:nth-child(6) { transition-delay: 0.40s; }
   }
 
-  /* ==== BENTO SERVICE GRID ==== */
-  .service-bento {
+  /* ==== UNIFORM CARD GRID (3-col desktop, 2-col tablet, 1-col mobile) ==== */
+  .service-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-auto-rows: minmax(160px, auto);
-    gap: var(--sp-4);
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-5);
   }
 
-  /* Place each card by index — use direct child selector for portability */
-  .service-bento > a:nth-of-type(1) {
-    grid-column: span 4;
-    grid-row: span 2;
-  }   /* Silicone — large hero */
-  .service-bento > a:nth-of-type(2) {
-    grid-column: span 2;
-    grid-row: span 2;
-  }   /* House — medium */
-  .service-bento > a:nth-of-type(3) {
-    grid-column: span 2;
-  }   /* External wall — small */
-  .service-bento > a:nth-of-type(4) {
-    grid-column: span 2;
-  }   /* Monocouche — small */
-  .service-bento > a:nth-of-type(5) {
-    grid-column: span 2;
-  }   /* Plastering — small */
-  .service-bento > a:nth-of-type(6) {
-    grid-column: span 6;
-  }   /* EWI — full width */
-
   @media (max-width: 900px) {
-    .service-bento {
-      grid-template-columns: 1fr;
-      grid-auto-rows: auto;
+    .service-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--sp-4);
     }
-    .service-bento > a {
-      grid-column: span 1 !important;
-      grid-row: auto !important;
+  }
+
+  @media (max-width: 600px) {
+    .service-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

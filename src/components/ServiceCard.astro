@@ -66,8 +66,8 @@ const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
   ]}
   data-variant={variant}
 >
-  {variant.startsWith('bento') && (
-    <span class="service-card__number">{displayNumber}</span>
+  {variant.startsWith('bento') && !imageSrc && number && (
+    <span class="service-card__number service-card__number--solo">{displayNumber}</span>
   )}
 
   {imageSrc && (
@@ -78,6 +78,9 @@ const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
         loading="lazy"
         decoding="async"
       />
+      {number && (
+        <span class="service-card__number">{number}</span>
+      )}
     </div>
   )}
 
@@ -96,7 +99,7 @@ const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
   <div class="service-card__body">
     <h3 class="service-card__name">{shortName}</h3>
     <p class="service-card__tagline">
-      {variant === 'bento-lg' && longTagline ? longTagline : tagline}
+      {tagline}
     </p>
   </div>
 
@@ -224,6 +227,10 @@ const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
     font-size: var(--fs-sm);
     line-height: 1.55;
     color: var(--color-walnut-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   /* ==== Price ==== */
@@ -270,16 +277,21 @@ const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
   /* ==== BENTO VARIANTS ==== */
 
   /* Number badge */
+  /* Service number badge — overlaid on the hero image */
   .service-card__number {
     position: absolute;
     top: var(--sp-4);
-    right: var(--sp-5);
+    left: var(--sp-4);
+    background: var(--color-clay);
+    color: #fff;
     font-size: var(--fs-xs);
-    font-weight: 700;
-    color: var(--card-accent, var(--color-clay-deep));
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.05em;
     font-feature-settings: 'tnum';
-    letter-spacing: 0.1em;
-    opacity: 0.55;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    z-index: 1;
   }
 
   /* Small bento card — minimal, tight */
