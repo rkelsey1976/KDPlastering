@@ -40,8 +40,11 @@ const {
     <span class="kd__k">K</span><span class="kd__d">D</span>
   </span>
 
+  {/* The wordmark is readable by AT — it is the link's accessible name.
+      The KD monogram above stays aria-hidden, since it repeats the same
+      words and would otherwise be announced twice. */}
   {variant !== 'mark' && (
-    <span class="kd__words" aria-hidden="true">
+    <span class="kd__words">
       <span class="kd__name">KD Plastering</span>
       {showTagline && (
         <span class="kd__tag">

@@ -140,7 +140,9 @@ const groups = [
   .area-coverage__pcode {
     font-size: var(--fs-xs);
     font-weight: var(--weight-body);
-    color: var(--text-subtle);
+    /* --text-subtle is 3.3:1 and documented as large-text-only. At 12px
+       this needs 4.5:1, so it uses --text-muted (5.5:1). */
+    color: var(--text-muted);
     font-variant-numeric: tabular-nums;
   }
 

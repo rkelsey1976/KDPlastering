@@ -1,0 +1,17 @@
+# Netlify redirects. Nearest match wins; 301 unless stated.
+#
+# The rebuild kept every service URL slug, so only two old pages moved.
+# Both currently return 200 on the live site and would 404 at cut-over.
+
+# Sitemap moved: Astro's integration emits an index plus a child sitemap.
+# Anything still referencing the old flat path (GSC, directories, backlinks)
+# lands on the index instead of a 404.
+/sitemap.xml            /sitemap-index.xml       301
+
+# Old form thank-you page.
+/faqs/thank-you         /thanks/                 301
+
+# There is no dedicated testimonials page any more — reviews sit on the
+# homepage and each service page. The gallery is the closest match in
+# intent: it is the proof-of-work page.
+/testimonials           /our-work/               301

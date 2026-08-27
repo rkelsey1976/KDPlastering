@@ -111,6 +111,7 @@ const schema = {
 <PageLayout
   title="Bristol's Trusted Plastering & Rendering Specialists | KD Plastering"
   description="Professional plastering, rendering and external wall insulation across Bristol and Bath. 10+ years experience, fully insured, 4.9 on Google from 50 reviews. Free quotes within 48 hours."
+  preloadImage="/hero-home.webp"
   canonical="/"
   schema={schema}
 >
@@ -122,7 +123,7 @@ const schema = {
     primaryCta={{ label: 'Get Your Free Quote', href: '/contact/#lead-form-heading' }}
     phone={{ number: '01174094116', display: '0117 409 4116' }}
     image="/hero-home.webp"
-    rotateWith={['/hero-2.webp', '/hero-3.webp', '/hero-4.webp']}
+    rotateWith={['/heroes/r/hero-2-1200.webp', '/heroes/r/hero-3-1200.webp', '/heroes/r/hero-4-1200.webp']}
     stats={heroStats}
   />
 
@@ -165,14 +166,13 @@ const schema = {
               <a
                 href={`/our-services/${img.slug}-bristol/`}
                 class="slide__link"
-                aria-label={`${img.service}: ${img.caption}`}
               >
                 <img
                   src={img.src}
                   alt={img.alt}
                   width="920"
                   height="613"
-                  loading={i < 2 ? 'eager' : 'lazy'}
+                  loading="lazy"
                   decoding="async"
                 />
                 <figcaption class="slide__caption">
@@ -220,6 +220,20 @@ const schema = {
       </div>
     </div>
   </section>
+{/* Body link, not a nav link: a sitewide /blog/ entry would take ~3.5%
+    of internal PageRank from the service pages. */}
+<section class="section section--alt">
+  <div class="container container--reading" style="text-align: center;">
+    <span class="eyebrow">Guides</span>
+    <h2>Not sure what's wrong with your wall?</h2>
+    <p class="lede">
+      Straight answers on failing render, damp inside walls and what the work
+      actually costs — from what we find on site.
+    </p>
+    <p style="margin: 0;"><a class="btn btn--secondary" href="/blog/">Read our guides</a></p>
+  </div>
+</section>
+
 </PageLayout>
 
 <script>

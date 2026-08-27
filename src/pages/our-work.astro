@@ -38,6 +38,7 @@ const services = [...new Set(projects.map((p) => p.service))].sort();
 <PageLayout
   title="Our Work | KD Plastering & Rendering Services"
   description="A gallery of recent plastering, rendering and external wall insulation projects across Bristol and Bath."
+  preloadImage="/heroes/our-work.webp"
   canonical="/our-work/"
   breadcrumbs={[{ name: 'Our Work', href: '/our-work/' }]}
   ctaHeading="Like what you see?"
@@ -82,7 +83,6 @@ const services = [...new Set(projects.map((p) => p.service))].sort();
               type="button"
               class="gallery-item__btn"
               data-index={i}
-              aria-label={`View larger: ${p.caption}`}
             >
               <img
                 src={`/services/gallery/${p.src}.webp`}
@@ -90,7 +90,7 @@ const services = [...new Set(projects.map((p) => p.service))].sort();
                 alt={p.alt}
                 width="920"
                 height="613"
-                loading={i < 6 ? 'eager' : 'lazy'}
+                loading={i < 3 ? 'eager' : 'lazy'}
                 decoding="async"
               />
               <span class="gallery-item__meta">
@@ -261,7 +261,9 @@ const services = [...new Set(projects.map((p) => p.service))].sort();
     font-variant-numeric: tabular-nums;
     color: var(--text-muted);
   }
-  .gallery-filter.is-active .gallery-filter__count { color: var(--on-accent); opacity: 0.7; }
+    /* No opacity: it blended --on-accent into the orange and dropped the
+     contrast from 6.95:1 to 4.4:1, just under AA for 12px. */
+  .gallery-filter.is-active .gallery-filter__count { color: var(--on-accent); }
   .gallery-filter:focus-visible { outline: none; box-shadow: var(--focus-ring); }
 
   /* ---- grid ---- */

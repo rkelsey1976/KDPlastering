@@ -70,6 +70,7 @@ const schema = {
 <PageLayout
   title={`${prose} in Bath | ${serviceHook(service)}`}
   description={`${prose} across Bath's BA postcodes. Georgian and listed property experience, lime-compatible specifications, free site visit and a fixed written quote.`}
+  preloadImage={`/heroes/${service.slug}.webp`}
   canonical={`/our-services/${service.slug}-bath/`}
   schema={schema}
   breadcrumbs={[
@@ -295,6 +296,12 @@ const schema = {
     color: var(--text-muted);
   }
 
+  /* Links inside body copy need more than colour to be distinguishable. */
+  .bath-foot a {
+    color: var(--accent-text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
   .bath-foot {
     max-width: 780px;
     margin: var(--sp-4) auto 0;

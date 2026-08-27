@@ -94,6 +94,7 @@ const schema = {
 <PageLayout
   title={`${prose} in ${area.name} ${area.postcode} | ${serviceHook(service)}`}
   description={`${prose} in ${area.name}, Bristol ${area.postcode}. ${area.blurb} Free site visit, fixed written quote, 10-year warranty.`}
+  preloadImage={`/heroes/${service.slug}.webp`}
   canonical={`/our-services/${service.slug}-bristol/${area.slug}/`}
   schema={schema}
   breadcrumbs={[

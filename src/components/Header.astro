@@ -23,7 +23,7 @@ const services = [
 
 <header class="site-header" data-scrolled="false">
   <div class="container site-header__inner">
-    <a href="/" class="logo" aria-label="KD Plastering and Rendering Services — Home">
+    <a href="/" class="logo">
       <Logo variant="inline" size={28} />
     </a>
 
@@ -49,14 +49,14 @@ const services = [
               <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </button>
-          <div class="mega-menu" id="services-mega" role="menu" aria-labelledby="services-trigger">
+          <div class="mega-menu" id="services-mega" aria-labelledby="services-trigger">
             <div class="container mega-menu__container">
               <div class="mega-menu__header">
                 <p class="eyebrow eyebrow--clay">Our Services</p>
                 <h2 class="mega-menu__title">Six specialist services. Twenty neighbourhoods.</h2>
                 {/* The category page had no sitewide link — it was reached only by
                     breadcrumbs, all 102 of them reading "Our Services". */}
-                <a href="/our-services/" class="mega-menu__all" role="menuitem">
+                <a href="/our-services/" class="mega-menu__all">
                   Compare all plastering &amp; rendering services
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                        stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -66,14 +66,18 @@ const services = [
               </div>
               <div class="mega-menu__grid">
                 {services.map((s) => (
-                  <a href={`/our-services/${s.slug}-bristol/`} class="mega-menu__item" role="menuitem">
+                  <a href={`/our-services/${s.slug}-bristol/`} class="mega-menu__item">
                     <span class="mega-menu__shot">
+                      {/* data-src, not src: the panel is visibility:hidden but
+                          laid out inside the viewport, so loading="lazy" never
+                          defers it. These twelve thumbnails were fetching ~360KB
+                          at 32ms and starving the LCP image. Swapped in on first
+                          intent, or at idle. */}
                       <img
-                        src={s.image}
+                        data-src={s.image}
                         alt=""
                         width="560"
                         height="374"
-                        loading="lazy"
                         decoding="async"
                       />
                     </span>
@@ -248,6 +252,38 @@ const services = [
     const mq = window.matchMedia('(min-width: 901px)');
     mq.addEventListener('change', (e) => { if (e.matches) setOpen(false); });
   }
+
+  // Mega-menu thumbnails: fetch on first intent, or at idle once the page
+  // has settled — whichever comes first. Held in data-src because the panel
+  // is laid out inside the viewport, which defeats loading="lazy".
+  {
+    let loaded = false;
+    const fill = () => {
+      if (loaded) return;
+      loaded = true;
+      document
+        .querySelectorAll<HTMLImageElement>('.mega-menu img[data-src]')
+        .forEach((img) => {
+          img.src = img.dataset.src!;
+          img.removeAttribute('data-src');
+        });
+    };
+
+    const mega = document.querySelector('.has-mega');
+    if (mega) {
+      ['pointerenter', 'focusin', 'click'].forEach((evt) =>
+        mega.addEventListener(evt, fill, { once: true })
+      );
+    }
+
+    const idle = () =>
+      'requestIdleCallback' in window
+        ? (window as any).requestIdleCallback(fill, { timeout: 5000 })
+        : setTimeout(fill, 3000);
+    if (document.readyState === 'complete') idle();
+    else window.addEventListener('load', idle, { once: true });
+  }
+
 </script>
 
 <style>

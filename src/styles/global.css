@@ -1106,3 +1106,12 @@ p { margin: 0 0 var(--sp-4); }
 @media (max-width: 600px) {
   .service-grid-3 { grid-template-columns: 1fr; }
 }
+
+
+/* --accent-text (orange-700) is the AA-safe orange for LIGHT surfaces and
+   falls to 3.51:1 on near-black. Dark sections take the inverse token,
+   which is 6.95:1. Global so a new dark block cannot miss it. */
+.section--dark .eyebrow,
+.section--dark .section-header .eyebrow {
+  color: var(--accent-on-dark);
+}

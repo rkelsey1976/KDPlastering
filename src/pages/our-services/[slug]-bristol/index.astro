@@ -14,9 +14,11 @@ import ServiceBullets from '../../../components/ServiceBullets.astro';
 import { getService, getRelatedServices } from '../../../lib/services';
 import { AREAS } from '../../../lib/areas';
 import { REVIEWS } from '../../../lib/reviews';
+import { getCollection } from 'astro:content';
 import { getBathAreas } from '../../../lib/areas';
 
 const BATH_AREA_NAMES = new Set(getBathAreas().map((a) => a.name));
+
 
 export function getStaticPaths() {
   const slugs = [
@@ -44,6 +46,14 @@ const serviceProse = service.shortName.replace(/\s+Services$/i, '').toLowerCase(
 // Title-case form for headings that read as a sentence: "How Much Does
 // Plastering Services Cost?" is not English.
 const serviceTitle = service.shortName.replace(/\s+Services$/i, '');
+
+// Guides naming this service. Capped at two: the point is a relevant link
+// down and a link back up, not a link farm.
+const guides = (await getCollection('blog', ({ data }) =>
+  !data.draft && (data.service === service.slug || data.alsoService === service.slug)
+)).slice(0, 2);
+
+
 
 // Intro photograph — a different frame from the hero, so the top of the
 // page does not show the same house twice.
@@ -136,6 +146,7 @@ const schema = [
 <PageLayout
   title={service.titleTemplate}
   description={service.metaDescription}
+  preloadImage={`/heroes/${service.slug}.webp`}
   canonical={`/our-services/${slug}-bristol/`}
   breadcrumbs={[{ name: 'Our Services', href: '/our-services/' }, { name: service.shortName, href: `/our-services/${service.slug}-bristol/` }]}
   prefillService={service.shortName}
@@ -318,6 +329,28 @@ const schema = [
     </div>
   </section>
 
+  {guides.length > 0 && (
+    <section class="section">
+      <div class="container container--reading">
+        <header class="section-header section-header--center">
+          <span class="eyebrow">Before you commit</span>
+          <h2>Worth reading first</h2>
+        </header>
+        <ul class="svc-guides">
+          {guides.map((g) => (
+            <li>
+              <a href={`/blog/${g.id}/`}>
+                <span class="svc-guides__title">{g.data.title}</span>
+                <span class="svc-guides__desc">{g.data.description}</span>
+                <span class="svc-guides__meta">{g.data.minutes} min read</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
   <section class="section">
     <div class="container">
       {/* Bath's six service pages were reachable only from /bath/ and the
@@ -341,6 +374,31 @@ const schema = [
 </PageLayout>
 
 <style>
+  .svc-guides { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-3); }
+  .svc-guides a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: var(--sp-5);
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+  }
+  .svc-guides a:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .svc-guides__title { font-size: var(--fs-md); font-weight: var(--weight-bold); color: var(--text); }
+  .svc-guides__desc { font-size: var(--fs-sm); line-height: 1.6; color: var(--text-muted); }
+  .svc-guides__meta {
+    margin-top: var(--sp-2);
+    font-size: var(--fs-xs);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--accent-text);
+  }
+
   .subsvc {
     list-style: none;
     margin: 0;
