@@ -8,6 +8,7 @@ import Header from '../components/Header.astro';
 import LeadForm from '../components/LeadForm.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Footer from '../components/Footer.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
 
 export type BreadcrumbItem = { name: string; href: string };
 
@@ -63,15 +64,39 @@ const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://www.kdplas
 const canonicalAbsolute = new URL(canonical, siteUrl).toString();
 const ogImageAbsolute = new URL(ogImage, siteUrl).toString();
 const schemaArr = Array.isArray(schema) ? schema : schema ? [schema] : [];
+
+// BreadcrumbList, built from the same array the visible nav renders — Google
+// requires the markup to match what the user actually sees, so deriving both
+// from one source is the point. Home is implicit in the nav, so it is added
+// here too. Only emitted when there is a trail; the homepage has none.
+const breadcrumbSchema =
+  breadcrumbs.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [{ name: 'Home', href: '/' }, ...breadcrumbs].map((b, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: b.name,
+          item: new URL(b.href, siteUrl).toString(),
+        })),
+      }
+    : null;
 ---
 
 <!doctype html>
 <html lang="en-GB">
   <head>
     <!-- Fonts: Inter (display + body, self-via Google) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    {/* Inter is self-hosted (see global.css). Preload it: it is the only
+        font on the site and every page needs it immediately. */}
+    <link
+      rel="preload"
+      href="/fonts/inter-var-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {noindex
@@ -108,6 +133,10 @@ const schemaArr = Array.isArray(schema) ? schema : schema ? [schema] : [];
     {schemaArr.map((s) => (
       <script type="application/ld+json" set:html={JSON.stringify(s)} />
     ))}
+
+    {breadcrumbSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    )}
   </head>
   <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -161,6 +190,7 @@ const schemaArr = Array.isArray(schema) ? schema : schema ? [schema] : [];
     )}
 
     <Footer />
+    <WhatsAppButton />
   </body>
 </html>
 

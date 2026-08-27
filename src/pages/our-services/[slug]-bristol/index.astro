@@ -14,6 +14,9 @@ import ServiceBullets from '../../../components/ServiceBullets.astro';
 import { getService, getRelatedServices } from '../../../lib/services';
 import { AREAS } from '../../../lib/areas';
 import { REVIEWS } from '../../../lib/reviews';
+import { getBathAreas } from '../../../lib/areas';
+
+const BATH_AREA_NAMES = new Set(getBathAreas().map((a) => a.name));
 
 export function getStaticPaths() {
   const slugs = [
@@ -60,9 +63,12 @@ const introAlt: Record<string, string> = {
   'plastering-services':      'Finished interior room with smooth white plastered walls',
   'external-wall-insulation': 'EPS insulation boards being mechanically fixed to an external wall',
 };
-const reviewsForService = REVIEWS.filter(
-  (r) => r.service.toLowerCase().includes(service.shortName.toLowerCase().split(' ')[0])
-).slice(0, 3);
+const reviewsForService = REVIEWS
+  .filter((r) => r.service.toLowerCase().includes(service.shortName.toLowerCase().split(' ')[0]))
+  // Bath jobs are the proof on the Bath page, not here. Filter before the
+  // slice, or dropping one leaves two reviews instead of pulling in a third.
+  .filter((r) => !BATH_AREA_NAMES.has(r.area))
+  .slice(0, 3);
 
 // Build comprehensive Service + LocalBusiness + FAQPage + Offer schema
 const schema = [
@@ -86,21 +92,9 @@ const schema = [
         postalCode: 'BS15 3FH',
         addressCountry: 'GB',
       },
-      areaServed: [
-        { '@type': 'City', name: 'Bristol' },
-        { '@type': 'City', name: 'Bath' },
-      ],
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '4.9',
-        reviewCount: '180',
-        bestRating: '5',
-      },
+      areaServed: { '@type': 'City', name: 'Bristol' },
     },
-    areaServed: [
-      { '@type': 'City', name: 'Bristol' },
-      { '@type': 'City', name: 'Bath' },
-    ],
+    areaServed: { '@type': 'City', name: 'Bristol' },
     offers: {
       '@type': 'AggregateOffer',
       priceCurrency: 'GBP',
@@ -143,21 +137,21 @@ const schema = [
   title={service.titleTemplate}
   description={service.metaDescription}
   canonical={`/our-services/${slug}-bristol/`}
-  breadcrumbs={[{ name: 'Our Services', href: '/our-services/' }, { name: service.shortName }]}
+  breadcrumbs={[{ name: 'Our Services', href: '/our-services/' }, { name: service.shortName, href: `/our-services/${service.slug}-bristol/` }]}
   prefillService={service.shortName}
   schema={schema}
   formHeading={`Get Your Free ${service.shortName} Quote`}
 >
   <Hero
     size="compact"
-    eyebrow={[`${service.shortName} in Bristol & Bath`]}
+    eyebrow={[`${service.shortName} in Bristol`]}
     title={service.name}
     lede={service.intro}
-    primaryCta={{ label: 'Get a Free Quote', href: '/contact/' }}
+    primaryCta={{ label: 'Get a Free Quote', href: '/contact/#lead-form-heading' }}
     phone={{ number: '01174094116', display: '0117 409 4116' }}
     image={`/heroes/${service.slug}.webp`}
     imageAlt={service.heroImageAlt ?? ''}
-    trust={['10+ years experience', '180+ verified reviews', '£2m public liability', '10-year warranty']}
+    trust={['10+ years experience', '290+ verified reviews', '£2m public liability', '10-year warranty']}
   />
 
   <section class="section">
@@ -184,10 +178,42 @@ const schema = [
         variant="do"
         columns={4}
         heading="What We Do"
-        lede={`The ${serviceProse} work we take on across Bristol and Bath — every project, every property type.`}
+        lede={`The ${serviceProse} work we take on across Bristol — every project, every property type.`}
       />
     </div>
   </section>
+
+  {/* Named jobs people search for individually — and that the Google
+      Business Profile lists as separate services. Anchored so a GBP entry
+      can deep-link straight to the right block instead of needing a thin
+      page of its own. */}
+  {service.subServices && (
+    <section class="section" aria-labelledby="sub-services-heading">
+      <div class="container">
+        <header class="section-header section-header--center">
+          <span class="eyebrow">Specific jobs</span>
+          <h2 id="sub-services-heading">{serviceProse} we're asked for by name</h2>
+          <p class="lede">Each is part of the same service — tell us which one you need and we'll quote it on its own.</p>
+        </header>
+        <ul class="subsvc">
+          {service.subServices.map((sub) => (
+            <li id={sub.id} class="subsvc__item">
+              <h3 class="subsvc__name">{sub.name}</h3>
+              <p class="subsvc__summary">{sub.summary}</p>
+              <a class="subsvc__cta" href="/contact/#lead-form-heading">
+                Get a quote for this
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
 
   <section class="section section--alt">
     <div class="container">
@@ -206,7 +232,7 @@ const schema = [
     eyebrow="Why us"
       benefits={service.benefits}
       heading={`Why Choose ${serviceTitle}`}
-      lede={`We've completed hundreds of ${serviceProse} projects across Bristol and Bath. Here's what makes them last.`}
+      lede={`We've completed hundreds of ${serviceProse} projects across Bristol. Here's what makes them last.`}
     />
     </div>
   </section>
@@ -248,7 +274,7 @@ const schema = [
       eyebrow="Reviews"
       reviews={reviewsForService}
       heading={`${service.shortName} Reviews`}
-      lede={`Verified customer reviews from our ${service.shortName.toLowerCase()} installations across Bristol and Bath.`}
+      lede={`Verified customer reviews from our ${service.shortName.toLowerCase()} installations across Bristol.`}
     />
   )}
 
@@ -294,10 +320,20 @@ const schema = [
 
   <section class="section">
     <div class="container">
+      {/* Bath's six service pages were reachable only from /bath/ and the
+          five Bath area pages — an eighth of the authority their Bristol
+          equivalents carry. */}
+      <p class="svc-othercity">
+        Property in Bath? See <a href={`/our-services/${service.slug}-bath/`}>{service.shortName.replace(/\s+Services$/i, '').toLowerCase()} in Bath</a>,
+        where most of the work is Georgian and lime-compatible.
+      </p>
+
       <AreaCoverage
-    eyebrow="Coverage"
-        heading={`${serviceTitle} Across Bristol & Bath`}
-        lede="We cover all 20 neighbourhoods across Bristol and Bath, with consistent pricing within BS and BA postcodes."
+        cities={['bristol']}
+        serviceSlug={service.slug}
+        eyebrow="Coverage"
+        heading={`${serviceTitle} Across Bristol`}
+        lede="We cover all 15 Bristol neighbourhoods, with consistent pricing within the BS postcodes."
         note="Free site visits within 10 miles of BS15. Properties outside our standard coverage area can be quoted by arrangement. Listed building consent, conservation area consent and Building Control notification are handled on your behalf where required."
       />
     </div>
@@ -305,6 +341,48 @@ const schema = [
 </PageLayout>
 
 <style>
+  .subsvc {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--sp-3);
+  }
+  .subsvc__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    padding: var(--sp-5);
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius-md);
+    scroll-margin-top: calc(var(--header-h, 5rem) + var(--sp-5));
+  }
+  .subsvc__name { margin: 0; font-size: var(--fs-md); font-weight: var(--weight-bold); color: var(--text); }
+  .subsvc__summary { margin: 0; flex: 1; font-size: var(--fs-sm); line-height: 1.65; color: var(--text-muted); }
+  .subsvc__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: var(--fs-sm);
+    font-weight: var(--weight-semi);
+    color: var(--accent-text);
+    text-decoration: none;
+  }
+  .subsvc__cta:hover { text-decoration: underline; }
+
+  .svc-othercity {
+    max-width: 780px;
+    margin: 0 auto var(--sp-6);
+    text-align: center;
+    font-size: var(--fs-sm);
+    line-height: 1.65;
+    color: var(--text-muted);
+  }
+  .svc-othercity a { color: var(--accent-text); font-weight: var(--weight-semi); }
+
   /* Intro: copy beside a photograph, no tinted panel. The callout styling
      made the opening paragraph look like an aside rather than the lead. */
   .intro-split {

@@ -56,6 +56,22 @@ const schema = {
   name: 'KD Plastering & Rendering Services',
   '@id': 'https://www.kdplasteringrenderingservices.co.uk/#organization',
   telephone: '+441174094116',
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        telephone: '+441174094116',
+        contactType: 'customer service',
+        areaServed: 'GB',
+        availableLanguage: 'English',
+      },
+      {
+        '@type': 'ContactPoint',
+        telephone: '+447961114662',
+        contactType: 'customer service',
+        areaServed: 'GB',
+        availableLanguage: 'English',
+      },
+    ],
   email: 'kdplasteringltd@gmail.com',
   url: 'https://www.kdplasteringrenderingservices.co.uk',
   address: {
@@ -89,18 +105,12 @@ const schema = {
       closes: '13:00',
     },
   ],
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.9',
-    reviewCount: '180',
-    bestRating: '5',
-  },
 };
 ---
 
 <PageLayout
   title="Bristol's Trusted Plastering & Rendering Specialists | KD Plastering"
-  description="Professional plastering, rendering and external wall insulation across Bristol and Bath. 10+ years experience, fully insured, 180+ verified reviews. Free quotes within 48 hours."
+  description="Professional plastering, rendering and external wall insulation across Bristol and Bath. 10+ years experience, fully insured, 4.9 on Google from 50 reviews. Free quotes within 48 hours."
   canonical="/"
   schema={schema}
 >
@@ -109,7 +119,7 @@ const schema = {
     title="We transform Bristol homes with a render that"
     titleAccent="lasts 25 years."
     lede="Silicone render, monocouche, house rendering and external wall insulation — fitted by Bristol's most reviewed plastering team."
-    primaryCta={{ label: 'Get Your Free Quote', href: '/contact/' }}
+    primaryCta={{ label: 'Get Your Free Quote', href: '/contact/#lead-form-heading' }}
     phone={{ number: '01174094116', display: '0117 409 4116' }}
     image="/hero-home.webp"
     rotateWith={['/hero-2.webp', '/hero-3.webp', '/hero-4.webp']}

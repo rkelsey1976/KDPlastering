@@ -1,0 +1,116 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Hero from '../../components/Hero.astro';
+import AreaIndex from '../../components/AreaIndex.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import { SERVICES } from '../../lib/services';
+import { getBathAreas, getBristolAreas } from '../../lib/areas';
+
+const bath = getBathAreas();
+const bristol = getBristolAreas();
+
+const serviceImages: Record<string, string> = {
+  'silicone-rendering':       '/services/cards/silicone-rendering.webp',
+  'house-rendering':          '/services/cards/house-rendering.webp',
+  'external-wall-rendering':  '/services/cards/ewall-rendering.webp',
+  'monocouche-rendering':     '/services/cards/monocouche-rendering.webp',
+  'plastering-services':      '/services/cards/plastering.webp',
+  'external-wall-insulation': '/services/cards/ewi.webp',
+};
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Plastering & rendering across Bath',
+  url: 'https://www.kdplasteringrenderingservices.co.uk/bath/',
+  hasPart: bath.map((a) => ({
+    '@type': 'WebPage',
+    name: `${a.name} plastering & rendering`,
+    url: `https://www.kdplasteringrenderingservices.co.uk/bath/${a.slug}/`,
+  })),
+};
+---
+
+<PageLayout
+  title="Plastering & Rendering in Bath | Areas We Cover"
+  description="KD Plastering & Rendering covers five Bath neighbourhoods from our Bristol base. Georgian lime-compatible systems, listed building work and modern render."
+  canonical="/bath/"
+  schema={schema}
+  breadcrumbs={[{ name: 'Bath', href: '/bath/' }]}
+  ctaHeading="Rendering a property in Bath?"
+  ctaText="Free site visit across Bath, a fixed written quote within 48 hours, and no pressure either way."
+>
+  <Hero
+    size="compact"
+    eyebrow={['Coverage', 'Bath & BA postcodes']}
+    title="Plastering and rendering across"
+    titleAccent="Bath"
+    lede="We cover five Bath neighbourhoods from our base in Hanham, half an hour up the A4. Much of the work here is Georgian — lime-compatible systems, conservation area consent and listed building consent are routine rather than exceptional."
+    primaryCta={{ label: 'Get a Free Quote', href: '/contact/#lead-form-heading' }}
+    phone={{ number: '01174094116', display: '0117 409 4116' }}
+    image="/heroes/our-services.webp"
+    imageAlt=""
+    trust={['5 Bath neighbourhoods', 'Listed building experience', 'Free site visits']}
+  />
+
+  <!-- Services first: someone landing on a city page wants to know what we
+       do before which streets we do it on. Neighbourhoods second, the other
+       city last. -->
+  <section class="section">
+    <div class="container">
+      <header class="section-header section-header--center">
+        <span class="eyebrow">Services</span>
+        <h2>What we do in Bath</h2>
+        <p class="lede">The same six services in Bath — with lime-compatible specifications and conservation consent where the property needs them.</p>
+      </header>
+      <div class="service-grid-3">
+        {SERVICES.map((svc, i) => (
+          <ServiceCard
+            slug={svc.slug}
+            shortName={svc.shortName}
+            tagline={svc.tagline}
+            imageSrc={serviceImages[svc.slug]}
+            number={String(i + 1).padStart(2, '0')}
+            variant="default"
+            href={`/our-services/${svc.slug}-bath/`}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <header class="section-header section-header--center">
+        <span class="eyebrow">Bath</span>
+        <h2>{bath.length} Bath neighbourhoods</h2>
+        <p class="lede">Every area below has its own page with local detail.</p>
+      </header>
+
+      <AreaIndex areas={bath} city="bath" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <header class="section-header section-header--center">
+        <span class="eyebrow">Bristol</span>
+        <h2>We are based in Bristol</h2>
+        <p class="lede">
+          Our yard is in Hanham, and {bristol.length} Bristol neighbourhoods have their own
+          pages. Bath is a half-hour run on the A4 — the same crews, the same warranty.
+        </p>
+      </header>
+      <p style="text-align: center; margin: 0;">
+        <a class="btn btn--secondary" href="/bristol/">See our Bristol coverage</a>
+      </p>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  @media (max-width: 600px) {
+    .service-grid-3 { grid-template-columns: 1fr; }
+  }
+
+</style>

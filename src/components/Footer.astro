@@ -34,6 +34,16 @@ const year = new Date().getFullYear();
             </a>
           </li>
           <li>
+            {/* The mobile is the WhatsApp line and is listed on the Google
+                Business Profile — NAP has to match, so it shows here too. */}
+            <a href="https://wa.me/447961114662" target="_blank" rel="noopener">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.87 9.87 0 0 0 4.79 1.22c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.13a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.25-4.36c0-4.54 3.7-8.24 8.24-8.24a8.19 8.19 0 0 1 5.82 2.42 8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.25 8.23z"/>
+              </svg>
+              07961 114662 <span class="footer-wa-tag">WhatsApp</span>
+            </a>
+          </li>
+          <li>
             <a href="mailto:kdplasteringltd@gmail.com">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
@@ -46,36 +56,40 @@ const year = new Date().getFullYear();
         <p class="footer-hours">Mon–Fri 8am–6pm · Sat 9am–1pm</p>
       </div>
 
-      <div class="footer-col">
-        <h4>Services</h4>
+      <details class="footer-col" open>
+        <summary><h4>Services</h4><svg class="footer-col__chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
         <ul>
           {services.map((slug) => (
             <li><a href={`/our-services/${slug}-bristol/`}>{slug.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' ')}</a></li>
           ))}
         </ul>
-      </div>
+      </details>
 
-      <div class="footer-col">
-        <h4>Service Areas</h4>
+      <details class="footer-col" open>
+        <summary><h4>Service Areas</h4><svg class="footer-col__chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
         <p class="footer-area-note">
           Bristol — 15 neighbourhoods across BS postcodes. Bath — 5 neighbourhoods across BA postcodes. South Gloucestershire &amp; North Somerset by arrangement.
         </p>
         <p class="footer-area-note">
           Free site visits within 10 miles of BS15.
         </p>
-      </div>
+      </details>
 
-      <div class="footer-col">
-        <h4>Company</h4>
+      <details class="footer-col" open>
+        <summary><h4>Company</h4><svg class="footer-col__chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
         <ul>
+          <li><a href="/our-services/">All Services</a></li>
           <li><a href="/about-us/">About Us</a></li>
           <li><a href="/our-work/">Gallery</a></li>
           <li><a href="/faqs/">FAQs</a></li>
           <li><a href="/contact/">Contact</a></li>
+          <li><a href="/bristol/">Bristol Areas</a></li>
+          <li><a href="/bath/">Bath Areas</a></li>
           <li><a href="/privacy/">Privacy Policy</a></li>
           <li><a href="/terms/">Terms &amp; Conditions</a></li>
+          <li><a href="/cookies/">Cookies</a></li>
         </ul>
-      </div>
+      </details>
     </div>
 
     <div class="footer-accreditations">
@@ -87,10 +101,40 @@ const year = new Date().getFullYear();
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; {year} KD Plastering &amp; Rendering Services Ltd. Registered in England &amp; Wales.</p>
+      <p>
+        &copy; {year} KD Plastering &amp; Rendering Services.
+        Trading name of K D Plastering Services Ltd, registered in England &amp; Wales.
+      </p>
     </div>
   </div>
 </footer>
+
+<script is:inline>
+  // The footer columns collapse only at one column. They ship open so the
+  // page is correct on tablet/desktop and without JS; this closes them on
+  // phones and re-syncs if the viewport crosses the breakpoint (rotation).
+  (() => {
+    const mq = window.matchMedia('(max-width: 600px)');
+    const cols = document.querySelectorAll('details.footer-col');
+    const sync = () => cols.forEach((d) => { d.open = !mq.matches; });
+
+    // Only act when the breakpoint is actually crossed. A plain resize
+    // handler would slam the panels shut every time a mobile browser's URL
+    // bar changes the viewport height mid-scroll.
+    let last = mq.matches;
+    const check = () => {
+      if (mq.matches === last) return;
+      last = mq.matches;
+      sync();
+    };
+
+    sync();
+    mq.addEventListener('change', check);
+    // Belt and braces: some embedded webviews resize without firing the
+    // media-query change event.
+    window.addEventListener('resize', check, { passive: true });
+  })();
+</script>
 
 <style>
   .site-footer {
@@ -123,6 +167,40 @@ const year = new Date().getFullYear();
     margin: 0;
     color: rgba(255, 255, 255, 0.65);
   }
+  /* Accordion behaviour is MOBILE ONLY. On desktop the <details> content is
+     forced visible regardless of open state and the summary stops behaving
+     like a control, so the footer looks and works exactly as it did. */
+  .footer-col > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+    cursor: pointer;
+    list-style: none;
+  }
+  .footer-col > summary::-webkit-details-marker { display: none; }
+  .footer-col > summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+  .footer-col > summary h4 { margin-bottom: 0; }
+  .footer-col__chev {
+    flex: none;
+    color: var(--accent-on-dark);
+    transition: transform var(--dur-fast) var(--ease);
+  }
+  details.footer-col[open] > summary .footer-col__chev { transform: rotate(180deg); }
+
+  @media (min-width: 601px) {
+    /* Above one column the summary stops being a control. The panels are
+       held open by the script below rather than by CSS: a closed <details>
+       gets content-visibility from the UA, so it measures zero height even
+       when its children are display:block. */
+    .footer-col > summary { cursor: default; pointer-events: none; }
+    .footer-col__chev { display: none; }
+  }
+
   .footer-col h4 {
     color: var(--text-inverse);
     font-size: var(--fs-sm);
@@ -132,6 +210,13 @@ const year = new Date().getFullYear();
     letter-spacing: 0.08em;
   }
   .footer-address,
+  .footer-wa-tag {
+    font-size: var(--fs-xs);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-on-dark);
+  }
   .footer-hours,
   .footer-area-note {
     font-size: var(--fs-sm);
@@ -204,6 +289,7 @@ const year = new Date().getFullYear();
     .footer-top {
       grid-template-columns: 1fr 1fr;
     }
+
     .footer-brand {
       grid-column: 1 / -1;
     }
@@ -211,6 +297,23 @@ const year = new Date().getFullYear();
   @media (max-width: 600px) {
     .footer-top {
       grid-template-columns: 1fr;
+      gap: 0;
     }
+    /* Collapsed columns are just a row of headings — give them a divider so
+       the footer reads as a list of sections rather than floating text. */
+    details.footer-col {
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: var(--sp-4);
+    }
+    .footer-col > summary { min-height: 44px; }
+    .footer-brand { margin-bottom: var(--sp-5); }
+    .footer-accreditations {
+      gap: var(--sp-3);
+      margin-top: var(--sp-5);
+    }
+    .accred { font-size: var(--fs-xs); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .footer-col__chev { transition: none; }
   }
 </style>

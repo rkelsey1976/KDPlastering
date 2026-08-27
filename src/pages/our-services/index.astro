@@ -1,17 +1,35 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
 import Hero from '../../components/Hero.astro';
-import AreaCoverage from '../../components/AreaCoverage.astro';
 import ServiceCard from '../../components/ServiceCard.astro';
 import { SERVICES, getService } from '../../lib/services';
 import { AREAS, getBristolAreas, getBathAreas } from '../../lib/areas';
+
+const bristolAreas = getBristolAreas();
+const bathAreas = getBathAreas();
 
 const localBusiness = {
   '@context': 'https://schema.org',
   '@type': ['LocalBusiness', 'Plasterer'],
   name: 'KD Plastering & Rendering Services',
   url: 'https://www.kdplasteringrenderingservices.co.uk',
-  telephone: '0117 409 4116',
+  telephone: '+441174094116',
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        telephone: '+441174094116',
+        contactType: 'customer service',
+        areaServed: 'GB',
+        availableLanguage: 'English',
+      },
+      {
+        '@type': 'ContactPoint',
+        telephone: '+447961114662',
+        contactType: 'customer service',
+        areaServed: 'GB',
+        availableLanguage: 'English',
+      },
+    ],
   email: 'kdplasteringltd@gmail.com',
   address: {
     '@type': 'PostalAddress',
@@ -25,11 +43,6 @@ const localBusiness = {
     { '@type': 'City', name: 'Bath' },
   ],
   priceRange: '££',
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.9',
-    reviewCount: '180',
-  },
 };
 
 // Same card-sized WebP the homepage grid uses — the icons here were the
@@ -65,7 +78,7 @@ const bath = getBathAreas();
     title="Plastering & Rendering Services in"
     titleAccent="Bristol & Bath"
     lede="Six specialist services covering every type of internal plastering, external rendering and external wall insulation across 20 Bristol & Bath neighbourhoods."
-    primaryCta={{ label: 'Explore our services', href: '#services-grid' }}
+    primaryCta={{ label: 'Get a Free Quote', href: '/contact/#lead-form-heading' }}
     phone={{ number: '01174094116', display: '0117 409 4116' }}
     image="/heroes/our-services.webp"
     imageAlt=""
@@ -96,21 +109,173 @@ const bath = getBathAreas();
     </div>
   </section>
 
-  <!-- Service areas -->
+  <!-- Coverage: two hubs, not twenty chips. The service cards above already
+       carry the "what"; this is the "where", and the city hubs are the pages
+       that should hold that authority. -->
   <section class="section section--alt">
     <div class="container">
-        <AreaCoverage
-          eyebrow="Coverage"
-          heading="Service areas we cover"
-          lede="Every service is available in every area we cover, with consistent pricing within BS and BA postcodes."
-          note="Localised notes apply for listed buildings, conservation areas and access-restricted streets — we cover those at the site visit."
-        />
+      <header class="section-header section-header--center">
+        <span class="eyebrow">Coverage</span>
+        <h2>Where we work</h2>
+        <p class="lede">
+          Every service is available across both cities, with consistent pricing
+          within BS and BA postcodes.
+        </p>
+      </header>
+
+      <ul class="city-hubs">
+        <li>
+          <a href="/bristol/">
+            <span class="city-hubs__media">
+              <img
+                src="/services/gallery/house-rendering-1.webp"
+                alt="Modern detached house finished in white through-coloured render"
+                width="920" height="613" loading="lazy" decoding="async"
+              />
+            </span>
+            <span class="city-hubs__body">
+              <span class="city-hubs__count">{bristolAreas.length} neighbourhoods · BS postcodes</span>
+              <span class="city-hubs__name">Bristol</span>
+              <span class="city-hubs__blurb">
+                Our yard is on Roman Way in Hanham. Every neighbourhood has its own page
+                covering the local housing stock, access and recent work.
+              </span>
+              <span class="city-hubs__go">
+                See Bristol areas
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="/bath/">
+            <span class="city-hubs__media">
+              <img
+                src="/services/gallery/monocouche-rendering-2.webp"
+                alt="Detached house finished in cream render with Bath stone detailing"
+                width="920" height="613" loading="lazy" decoding="async"
+              />
+            </span>
+            <span class="city-hubs__body">
+              <span class="city-hubs__count">{bathAreas.length} neighbourhoods · BA postcodes</span>
+              <span class="city-hubs__name">Bath</span>
+              <span class="city-hubs__blurb">
+                Half an hour up the A4. Much of the work here is Georgian — lime-compatible
+                systems, conservation areas and listed building consent.
+              </span>
+              <span class="city-hubs__go">
+                See Bath areas
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </span>
+            </span>
+          </a>
+        </li>
+      </ul>
+
+      <p class="city-hubs__note">
+        Localised notes apply for listed buildings, conservation areas and
+        access-restricted streets — we cover those at the site visit.
+      </p>
     </div>
   </section>
 
 </PageLayout>
 
 <style>
+  .city-hubs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-4);
+  }
+  .city-hubs a {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: border-color var(--dur-fast) var(--ease),
+                box-shadow var(--dur-fast) var(--ease),
+                transform var(--dur-fast) var(--ease);
+  }
+  .city-hubs a:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+  }
+  .city-hubs__media {
+    display: block;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+  }
+  .city-hubs__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--dur-slow) var(--ease);
+  }
+  .city-hubs a:hover .city-hubs__media img { transform: scale(1.04); }
+  .city-hubs__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    flex: 1;
+    padding: var(--sp-5);
+  }
+  .city-hubs__count {
+    font-size: var(--fs-xs);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-text);
+  }
+  .city-hubs__name {
+    font-size: var(--fs-xl);
+    font-weight: var(--weight-bold);
+    line-height: 1.1;
+    color: var(--text);
+  }
+  .city-hubs__blurb {
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+    color: var(--text-muted);
+    flex: 1;
+  }
+  .city-hubs__go {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    margin-top: var(--sp-3);
+    font-size: var(--fs-sm);
+    font-weight: var(--weight-semi);
+    color: var(--accent-text);
+  }
+  .city-hubs a:hover .city-hubs__go svg { transform: translateX(3px); }
+  .city-hubs__go svg { transition: transform var(--dur-fast) var(--ease); }
+  @media (max-width: 700px) {
+    .city-hubs { grid-template-columns: 1fr; }
+  }
+  .city-hubs__note {
+    max-width: 640px;
+    margin: var(--sp-5) auto 0;
+    text-align: center;
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
   /* Section header */
   .section-header {
     margin-bottom: var(--sp-7);
@@ -124,15 +289,7 @@ const bath = getBathAreas();
   }
 
   /* Service grid */
-  .service-grid-3 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--sp-4);
-  }
 
-  @media (max-width: 1000px) {
-    .service-grid-3 { grid-template-columns: repeat(2, 1fr); }
-  }
   @media (max-width: 640px) {
     .service-grid-3 { grid-template-columns: 1fr; }
   }
@@ -146,8 +303,5 @@ const bath = getBathAreas();
 
   @media (max-width: 700px) {
   }
-
-
-
 
 </style>

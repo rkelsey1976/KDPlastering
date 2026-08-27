@@ -8,6 +8,14 @@
 import { getBristolAreas, getBathAreas } from '../lib/areas';
 
 type Props = {
+  /** Which cities to list. Defaults to both. A Bristol service page that
+      lists Bath's five neighbourhoods competes with the Bath page for the
+      same terms, and wins — which is the wrong page to win. */
+  cities?: ('bristol' | 'bath')[];
+  /** When set, Bristol areas link to that service's page for the area (the
+      more specific match on a service page). Without it — and for Bath, which
+      has no service × area pages — they link to the neighbourhood hub. */
+  serviceSlug?: string;
   eyebrow?: string;
   heading?: string;
   lede?: string;
@@ -15,12 +23,12 @@ type Props = {
   note?: string;
 };
 
-const { eyebrow, heading, lede, note } = Astro.props as Props;
+const { cities = ['bristol', 'bath'], serviceSlug, eyebrow, heading, lede, note } = Astro.props as Props;
 
 const groups = [
-  { city: 'Bristol', areas: getBristolAreas(), postcodes: 'BS' },
-  { city: 'Bath',    areas: getBathAreas(),    postcodes: 'BA' },
-];
+  { key: 'bristol', city: 'Bristol', areas: getBristolAreas(), postcodes: 'BS' },
+  { key: 'bath',    city: 'Bath',    areas: getBathAreas(),    postcodes: 'BA' },
+].filter((g) => cities.includes(g.key as "bristol" | "bath"));
 ---
 
 {(heading || lede) && (
@@ -40,9 +48,19 @@ const groups = [
       </h3>
       <ul class="area-coverage__list">
         {g.areas.map((a) => (
-          <li class="area-coverage__area">
-            {a.name}
-            <span class="area-coverage__pcode">{a.postcode}</span>
+          <li>
+            {/* Every area now has a hub page. On a service page the more
+                specific service × area page exists for Bristol only, so Bath
+                keeps the hub. */}
+            <a
+              class="area-coverage__area area-coverage__area--link"
+              href={serviceSlug && a.city === 'bristol'
+                ? `/our-services/${serviceSlug}-bristol/${a.slug}/`
+                : `/${a.city}/${a.slug}/`}
+            >
+              {a.name}
+              <span class="area-coverage__pcode">{a.postcode}</span>
+            </a>
           </li>
         ))}
       </ul>
@@ -96,6 +114,16 @@ const groups = [
 
   /* Same chip as the materials cards use, so coverage reads as designed
      content rather than a run-on sentence of place names. */
+  .area-coverage__area--link {
+    text-decoration: none;
+    transition: border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+  }
+  .area-coverage__area--link:hover {
+    border-color: var(--accent);
+    color: var(--accent-text);
+  }
+  .area-coverage__area--link:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
   .area-coverage__area {
     display: inline-flex;
     align-items: baseline;

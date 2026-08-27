@@ -35,6 +35,10 @@ const schema = {
   name: nap.name,
   url: 'https://www.kdplasteringrenderingservices.co.uk/contact/',
   telephone: `+${nap.phoneHref.replace('+', '')}`,
+  contactPoint: [
+    { '@type': 'ContactPoint', telephone: '+441174094116', contactType: 'customer service', areaServed: 'GB', availableLanguage: 'English' },
+    { '@type': 'ContactPoint', telephone: '+447961114662', contactType: 'customer service', areaServed: 'GB', availableLanguage: 'English' },
+  ],
   email: nap.email,
   address: {
     '@type': 'PostalAddress',

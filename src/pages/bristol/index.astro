@@ -1,0 +1,116 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Hero from '../../components/Hero.astro';
+import AreaIndex from '../../components/AreaIndex.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import { SERVICES } from '../../lib/services';
+import { getBristolAreas, getBathAreas } from '../../lib/areas';
+
+const bristol = getBristolAreas();
+const bath = getBathAreas();
+
+const serviceImages: Record<string, string> = {
+  'silicone-rendering':       '/services/cards/silicone-rendering.webp',
+  'house-rendering':          '/services/cards/house-rendering.webp',
+  'external-wall-rendering':  '/services/cards/ewall-rendering.webp',
+  'monocouche-rendering':     '/services/cards/monocouche-rendering.webp',
+  'plastering-services':      '/services/cards/plastering.webp',
+  'external-wall-insulation': '/services/cards/ewi.webp',
+};
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Plastering & rendering across Bristol',
+  description: 'Plastering and rendering across 20 neighbourhoods in Bristol and Bath.',
+  hasPart: bristol.map((a) => ({
+    '@type': 'WebPage',
+    name: `${a.name} plastering & rendering`,
+    url: `https://www.kdplasteringrenderingservices.co.uk/bristol/${a.slug}/`,
+  })),
+};
+---
+
+<PageLayout
+  title="Plastering & Rendering in Bristol | Areas We Cover"
+  description="KD Plastering & Rendering covers 15 Bristol neighbourhoods from our yard in Hanham. Find your area for local housing stock, access notes and recent work."
+  canonical="/bristol/"
+  schema={schema}
+  breadcrumbs={[{ name: 'Bristol', href: '/bristol/' }]}
+  ctaHeading="Not sure if we cover you?"
+  ctaText="If your street isn't listed, ask anyway — we travel beyond our standard coverage by arrangement."
+>
+  <Hero
+    size="compact"
+    eyebrow={['Coverage', '15 neighbourhoods']}
+    title="Plastering and rendering across"
+    titleAccent="Bristol"
+    lede="We work across 15 Bristol neighbourhoods from our base in Hanham. Each area page covers the local housing stock, access and parking, and recent work nearby."
+    primaryCta={{ label: 'Get a Free Quote', href: '/contact/#lead-form-heading' }}
+    phone={{ number: '01174094116', display: '0117 409 4116' }}
+    image="/heroes/our-services.webp"
+    imageAlt=""
+    trust={['15 Bristol areas', 'Bath covered too', 'Free site visits']}
+  />
+
+  <!-- Services first: someone landing on a city page wants to know what we
+       do before which streets we do it on. Neighbourhoods second, the other
+       city last. -->
+  <section class="section">
+    <div class="container">
+      <header class="section-header section-header--center">
+        <span class="eyebrow">Services</span>
+        <h2>What we do in Bristol</h2>
+        <p class="lede">Six specialist services, available across every BS postcode we cover.</p>
+      </header>
+      <div class="service-grid-3">
+        {SERVICES.map((svc, i) => (
+          <ServiceCard
+            slug={svc.slug}
+            shortName={svc.shortName}
+            tagline={svc.tagline}
+            imageSrc={serviceImages[svc.slug]}
+            number={String(i + 1).padStart(2, '0')}
+            variant="default"
+            href={`/our-services/${svc.slug}-bristol/`}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <header class="section-header section-header--center">
+        <span class="eyebrow">Bristol</span>
+        <h2>{bristol.length} Bristol neighbourhoods</h2>
+        <p class="lede">Every area below has its own page with local detail.</p>
+      </header>
+
+      <AreaIndex areas={bristol} city="bristol" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <header class="section-header section-header--center">
+        <span class="eyebrow">Bath</span>
+        <h2>We also cover Bath</h2>
+        <p class="lede">
+          {bath.length} neighbourhoods across the BA postcodes, half an hour up the A4 —
+          mostly Georgian, where the render specification follows the stone.
+        </p>
+      </header>
+      <p style="text-align: center; margin: 0;">
+        <a class="btn btn--secondary" href="/bath/">See our Bath coverage</a>
+      </p>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  @media (max-width: 600px) {
+    .service-grid-3 { grid-template-columns: 1fr; }
+  }
+
+</style>

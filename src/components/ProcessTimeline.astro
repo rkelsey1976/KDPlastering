@@ -95,7 +95,9 @@ const iconPaths: Record<string, string> = {
 
   .process-steps {
     list-style: none;
-    margin: 0;
+    /* auto, not 0 — the max-width capped the list but left it against the
+       container's left edge while the header centred itself above it. */
+    margin: 0 auto;
     padding: 0;
     display: flex;
     flex-direction: column;

@@ -54,6 +54,15 @@ const services = [
               <div class="mega-menu__header">
                 <p class="eyebrow eyebrow--clay">Our Services</p>
                 <h2 class="mega-menu__title">Six specialist services. Twenty neighbourhoods.</h2>
+                {/* The category page had no sitewide link — it was reached only by
+                    breadcrumbs, all 102 of them reading "Our Services". */}
+                <a href="/our-services/" class="mega-menu__all" role="menuitem">
+                  Compare all plastering &amp; rendering services
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                       stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
               </div>
               <div class="mega-menu__grid">
                 {services.map((s) => (
@@ -444,6 +453,20 @@ const services = [
     margin: 0 auto;
     padding: 0 var(--sp-5);
   }
+
+  .mega-menu__all {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    margin-top: var(--sp-3);
+    font-size: var(--fs-sm);
+    font-weight: var(--weight-semi);
+    color: var(--accent-on-dark);
+    text-decoration: none;
+  }
+  .mega-menu__all:hover { text-decoration: underline; }
+  .mega-menu__all svg { transition: transform var(--dur-fast) var(--ease); }
+  .mega-menu__all:hover svg { transform: translateX(3px); }
 
   .mega-menu__header {
     display: flex;

@@ -17,6 +17,7 @@ export type ServiceCardData = {
   variant?: 'default' | 'featured' | 'bento' | 'bento-lg';
   imageSrc?: string;          // hero photo for bento variants
   imageAlt?: string;          // alt text for the hero photo
+  href?: string;              // defaults to the Bristol service page
 };
 
 const {
@@ -30,6 +31,7 @@ const {
   variant = 'default',
   imageSrc,
   imageAlt,
+  href = `/our-services/${slug}-bristol/`,
 } = Astro.props as ServiceCardData;
 
 const iconMap: Record<string, string> = {
@@ -58,7 +60,7 @@ const displayNumber = number ?? (variant.startsWith('bento') ? '01' : '');
 ---
 
 <a
-  href={`/our-services/${slug}-bristol/`}
+    href={href}
   class:list={[
     'service-card',
     `service-card--${variant}`,

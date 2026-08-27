@@ -1,0 +1,357 @@
+---
+import PageLayout from '../../../layouts/PageLayout.astro';
+import Hero from '../../../components/Hero.astro';
+import ServiceBullets from '../../../components/ServiceBullets.astro';
+import ProblemList from '../../../components/ProblemList.astro';
+import MaterialGrid from '../../../components/MaterialGrid.astro';
+import ReviewCards from '../../../components/ReviewCards.astro';
+import { SERVICES, serviceHook } from '../../../lib/services';
+import { getBathAreas } from '../../../lib/areas';
+import { REVIEWS } from '../../../lib/reviews';
+import { getBathNote } from '../../../lib/bathServiceNotes';
+
+// Six Bath service pages. Deliberately shorter than their Bristol
+// counterparts: the technical spec is the same trade in both cities, so
+// repeating all of it here would produce six near-duplicates. What these
+// pages lead with is the part that genuinely differs — Georgian limestone
+// instead of brick and pebbledash, listed and conservation constraints,
+// and the pricing that follows from both.
+export function getStaticPaths() {
+  return SERVICES.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+}
+
+const { service } = Astro.props;
+const prose = service.shortName.replace(/\s+Services$/i, '');
+const proseLower = prose.toLowerCase();
+
+const areas = getBathAreas();
+const note = getBathNote(service.slug);
+
+// Bath reviews, where we have them. Two of the twelve are Bath jobs.
+const bathNames = new Set(areas.map((a) => a.name));
+const bathReviews = REVIEWS.filter((r) => bathNames.has(r.area));
+const reviews = bathReviews.length ? bathReviews : REVIEWS.slice(0, 3);
+
+// Pricing note per area, taken from the area data rather than asserted
+// here, so the page cannot drift from what the area pages say. All five,
+// not just the listed ones — filtering to three made it read as though we
+// only cover three, and "standard pricing" is exactly what someone in
+// Newbridge or Odd Down wants to see.
+const areaNotes = areas.map((a) => ({
+  ...a,
+  listed: /listed|conservation/i.test(a.costVariation),
+}));
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  // service.name carries the city ('Silicone Rendering Bristol'), which is
+  // wrong here and inconsistent with the Bristol pages' bare service type.
+  serviceType: prose,
+  name: `${prose} in Bath`,
+  provider: {
+    '@type': 'LocalBusiness',
+    '@id': 'https://www.kdplasteringrenderingservices.co.uk/#organization',
+    name: 'KD Plastering & Rendering Services',
+    telephone: '+441174094116',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '8 Roman Way, Hanham',
+      addressLocality: 'Bristol',
+      postalCode: 'BS15 3FH',
+      addressCountry: 'GB',
+    },
+  },
+  areaServed: { '@type': 'City', name: 'Bath' },
+  description: `${prose} across Bath and the BA postcodes, including Georgian and listed properties.`,
+};
+---
+
+<PageLayout
+  title={`${prose} in Bath | ${serviceHook(service)}`}
+  description={`${prose} across Bath's BA postcodes. Georgian and listed property experience, lime-compatible specifications, free site visit and a fixed written quote.`}
+  canonical={`/our-services/${service.slug}-bath/`}
+  schema={schema}
+  breadcrumbs={[
+    { name: 'Our Services', href: '/our-services/' },
+    { name: prose, href: `/our-services/${service.slug}-bristol/` },
+    { name: 'Bath', href: `/our-services/${service.slug}-bath/` },
+  ]}
+  prefillService={service.shortName}
+  ctaHeading={`${prose} on a Bath property?`}
+  ctaText="Free site visit across the BA postcodes, a fixed written quote within 48 hours, and a straight answer on whether consent is needed."
+>
+  <Hero
+    size="compact"
+    eyebrow={['Bath · BA postcodes', prose]}
+    title={`${prose} in`}
+    titleAccent="Bath"
+    lede={`${service.intro}`}
+    primaryCta={{ label: 'Get a Free Quote', href: '/contact/#lead-form-heading' }}
+    phone={{ number: '01174094116', display: '0117 409 4116' }}
+    image={`/heroes/${service.slug}.webp`}
+    imageAlt=""
+    trust={['Free site visit', 'Fixed written quote', '10-year warranty']}
+  />
+
+  <!-- What is different about Bath. This is the reason the page exists. -->
+  <section class="section">
+    <div class="container container--reading">
+      <header class="section-header section-header--center">
+        <span class="eyebrow">Bath</span>
+        <h2>What changes on a Bath property</h2>
+      </header>
+
+      {note && <p class="bath-note">{note}</p>}
+
+      <p class="bath-lead">
+        Most of what we do in Bath sits on Georgian limestone rather than the brick
+        and pebbledash that dominates Bristol. That changes the specification before
+        it changes the price: a solid lime-built wall needs a system that lets it
+        breathe, and the wrong choice traps moisture in the masonry.
+      </p>
+      <p class="bath-lead">
+        We survey every Bath property before quoting and tell you plainly whether
+        {' '}{proseLower} is the right answer for your wall — including when it isn't.
+      </p>
+
+      <ul class="bath-constraints">
+        {areaNotes.map((a) => (
+          <li class:list={['bath-constraint', a.listed && 'is-listed']}>
+            <span class="bath-constraint__head">
+              <a href={`/bath/${a.slug}/`}>{a.name}</a>
+              <span class="bath-constraint__pc">{a.postcode}</span>
+              <span class="bath-constraint__tag">
+                {a.listed ? 'Listed / conservation' : 'Standard pricing'}
+              </span>
+            </span>
+            <span class="bath-constraint__note">{a.costVariation}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="bath-foot">
+        Listed Building Consent and conservation area approval are handled before
+        we start. Where consent is needed we will say so at the site visit, not
+        after the scaffold is up.
+      </p>
+    </div>
+  </section>
+
+  <!-- Spec, true in either city -->
+  <section class="section section--alt">
+    <div class="container">
+      <ServiceBullets
+        items={service.whatWeDo}
+        variant="do"
+        columns={2}
+        eyebrow="What's included"
+        heading={`What ${proseLower} covers`}
+        lede="The same specification we work to across Bristol and Bath."
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <ProblemList
+        problems={service.problems}
+        eyebrow="Problems we fix"
+        heading={`Signs a Bath property needs ${proseLower}`}
+      />
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <MaterialGrid
+        materials={service.materials}
+        eyebrow="Systems"
+        heading={`Materials we use for ${proseLower}`}
+      />
+    </div>
+  </section>
+
+  <!-- Cost, with the Bath premium stated rather than buried -->
+  <section class="section">
+    <div class="container">
+      <header class="section-header section-header--center">
+        <span class="eyebrow">Cost</span>
+        <h2>What {proseLower} costs in Bath</h2>
+        <p class="lede">{service.costGuide.perSquareMetre}</p>
+      </header>
+      <ul class="bath-costs">
+        {service.costGuide.perPropertyType.map((b) => (
+          <li>
+            <span class="bath-costs__type">{b.type}</span>
+            <span class="bath-costs__price">{b.lowEnd} – {b.highEnd}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="bath-foot">
+        Listed and conservation work in the Georgian areas typically adds 15–25%
+        over these bands — specialist materials, slower methods and consent.
+        Newbridge and Odd Down price as standard. Every job is quoted on survey.
+      </p>
+    </div>
+  </section>
+
+  <ReviewCards
+    reviews={reviews}
+    eyebrow="Reviews"
+    heading={bathReviews.length ? 'What Bath customers say' : 'What our customers say'}
+    lede={bathReviews.length
+      ? 'Verified reviews from work completed in Bath.'
+      : 'Verified reviews from recent work across Bristol and Bath.'}
+  />
+
+  <section class="section section--alt">
+    <div class="container">
+      <header class="section-header section-header--center">
+        <span class="eyebrow">Coverage</span>
+        <h2>{prose} across Bath</h2>
+      </header>
+      <ul class="bath-areas">
+        {areas.map((a) => (
+          <li>
+            <a href={`/bath/${a.slug}/`}>
+              <span class="bath-areas__name">{a.name}</span>
+              <span class="bath-areas__pc">{a.postcode}</span>
+              <span class="bath-areas__blurb">{a.blurb}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="bath-foot">
+        Based in Bristol? See <a href={`/our-services/${service.slug}-bristol/`}>{proseLower} in Bristol</a>,
+        where we cover 15 neighbourhoods.
+      </p>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .bath-note {
+    margin: 0 0 var(--sp-5);
+    padding-left: var(--sp-4);
+    border-left: 3px solid var(--accent);
+    font-size: var(--fs-md);
+    line-height: 1.7;
+    color: var(--text);
+  }
+  .bath-lead {
+    font-size: var(--fs-md);
+    line-height: 1.75;
+    color: var(--text-secondary);
+    margin: 0 0 var(--sp-4);
+  }
+  .bath-constraints {
+    list-style: none;
+    margin: var(--sp-5) 0 0;
+    padding: 0;
+    display: grid;
+    gap: var(--sp-3);
+  }
+  .bath-constraint {
+    display: grid;
+    gap: var(--sp-2);
+    padding: var(--sp-4);
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+  /* Only the areas that actually carry the premium get the accent edge. */
+  .bath-constraint.is-listed { border-left-color: var(--accent); }
+  .bath-constraint__head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+  }
+  .bath-constraint__head a {
+    font-weight: var(--weight-semi);
+    color: var(--text);
+    text-decoration: none;
+    font-size: var(--fs-md);
+  }
+  .bath-constraint__head a:hover { color: var(--accent-text); }
+  .bath-constraint__pc {
+    font-size: var(--fs-xs);
+    font-weight: var(--weight-bold);
+    color: var(--accent-text);
+    font-variant-numeric: tabular-nums;
+  }
+  .bath-constraint__tag {
+    margin-left: auto;
+    font-size: var(--fs-xs);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+  .bath-constraint__note {
+    font-size: var(--fs-sm);
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  .bath-foot {
+    max-width: 780px;
+    margin: var(--sp-4) auto 0;
+    font-size: var(--fs-sm);
+    line-height: 1.65;
+    color: var(--text-muted);
+  }
+
+  .bath-costs { list-style: none; margin: 0 auto; padding: 0; max-width: 780px; }
+  .bath-costs li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-4);
+    padding: var(--sp-4) 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .bath-costs li:first-child { border-top: 1px solid var(--border); }
+  .bath-costs__type { font-weight: var(--weight-semi); color: var(--text); }
+  .bath-costs__price {
+    font-weight: var(--weight-bold);
+    color: var(--accent-text);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .bath-areas {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--sp-3);
+  }
+  .bath-areas a {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    height: 100%;
+    padding: var(--sp-5);
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+  }
+  .bath-areas a:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .bath-areas__name { font-size: var(--fs-md); font-weight: var(--weight-semi); color: var(--text); }
+  .bath-areas__pc {
+    font-size: var(--fs-xs);
+    font-weight: var(--weight-bold);
+    color: var(--accent-text);
+    font-variant-numeric: tabular-nums;
+  }
+  .bath-areas__blurb { font-size: var(--fs-sm); line-height: 1.55; color: var(--text-muted); }
+
+  @media (max-width: 600px) {
+    .bath-costs li { flex-direction: column; gap: var(--sp-1); }
+  }
+</style>

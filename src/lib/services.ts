@@ -58,6 +58,10 @@ export type Service = {
   faq: ServiceFaq[];
   // A real-world case study
   caseStudy: CaseStudy;
+  // Named jobs within this service that people search for by name, and that
+  // GBP lists as separate services. Each gets an anchored block so a GBP
+  // entry can deep-link to it instead of needing a thin page of its own.
+  subServices?: { id: string; name: string; summary: string }[];
   // Slugs of related services customers often combine
   relatedServices: string[];
   // Image alt text for the hero/feature photo
@@ -81,9 +85,9 @@ export const SERVICES: Service[] = [
     city: 'bristol',
     tagline: 'Durable, weather-resistant silicone render systems for Bristol homes and businesses.',
     intro:
-      'Modern silicone render gives Bristol properties a clean, low-maintenance finish that shrugs off the British weather. Applied in one colour-through coat over a reinforced base, silicone render is breathable, water-resistant and keeps its colour for decades.',
+      'Modern silicone render gives a property a clean, low-maintenance finish that shrugs off the British weather. Applied in one colour-through coat over a reinforced base, silicone render is breathable, water-resistant and keeps its colour for decades.',
     longIntro:
-      "Silicone render is the system we'd put on our own homes. It's the best of all worlds: through-colour, so no painting ever; hydrophobic, so Bristol's driving rain beads off; breathable, so the wall can dry out; and self-cleaning, so algae and dirt don't take hold. We install silicone systems from Johnstone's, K Rend, Parex and Weber across Bristol and Bath — typically on 1930s semis where the original sand-and-cement has failed, on detached new-builds where a clean modern finish is wanted, and on commercial buildings where a 25-year maintenance-free life matters. Every silicone system we install is backed by a 10-year manufacturer warranty, and priced with a fixed written quote after a free site visit.",
+      "Silicone render is the system we'd put on our own homes. It's the best of all worlds: through-colour, so no painting ever; hydrophobic, so Bristol's driving rain beads off; breathable, so the wall can dry out; and self-cleaning, so algae and dirt don't take hold. We install silicone systems from Johnstone's, K Rend, Parex and Weber across Bristol — typically on 1930s semis where the original sand-and-cement has failed, on detached new-builds where a clean modern finish is wanted, and on commercial buildings where a 25-year maintenance-free life matters. Every silicone system we install is backed by a 10-year manufacturer warranty, and priced with a fixed written quote after a free site visit.",
     whatWeDo: [
       'One-coat silicone render systems from Johnstone\'s, Parex, K Rend and Weber',
       'Full substrate preparation including mechanical removal of failed existing render',
@@ -114,7 +118,7 @@ export const SERVICES: Service[] = [
       'Available in 100+ standard colours, plus bespoke colour-matching service',
     ],
     processSteps: [
-      { title: 'Free site visit in Bristol or Bath', description: 'We come to your property, survey the substrate, take measurements and photographs, and discuss the look you want. Typically 30-45 minutes.' },
+      { title: 'Free site visit and survey', description: 'We come to your property, survey the substrate, take measurements and photographs, and discuss the look you want. Typically 30-45 minutes.' },
       { title: 'Fixed written quote within 48 hours', description: 'You get a detailed quote breaking out every element — prep, materials, scaffolding, labour — so there are no surprises later.' },
       { title: 'Scaffolding erected', description: 'Scaffolding is up 1-2 days before we start so the team can work safely around the entire facade. We own our own scaffold for most projects, which keeps the cost down.' },
       { title: 'Substrate preparation', description: 'The single most important step. We strip off all failed existing render, hack out defective pointing, treat any salt or algae contamination, and key the substrate ready for the new system.' },
@@ -260,7 +264,7 @@ export const SERVICES: Service[] = [
     city: 'bristol',
     tagline: 'Transform the look of your Bristol home with a fresh, modern render finish.',
     intro:
-      "Whether you're replacing cracked, blown 1970s rendering or upgrading bare brickwork, a full house render is the single biggest exterior upgrade you can give a Bristol property.",
+      "Whether you're replacing cracked, blown 1970s rendering or upgrading bare brickwork, a full house render is the single biggest exterior upgrade you can give a property.",
     longIntro:
       "Most Bristol houses built before 2000 were finished in some form of render — pebbledash, tyrolean, sand-and-cement, or roughcast. After 20-40 years, that render is reaching the end of its useful life, and the symptoms are familiar: blown patches, cracking along stress points, paint that won't stay on, and damp getting into the wall. A full house render with a modern system — monocouche, silicone, or acrylic — fixes all of these in one go and adds 25+ years of maintenance-free life. We work on every kind of Bristol property, from 1930s semis in Hanham to Victorian terraces in St George and modern detached homes in Emerson's Green. Every project starts with a free site visit and ends with a 10-year warranty.",
     whatWeDo: [
@@ -277,7 +281,7 @@ export const SERVICES: Service[] = [
       'Pebbledash from the 1960s-80s failing and falling off',
       'Sand-and-cement render cracking at corners, reveals and stress points',
       'Paint continuously peeling and needing re-application every 2-3 years',
-      'Damp patches appearing inside walls after heavy Bristol rain',
+      'Damp patches appearing inside walls after heavy driving rain',
       'Bare brickwork that\'s hard to clean and looks dated',
       'Mixed finishes (brick + render) looking inconsistent on the same property',
       'Listed or heritage properties needing sympathetic treatment',
@@ -306,7 +310,7 @@ export const SERVICES: Service[] = [
       { title: '12-month aftercare inspection', description: 'Free inspection at 12 months. Most renders don\'t need anything, but if anything has lifted or cracked we fix it under warranty.' },
     ],
     materials: [
-      { manufacturer: 'Johnstone\'s', products: ['Stormshield Silicone', 'Stormshield Monocouche'], notes: 'Most popular across Bristol. Wide colour range, BBA-certified.' },
+      { manufacturer: 'Johnstone\'s', products: ['Stormshield Silicone', 'Stormshield Monocouche'], notes: 'The system we specify most often. Wide colour range, BBA-certified.' },
       { manufacturer: 'K Rend', products: ['Standard K1.5', 'Silicone K1.5', 'Scraped K1.5'], notes: 'Through-colour mineral render. Hard-wearing, ideal for high-traffic areas.' },
       { manufacturer: 'Parex', products: ['Maika Monocouche', 'Parex Silicone Finish'], notes: 'Premium French systems, excellent colour depth.' },
       { manufacturer: 'Weber', products: ['weber.rend Monocouche', 'weber.rend Silicone'], notes: 'Best for combined EWI + render projects.' },
@@ -324,7 +328,7 @@ export const SERVICES: Service[] = [
         'Substrate condition — failed existing render needs stripping back first',
         'System chosen — silicone is at the top of the price range, acrylic at the bottom',
         'Property size and number of storeys',
-        'Access — tight Bristol terraces add scaffold complexity',
+        'Access — tight terraced streets add scaffold complexity',
         'Detailing — feature reveals, ashlar lines, decorative bands',
         'Listed building status (may require lime-based systems)',
         'Time of year (winter working can attract a small premium)',
@@ -474,7 +478,7 @@ export const SERVICES: Service[] = [
       { title: '12-month aftercare inspection', description: 'Free inspection at 12 months — any issues fixed under warranty.' },
     ],
     materials: [
-      { manufacturer: 'Johnstone\'s', products: ['Stormshield Silicone', 'Stormshield Monocouche', 'Stormshield Acrylic'], notes: 'Most popular Bristol choice — BBA-certified systems.' },
+      { manufacturer: 'Johnstone\'s', products: ['Stormshield Silicone', 'Stormshield Monocouche', 'Stormshield Acrylic'], notes: 'The system we specify most often — BBA-certified.' },
       { manufacturer: 'K Rend', products: ['Standard K1.5', 'Silicone K1.5', 'Scraped K1.5'], notes: 'Hard-wearing through-colour mineral render.' },
       { manufacturer: 'Parex', products: ['Maika', 'Parex Silicone Finish'], notes: 'Premium systems, excellent colour depth.' },
       { manufacturer: 'Weber', products: ['weber.rend Monocouche', 'weber.rend Silicone'], notes: 'Best for EWI + render combined projects.' },
@@ -597,7 +601,7 @@ export const SERVICES: Service[] = [
     intro:
       'Monocouche is a through-colour mineral render applied in a single coat. Hard-wearing, impact-resistant, and available in 100+ colours — it\'s the go-to system for new builds and modern re-renders.',
     longIntro:
-      "Monocouche is a through-colour mineral render — limestone aggregate, Portland cement, pigments, and additives — applied in a single 12-18mm coat and then scraped back to expose the aggregate for a textured finish. The colour goes all the way through, so unlike paint there's no top coat to maintain. Monocouche is harder-wearing than silicone (more impact-resistant, great for parking areas and alleyways), cheaper, and gives a contemporary scraped or dragged finish that's popular on modern Bristol homes. We install Weber, K Rend and Parex monocouche across Bristol and Bath. Every install carries a 25-year manufacturer warranty and a fixed written quote after a free site visit.",
+      "Monocouche is a through-colour mineral render — limestone aggregate, Portland cement, pigments, and additives — applied in a single 12-18mm coat and then scraped back to expose the aggregate for a textured finish. The colour goes all the way through, so unlike paint there's no top coat to maintain. Monocouche is harder-wearing than silicone (more impact-resistant, great for parking areas and alleyways), cheaper, and gives a contemporary scraped or dragged finish that's popular on modern Bristol homes. We install Weber, K Rend and Parex monocouche across Bristol. Every install carries a 25-year manufacturer warranty and a fixed written quote after a free site visit.",
     whatWeDo: [
       'Through-colour monocouche render from Weber, K Rend and Parex',
       'One-coat application, 12-18mm thick, scraped back for texture',
@@ -638,7 +642,7 @@ export const SERVICES: Service[] = [
       { title: '12-month aftercare inspection', description: 'Free inspection at 12 months.' },
     ],
     materials: [
-      { manufacturer: 'Weber', products: ['weber.rend Monocouche'], notes: 'Most popular across Bristol. BBA-certified, 100+ colours, 3 textures.' },
+      { manufacturer: 'Weber', products: ['weber.rend Monocouche'], notes: 'The system we specify most often. BBA-certified, 100+ colours, 3 textures.' },
       { manufacturer: 'K Rend', products: ['Standard K1.5', 'Silicone K1.5', 'Scraped K1.5'], notes: 'Northern Ireland-made, hard-wearing mineral render.' },
       { manufacturer: 'Parex', products: ['Maika Monocouche'], notes: 'Premium French monocouche, excellent colour depth.' },
     ],
@@ -802,7 +806,7 @@ export const SERVICES: Service[] = [
       { title: 'Aftercare guide', description: 'Every project comes with a written aftercare guide explaining drying times and recommended paint systems.' },
     ],
     materials: [
-      { manufacturer: 'British Gypsum', products: ['Thistle Multifinish', 'Thistle Bonding', 'Thistle Hardwall'], notes: 'Most popular across Bristol. BBA-certified, easy to work, smooth finish.' },
+      { manufacturer: 'British Gypsum', products: ['Thistle Multifinish', 'Thistle Bonding', 'Thistle Hardwall'], notes: 'The system we specify most often. BBA-certified, easy to work, smooth finish.' },
       { manufacturer: 'Knauf', products: ['Knauf MP75', 'Knauf Multifinish'], notes: 'Premium German systems, slightly smoother finish.' },
       { manufacturer: 'Thistle', products: ['Thistle One Coat', 'Thistle Dri-Coat'], notes: 'Specialist systems for one-coat and rapid-drying applications.' },
     ],
@@ -907,6 +911,32 @@ export const SERVICES: Service[] = [
       beforeAlt: 'Fishponds home with visible electrical chases and patches after rewiring',
       afterAlt: 'Smooth airless-spray skim finish throughout a Fishponds home ready for decorating',
     },
+    subServices: [
+      {
+        id: 'internal-skimming',
+        name: 'Internal Skimming & Re-Plastering',
+        summary:
+          'Precision two-coat multi-finish skimming for renovations, extensions and blown walls. A glass-smooth finish ready for painting, fully sheeted and left clean.',
+      },
+      {
+        id: 'artex-removal',
+        name: 'Artex Removal & Ceiling Skimming',
+        summary:
+          'Safe artex flattening, bonding, overboarding and smooth ceiling skimming. Clears dated stipple and swirl patterns and repairs water damage or sagging plasterboard, dust-controlled throughout.',
+      },
+      {
+        id: 'drylining',
+        name: 'Drylining & Plasterboarding',
+        summary:
+          'Dot-and-dab drywalling, stud wall boarding, acoustic insulation and moisture-resistant board for loft conversions, kitchen knock-throughs and garage conversions.',
+      },
+      {
+        id: 'crack-repair',
+        name: 'Plaster Crack & Water Damage Repair',
+        summary:
+          'Localised patch repairs for blown plaster, settling cracks, ceiling leaks and chasing after rewiring or plumbing. Feathered seamlessly into the existing wall, often same week.',
+      },
+    ],
     relatedServices: ['external-wall-insulation', 'house-rendering'],
     heroImageAlt: 'Smooth plaster finish on walls and ceilings of a Fishponds home after rewiring',
     category: 'plastering',
@@ -924,7 +954,7 @@ export const SERVICES: Service[] = [
     city: 'bristol',
     tagline: 'Cut energy bills, eliminate condensation and refresh your home\'s exterior with EWI.',
     intro:
-      'External Wall Insulation (EWI) is the single most effective way to insulate a Bristol home — eliminating cold bridges, cutting energy bills by 25-35%, and giving the exterior a fresh render finish at the same time.',
+      'External Wall Insulation (EWI) is the single most effective way to insulate an older home — eliminating cold bridges, cutting energy bills by 25-35%, and giving the exterior a fresh render finish at the same time.',
     longIntro:
       "If your Bristol home was built before 1990, chances are it has no cavity wall insulation and minimal loft insulation. The result: heat loss through the walls (up to 35% of your total heat loss), cold spots around window reveals, condensation on inside walls, and high energy bills. External Wall Insulation fixes all of this in one go. We fix 80-150mm of high-performance insulation board to the outside of your property, then apply a reinforced base coat and a silicone or monocouche render finish. The result: a 25-35% reduction in heating bills, elimination of condensation, and a fresh modern exterior. EWI typically pays for itself in 8-12 years through energy savings. We install Weber, K Rend and Johnstone's EWI systems.",
     whatWeDo: [
@@ -938,7 +968,7 @@ export const SERVICES: Service[] = [
       'Insurance-backed 25-year warranty available on qualifying installations',
     ],
     problems: [
-      'High heating bills on older Bristol properties',
+      'High heating bills on older solid-wall properties',
       'Condensation and mould on inside walls',
       'Cold spots around window reveals and corners',
       'No cavity to fill (solid wall construction)',
@@ -1113,3 +1143,16 @@ export const getRelatedServices = (slug: string): Service[] => {
     .map((s) => getService(s))
     .filter((s): s is Service => Boolean(s));
 };
+
+
+/**
+ * The distinguishing phrase from a service's title — "10-Year Warranty",
+ * "Through-Colour", "Airless Spray".
+ *
+ * The area and Bath pages were titled by formula, so within a tier they
+ * differed only by the service name: measured at 83-86% keyword overlap
+ * between, say, external wall rendering and external wall insulation in
+ * the same area. This puts each service's own hook back into the title.
+ */
+export const serviceHook = (service: Service): string =>
+  service.titleTemplate.split('|').pop()!.trim();
