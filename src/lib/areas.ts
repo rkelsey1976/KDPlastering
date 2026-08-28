@@ -110,7 +110,7 @@ export const AREAS: Area[] = [
       'Wick Road Baptist Church',
       'Broomhill sports ground',
     ],
-    nearbyAreas: ['hanham', 'knowle', 'st-george', 'warmley'],
+    nearbyAreas: ['hanham', 'knowle', 'st-george', 'warmley', 'keynsham'],
     tier: 'primary',
     costVariation: 'Standard pricing. Tight terraces around Sandy Park can add £500-£1,000 due to scaffold complexity.',
     nearbyProjects: [
@@ -339,7 +339,7 @@ export const AREAS: Area[] = [
       'A4174 ring road',
       'Bourne (the boundary to the east)',
     ],
-    nearbyAreas: ['hanham', 'warmley', 'emersons-green', 'kingswood'],
+    nearbyAreas: ['hanham', 'warmley', 'emersons-green', 'kingswood', 'keynsham'],
     tier: 'tertiary',
     costVariation: 'Standard pricing. Multi-property jobs (whole streets) attract a 10% discount.',
     nearbyProjects: [
@@ -607,6 +607,142 @@ export const AREAS: Area[] = [
     demographics: 'Predominantly owner-occupier families, with a growing young-professional rental market. Average property value £340,000.',
     metaDescription: 'Plastering & rendering in Knowle from £55/m². 1930s semis, bay-fronted homes. Silicone, monocouche. 10-year warranty.',
     titleTemplate: 'Knowle Plastering & Rendering | 1930s Semis | From £55/m²',
+  },
+
+
+  // ---- Added on the evidence of real jobs, not guesswork. Each of these
+  // three postcodes appears in the Checkatrade record with paying work, and
+  // none of them had a page. BS8 also carries the only heritage/lime job on
+  // file. Housing stock and pricing notes below are the general character of
+  // each area — worth Kyran sanity-checking before they go out.
+  {
+    slug: 'clifton',
+    name: 'Clifton',
+    city: 'bristol',
+    postcode: 'BS8',
+    type: 'Georgian conservation area',
+    blurb:
+      "Bristol's Georgian quarter — listed terraces, painted stucco and conservation area consent on almost every elevation.",
+    intro:
+      "Clifton is the most constrained place we work in Bristol. Much of it is listed or in a conservation area, a great deal of it is Georgian stucco over rubble stone, and the specification follows from the building rather than from preference.",
+    longIntro:
+      "Clifton is Georgian Bristol, and it behaves like it. The terraces around Royal York Crescent, Cornwallis Crescent and the Polygon are stucco over rubble stone or soft brick — solid-wall construction that has to breathe. A modern cement-rich or non-breathable system traps moisture in the masonry and pushes damp inwards, which is why lime-compatible work matters here in a way it does not on a 1930s semi in Fishponds. A large share of the stock is listed or sits inside the Clifton and Hotwells conservation area, so Listed Building Consent or conservation area approval is routine rather than exceptional. There is also a substantial Victorian and Edwardian villa stock on the streets running back from the Downs, and a growing number of flat conversions where work is often limited to a single dwelling within a larger building. Access is the other constant: narrow streets, residents' parking and very little room for scaffold on the crescents.",
+    propertyTypes: [
+      'Georgian stucco terraces (Royal York Crescent, Cornwallis, the Polygon — often listed)',
+      'Victorian and Edwardian villas off the Downs (4-6 bed, 2,000-3,500 sq ft)',
+      'Flat conversions within larger period buildings (1-3 bed)',
+      'Painted render over rubble stone and soft brick — solid wall, no cavity',
+      'Mews and coach house conversions on the back lanes',
+    ],
+    landmarks: [
+      'Clifton Suspension Bridge',
+      'Royal York Crescent',
+      'Clifton Village',
+      'The Downs',
+      'Clifton Observatory',
+      'Whiteladies Road',
+    ],
+    nearbyAreas: ['redland'],
+    tier: 'secondary',
+    costVariation:
+      'Listed and conservation work typically adds 15-25% — lime-compatible materials, slower methods and consent. Access on the crescents is the other cost driver: narrow streets and restricted parking mean more scaffold time.',
+    nearbyProjects: [
+      'Listed building lime plaster system — heritage re-render, verified Checkatrade review (BS8)',
+      'Urgent kitchen skim and plaster, on site within 24 hours (BS8)',
+    ],
+    transport:
+      'Whiteladies Road and Park Street connect Clifton to the city centre; Clifton Down station is on the Severn Beach line. Residents\' parking applies across most of the village and the crescents, so scaffold and material drops need arranging in advance.',
+    demographics:
+      'A mix of long-term owner-occupiers in the period stock, professional households in the villas, and a substantial rental and student market closer to the university. Property values are among the highest in Bristol.',
+    metaDescription:
+      'Plastering & rendering in Clifton BS8. Georgian stucco, listed buildings and conservation areas — lime-compatible systems, consent handled. Free survey.',
+    titleTemplate: 'Clifton Plastering & Rendering | Listed & Georgian | BS8',
+  },
+  {
+    slug: 'redland',
+    name: 'Redland',
+    city: 'bristol',
+    postcode: 'BS6',
+    type: 'Victorian inner suburb',
+    blurb:
+      'Victorian and Edwardian villas and terraces north of the centre — large period homes, many converted to flats.',
+    intro:
+      'Redland is large Victorian and Edwardian stock: bay-fronted terraces, semi-detached villas and a lot of flat conversions. Most of what we do here is internal — re-skims after leaks, rewiring and conversions — alongside render repair on the rear elevations.',
+    longIntro:
+      "Redland sits between Clifton and Bishopston, and the housing is overwhelmingly late-Victorian and Edwardian: bay-fronted terraces on the streets off Redland Road, larger semi-detached and detached villas towards Redland Green, and a high proportion of houses subdivided into flats. That subdivision shapes the work. A great deal of what we are called to is internal and often urgent — a leak through a landing ceiling, a re-skim after rewiring, making good after a conversion — rather than full-property external rendering. Where external work does come up it tends to be rear elevations and returns, which on these houses are frequently rendered while the front is left as facing brick or stone. Parts of Redland fall inside conservation areas, and the stock is solid-wall throughout, so breathability matters on any external system.",
+    propertyTypes: [
+      'Victorian bay-fronted terraces (3-4 bed, 1,200-1,700 sq ft)',
+      'Edwardian semi-detached villas (4-5 bed, 1,800-2,600 sq ft)',
+      'Flat conversions within larger period houses (1-3 bed)',
+      'Rendered rear elevations and returns over solid brick',
+      'Mews and infill housing on the back streets',
+    ],
+    landmarks: [
+      'Redland Green',
+      'Redland Green School',
+      'Redland station',
+      'Chandos Road',
+      'Redland Chapel',
+      'Cotham Gardens',
+    ],
+    nearbyAreas: ['clifton'],
+    tier: 'secondary',
+    costVariation:
+      'Standard pricing on internal work. External work on the period stock needs breathable systems on solid walls, and parts of Redland sit inside a conservation area — we confirm at survey rather than assuming.',
+    nearbyProjects: [
+      'Landing ceiling taken down, re-insulated, reboarded and plastered after a leak (BS6)',
+      'Flat re-plaster with quick turnaround, verified Checkatrade review (BS6)',
+    ],
+    transport:
+      'Redland and Montpelier stations are on the Severn Beach line, with Gloucester Road and Whiteladies Road running into the centre. Residents\' parking covers much of the area, so access is arranged ahead of the start date.',
+    demographics:
+      'Professional households and families in the larger houses, with a substantial rental market in the flat conversions and student households closer to the university.',
+    metaDescription:
+      'Plastering & rendering in Redland BS6. Victorian villas, flat conversions, re-skims after leaks and rewiring. Free survey, fixed written quote.',
+    titleTemplate: 'Redland Plastering & Rendering | Victorian Villas | BS6',
+  },
+  {
+    slug: 'keynsham',
+    name: 'Keynsham',
+    city: 'bristol',
+    postcode: 'BS31',
+    type: 'Market town between Bristol and Bath',
+    blurb:
+      'Between Bristol and Bath on the A4 — inter-war and post-war housing with a Georgian core around the High Street.',
+    intro:
+      'Keynsham sits halfway between Bristol and Bath, and the housing reflects both: a small Georgian and Victorian core near the High Street, then substantial inter-war and post-war estates spreading out from it. We work here regularly from Hanham, twenty minutes down the A4175.',
+    longIntro:
+      "Keynsham is a market town in Bath and North East Somerset, roughly equidistant between Bristol and Bath, and the housing stock spans both traditions. Around the High Street and Temple Street there is a modest Georgian and Victorian core, some of it stone-built and some in conservation area. Beyond that the town is dominated by inter-war semi-detached housing and post-war estates on the Chandag, Park Estate and Queens Road sides, with a growing amount of modern development on the old Cadbury's factory site and the edges of the town. That means the work splits cleanly: breathable, sympathetic systems on the older core, and standard silicone or monocouche on the far larger inter-war and post-war stock, much of which still carries original pebbledash or sand-and-cement that is now at end of life.",
+    propertyTypes: [
+      'Inter-war semi-detached (3-bed, 900-1,150 sq ft) — often original pebbledash',
+      'Post-war estate housing on Chandag and Park Estate (3-bed, 850-1,100 sq ft)',
+      'Georgian and Victorian stone properties near the High Street (some in conservation area)',
+      '1990s-2000s detached on the town edges (4-bed, 1,300-1,800 sq ft)',
+      'Modern development on the former Cadbury\'s site',
+    ],
+    landmarks: [
+      'Keynsham High Street',
+      'Keynsham railway station',
+      'Memorial Park',
+      'The former Cadbury\'s factory site',
+      'Keynsham Civic Centre',
+      'River Chew',
+    ],
+    nearbyAreas: ['longwell-green', 'brislington'],
+    tier: 'secondary',
+    costVariation:
+      'Standard pricing — twenty minutes from our yard on the A4175, so no travel surcharge. Conservation area and stone-built properties near the High Street are quoted differently and need sympathetic systems.',
+    nearbyProjects: [
+      'Bathroom rendered, verified Checkatrade review (BS31)',
+      'Full plastering job — floors and furniture protected throughout, verified Checkatrade review (BS31)',
+    ],
+    transport:
+      'On the A4 between Bristol and Bath, with Keynsham station on the Bristol-Bath line. Twenty minutes from our yard in Hanham via the A4175. Parking is generally straightforward outside the town centre.',
+    demographics:
+      'Predominantly owner-occupier families and retired households, with commuters into both Bristol and Bath. A steady stream of renovation work on the inter-war stock as it changes hands.',
+    metaDescription:
+      'Plastering & rendering in Keynsham BS31. Inter-war semis, pebbledash removal, post-war estates. 20 minutes from our Hanham yard. Free survey.',
+    titleTemplate: 'Keynsham Plastering & Rendering | BS31 | Free Survey',
   },
 
   // =================== BATH AREAS (5) ===================

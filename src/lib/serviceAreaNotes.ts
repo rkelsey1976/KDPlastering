@@ -25,7 +25,7 @@
 
 export const SERVICE_AREA_NOTES: Record<string, string> = {
   // ---------- Silicone Rendering ----------
-  'silicone-rendering/hanham': '',                                                                                                                                                                                                                       // Hanham
+  'silicone-rendering/hanham': '',                     // Hanham
   'silicone-rendering/brislington': '',                // Brislington
   'silicone-rendering/kingswood': '',                  // Kingswood
   'silicone-rendering/st-george': '',                  // St George
@@ -40,6 +40,9 @@ export const SERVICE_AREA_NOTES: Record<string, string> = {
   'silicone-rendering/whitehall': '',                  // Whitehall
   'silicone-rendering/eastville': '',                  // Eastville
   'silicone-rendering/knowle': '',                     // Knowle
+  'silicone-rendering/clifton': '',                    // Clifton
+  'silicone-rendering/redland': '',                    // Redland
+  'silicone-rendering/keynsham': '',                   // Keynsham
 
   // ---------- House Rendering ----------
   'house-rendering/hanham': '',                        // Hanham
@@ -57,6 +60,9 @@ export const SERVICE_AREA_NOTES: Record<string, string> = {
   'house-rendering/whitehall': '',                     // Whitehall
   'house-rendering/eastville': '',                     // Eastville
   'house-rendering/knowle': '',                        // Knowle
+  'house-rendering/clifton': '',                       // Clifton
+  'house-rendering/redland': '',                       // Redland
+  'house-rendering/keynsham': '',                      // Keynsham
 
   // ---------- External Wall Rendering ----------
   'external-wall-rendering/hanham': '',                // Hanham
@@ -74,6 +80,9 @@ export const SERVICE_AREA_NOTES: Record<string, string> = {
   'external-wall-rendering/whitehall': '',             // Whitehall
   'external-wall-rendering/eastville': '',             // Eastville
   'external-wall-rendering/knowle': '',                // Knowle
+  'external-wall-rendering/clifton': '',               // Clifton
+  'external-wall-rendering/redland': '',               // Redland
+  'external-wall-rendering/keynsham': '',              // Keynsham
 
   // ---------- Monocouche Rendering ----------
   'monocouche-rendering/hanham': '',                   // Hanham
@@ -91,6 +100,9 @@ export const SERVICE_AREA_NOTES: Record<string, string> = {
   'monocouche-rendering/whitehall': '',                // Whitehall
   'monocouche-rendering/eastville': '',                // Eastville
   'monocouche-rendering/knowle': '',                   // Knowle
+  'monocouche-rendering/clifton': '',                  // Clifton
+  'monocouche-rendering/redland': '',                  // Redland
+  'monocouche-rendering/keynsham': '',                 // Keynsham
 
   // ---------- Plastering Services ----------
   'plastering-services/hanham': '',                    // Hanham
@@ -108,6 +120,9 @@ export const SERVICE_AREA_NOTES: Record<string, string> = {
   'plastering-services/whitehall': '',                 // Whitehall
   'plastering-services/eastville': '',                 // Eastville
   'plastering-services/knowle': '',                    // Knowle
+  'plastering-services/clifton': '',                   // Clifton
+  'plastering-services/redland': '',                   // Redland
+  'plastering-services/keynsham': '',                  // Keynsham
 
   // ---------- External Wall Insulation ----------
   'external-wall-insulation/hanham': '',               // Hanham
@@ -125,6 +140,9 @@ export const SERVICE_AREA_NOTES: Record<string, string> = {
   'external-wall-insulation/whitehall': '',            // Whitehall
   'external-wall-insulation/eastville': '',            // Eastville
   'external-wall-insulation/knowle': '',               // Knowle
+  'external-wall-insulation/clifton': '',              // Clifton
+  'external-wall-insulation/redland': '',              // Redland
+  'external-wall-insulation/keynsham': '',             // Keynsham
 };
 
 export const getNote = (service: string, area: string): string =>
