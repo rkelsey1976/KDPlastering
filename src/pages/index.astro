@@ -83,6 +83,18 @@ const schema = {
     ],
     // Consolidates this site with the same business elsewhere.
     sameAs: PROFILES,
+    // Google reads these on the LocalBusiness for the knowledge panel.
+    // image: real work, not the logo. logo: the square brand mark.
+    // hasMap ties the entity to the Business Profile listing itself.
+    image: [
+    'https://www.kdplasteringrenderingservices.co.uk/heroes/silicone-rendering.webp',
+    'https://www.kdplasteringrenderingservices.co.uk/heroes/house-rendering.webp',
+    'https://www.kdplasteringrenderingservices.co.uk/services/gallery/monocouche-rendering-2.webp',
+    ],
+    logo: 'https://www.kdplasteringrenderingservices.co.uk/icon-512.png',
+    description:
+    'Plastering, silicone and monocouche rendering, and external wall insulation across Bristol and Bath. Free site visits, fixed written quotes within 48 hours, 10-year warranty.',
+    hasMap: 'https://maps.google.com/?cid=4018445236727357871',
     // The registered entity behind the trading name (Companies House 10957221).
     legalName: COMPANY.legalName,
     foundingDate: COMPANY.incorporated,
