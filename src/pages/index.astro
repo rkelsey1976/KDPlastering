@@ -94,8 +94,10 @@ const schema = {
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: 51.4486,
-    longitude: -2.5107,
+    // Taken from the Google Business Profile itself. The previous values
+    // were 655m out, which undercuts the NAP match Google is checking.
+    latitude: 51.4427857,
+    longitude: -2.5122453,
   },
   areaServed: [
     { '@type': 'City', name: 'Bristol' },

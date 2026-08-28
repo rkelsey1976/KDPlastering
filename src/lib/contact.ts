@@ -109,6 +109,11 @@ export const PROFILES: string[] = [
   // tells Google they are the same entity, which is worse than omitting it.
   // Add only if Richard confirms the listing is his.
 
-  // TODO: the Google Business Profile — the maps.google.com/?cid=... link
+  // Google Business Profile. CID derived from the hex pair in the Maps place
+  // URL (0x...:0x37c462a6f47ea1af). The maps.app.goo.gl short link and the
+  // share.google link both resolve to the same entity, /g/11tn9dr2fx, so this
+  // is confirmed three ways. The CID form is used rather than the place URL
+  // because the latter carries session parameters that change per share.
+  'https://maps.google.com/?cid=4018445236727357871',
   // from the listing's Share option. The most valuable one still missing.
 ];

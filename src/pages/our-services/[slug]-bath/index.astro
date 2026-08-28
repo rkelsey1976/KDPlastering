@@ -29,7 +29,12 @@ const note = getBathNote(service.slug);
 
 // Bath reviews, where we have them. Two of the twelve are Bath jobs.
 const bathNames = new Set(areas.map((a) => a.name));
-const bathReviews = REVIEWS.filter((r) => bathNames.has(r.area));
+// Bath jobs, plus any heritage/lime work wherever it happened. These pages
+// are built on the claim that we handle listed and lime-compatible systems,
+// and until now nothing on the site evidenced it. The one review that does —
+// "Listed building Lime Plaster system", a heritage re-render in BS8 — is
+// worth more here than a Bath postcode with no heritage content.
+const bathReviews = REVIEWS.filter((r) => bathNames.has(r.area) || r.heritage);
 const reviews = bathReviews.length ? bathReviews : REVIEWS.slice(0, 3);
 
 // Pricing note per area, taken from the area data rather than asserted
