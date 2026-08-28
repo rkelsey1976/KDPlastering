@@ -4,11 +4,14 @@ import PageLayout from '../../layouts/PageLayout.astro';
 import Hero from '../../components/Hero.astro';
 import { getService } from '../../lib/services';
 
-// Deliberately NOT linked from the header or footer. Measured against the
-// real link graph: a sitewide link buys this page ~3.5% of internal
-// PageRank — the same as a service landing page — taken straight from the
-// pages that need it. It is linked from the homepage body and from the
-// service pages whose buyers the posts actually help.
+// Linked from the footer, the homepage body, and the service pages whose
+// buyers these posts help — but NOT the header nav.
+//
+// Measured against the real graph: a sitewide footer link costs the money
+// pages 0.96 points and takes this page from 0.30% to 3.43%. That is a fair
+// price. A blog nobody can find earns no external links, which was the whole
+// argument for having one. The expensive patterns are tag archives and
+// post-to-post cross-linking, not the link itself — see content.config.ts.
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.published.valueOf() - a.data.published.valueOf()
 );
