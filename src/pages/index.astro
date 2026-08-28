@@ -1,4 +1,5 @@
 ---
+import { AREAS } from '../lib/areas';
 import PageLayout from '../layouts/PageLayout.astro';
 import { PROFILES, COMPANY } from '../lib/contact';
 import SectionHeader from '../components/SectionHeader.astro';
@@ -119,9 +120,13 @@ const schema = {
     latitude: 51.4427857,
     longitude: -2.5122453,
   },
+  // The same entity described three times must describe its service area
+  // the same way. Cities plus every named neighbourhood — more useful to
+  // Google than two city names, and it stays in step with lib/areas.
   areaServed: [
     { '@type': 'City', name: 'Bristol' },
     { '@type': 'City', name: 'Bath' },
+    ...AREAS.map((a) => ({ '@type': 'Place', name: a.name })),
   ],
   priceRange: '££',
   openingHoursSpecification: [
@@ -142,8 +147,8 @@ const schema = {
 ---
 
 <PageLayout
-  title="Bristol's Trusted Plastering & Rendering Specialists | KD Plastering"
-  description="Professional plastering, rendering and external wall insulation across Bristol and Bath. 10+ years experience, fully insured, 4.9 on Google from 50 reviews. Free quotes within 48 hours."
+  title="Plastering & Rendering in Bristol & Bath | KD Plastering"
+  description="Plastering, rendering and external wall insulation across Bristol and Bath. 10+ years, fully insured, 4.9 on Google. Free quotes within 48 hours."
   preloadImage="/hero-home.webp"
   canonical="/"
   schema={schema}
@@ -154,7 +159,7 @@ const schema = {
     titleAccent="lasts 25 years."
     lede="Silicone render, monocouche, house rendering and external wall insulation — fitted by Bristol's most reviewed plastering team."
     primaryCta={{ label: 'Get Your Free Quote', href: '/contact/#lead-form-heading' }}
-    phone={{ number: '01174094116', display: '0117 409 4116' }}
+    phone={{ number: '+441174094116', display: '0117 409 4116' }}
     image="/hero-home.webp"
     rotateWith={['/heroes/r/hero-2-1200.webp', '/heroes/r/hero-3-1200.webp', '/heroes/r/hero-4-1200.webp']}
     stats={heroStats}

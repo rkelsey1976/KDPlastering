@@ -72,7 +72,11 @@ const schema = {
     addressCountry: 'GB',
   },
   geo: { '@type': 'GeoCoordinates', latitude: nap.lat, longitude: nap.lng },
-  areaServed: [...bristol, ...bath].map((a) => ({ '@type': 'Place', name: a.name })),
+  areaServed: [
+    { '@type': 'City', name: 'Bristol' },
+    { '@type': 'City', name: 'Bath' },
+    ...[...bristol, ...bath].map((a) => ({ '@type': 'Place', name: a.name })),
+  ],
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
@@ -105,7 +109,7 @@ const mapQuery = encodeURIComponent(`${nap.street}, ${nap.locality} ${nap.postco
     titleAccent="the property."
     lede="We'll come and look at it. Free site visit across Bristol and Bath, a fixed written quote within 48 hours, and no pressure either way."
     primaryCta={{ label: 'Send us the details', href: '#lead-form-heading' }}
-    phone={{ number: '01174094116', display: '0117 409 4116' }}
+    phone={{ number: '+441174094116', display: '0117 409 4116' }}
     image="/heroes/contact.webp"
     imageAlt=""
     trust={['Free site visit', 'Fixed written quote', 'Within 48 hours']}

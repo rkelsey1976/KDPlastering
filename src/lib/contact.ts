@@ -11,7 +11,7 @@
 
 export const PHONE = {
   /** Dial string, no spaces. */
-  tel: '01174094116',
+  tel: '+441174094116',
   /** How it is written on the page. */
   display: '0117 409 4116',
   /** E.164, for schema.org. */

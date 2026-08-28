@@ -121,7 +121,7 @@ export const AREAS: Area[] = [
     transport: 'On the A4 Bath Road with frequent bus services into Bristol city centre (15-25 minutes). Brislington railway station (the odd surviving station on the old Bath line) is a 10-minute walk from the centre of the suburb. Cycle route 3 (Bath-Bristol) passes through.',
     demographics: 'Mixed owner-occupier and rental market. The Victorian terraces around Sandy Park have a strong young-professional rental market; the post-war semis are predominantly owner-occupier families. Average property value £290,000.',
     metaDescription: 'Plastering & rendering in Brislington from £55/m². Silicone, monocouche, EWI. Victorian terraces to 1970s semis. Free quotes, 10-year warranty.',
-    titleTemplate: 'Brislington Plastering & Rendering | From £55/m² | All Property Types',
+    titleTemplate: 'Brislington Plastering & Rendering | From £55/m²',
   },
   {
     slug: 'kingswood',
@@ -199,7 +199,7 @@ export const AREAS: Area[] = [
     transport: 'On the A420 corridor east of Bristol city centre. Bus routes 5, 24, 48 connect to the centre in 10-15 minutes. Lawrence Hill and Stapleton Road railway stations within walking distance.',
     demographics: 'Mix of long-term residents and gentrifying younger professionals. The Church Road end is becoming increasingly popular with first-time buyers. Conservation area status limits some exterior alterations. Average property value £270,000.',
     metaDescription: 'Plastering & rendering in St George from £55/m². Victorian terraces, conservation area specialists. Lime-compatible systems. 10-year warranty.',
-    titleTemplate: 'St George Plastering & Rendering | Victorian Terraces | Conservation Area',
+    titleTemplate: 'St George Plastering & Rendering | Victorian Terraces',
   },
   {
     slug: 'fishponds',
@@ -238,7 +238,7 @@ export const AREAS: Area[] = [
     transport: 'On the A432 corridor east of Bristol. Bus routes 5, 24, 48 connect to the city centre. Stapleton Road railway station is within walking distance for the western parts.',
     demographics: 'Mixed — owner-occupier on the 1930s semis, rental and ex-counil on the post-war estates. The regeneration of the Frome Valley is bringing in younger buyers. Average property value £280,000.',
     metaDescription: 'Plastering & rendering in Fishponds from £55/m². 1930s semis, ex-council re-renders. Silicone systems. 10-year warranty.',
-    titleTemplate: 'Fishponds Plastering & Rendering | From £55/m² | Ex-Council Specialists',
+    titleTemplate: 'Fishponds Plastering & Rendering | From £55/m²',
   },
   {
     slug: 'downend',
@@ -276,7 +276,7 @@ export const AREAS: Area[] = [
     transport: 'Served by the A432 (Badminton Road) and the A4174. Bus routes into Bristol city centre take 25-35 minutes. Bristol Parkway station is 10 minutes by car for mainline rail.',
     demographics: 'Predominantly owner-occupier professional families, often with children at Downend School. One of the more affluent BS postcodes. Average property value £450,000.',
     metaDescription: 'Plastering & rendering in Downend from £60/m². Large detached homes, post-war pebbledash, EWI specialists. 10-year warranty.',
-    titleTemplate: 'Downend Plastering & Rendering | Large Detached Homes | From £60/m²',
+    titleTemplate: 'Downend Plastering & Rendering | Large Detached Homes',
   },
   {
     slug: 'emersons-green',
@@ -349,7 +349,7 @@ export const AREAS: Area[] = [
     transport: 'A4174 ring road access. Bus routes into Bristol city centre take 30-40 minutes. Easy access to the M5 at junction 1 (10 minutes). Keynsham railway station 5 minutes by car.',
     demographics: 'Predominantly owner-occupier families, multi-generational residents. Average property value £340,000.',
     metaDescription: 'Plastering & rendering in Longwell Green from £55/m². 1970s-80s semis and detached, multi-property discounts. 10-year warranty.',
-    titleTemplate: 'Longwell Green Plastering & Rendering | From £55/m² | 1970s-80s Homes',
+    titleTemplate: 'Longwell Green Plastering & Rendering | From £55/m²',
   },
   {
     slug: 'warmley',
@@ -386,7 +386,7 @@ export const AREAS: Area[] = [
     transport: 'Served by the A4175 and the A420. Bus routes into Bristol take 30-40 minutes. Keynsham railway station is 10 minutes by car.',
     demographics: 'Mix of long-term village residents in the period cottages and younger families in the estates. Conservation area status in the village centre limits some exterior alterations. Average property value £300,000.',
     metaDescription: 'Plastering & rendering in Warmley from £55/m². Period cottages + modern homes. Lime-compatible specialists. 10-year warranty.',
-    titleTemplate: 'Warmley Plastering & Rendering | Period Cottages | From £55/m²',
+    titleTemplate: 'Warmley Plastering & Rendering | Period Cottages',
   },
   {
     slug: 'stapleton',
@@ -424,7 +424,7 @@ export const AREAS: Area[] = [
     transport: 'On the Frome Valley between Eastville and Frenchay. Bus routes into Bristol city centre take 15-20 minutes. Stapleton Road railway station within walking distance.',
     demographics: 'Predominantly owner-occupier professional families. One of the more upmarket BS16 postcodes. Average property value £470,000.',
     metaDescription: 'Plastering & rendering in Stapleton from £60/m². Large period detached, Edwardian semis. Heritage specialists. 10-year warranty.',
-    titleTemplate: 'Stapleton Plastering & Rendering | Period Homes | From £60/m²',
+    titleTemplate: 'Stapleton Plastering & Rendering | Period Homes',
   },
   {
     slug: 'frenchay',
@@ -461,7 +461,7 @@ export const AREAS: Area[] = [
     transport: 'On the Bristol-Bath cycle path. Bus routes into Bristol take 25-35 minutes. Bristol Parkway station 10 minutes by car for mainline rail.',
     demographics: 'Predominantly owner-occupier professional families, often multi-generational. One of the more affluent BS16 postcodes. Average property value £550,000.',
     metaDescription: 'Plastering & rendering in Frenchay from £60/m². Large executive detached, EWI specialists. 10-year warranty.',
-    titleTemplate: 'Frenchay Plastering & Rendering | Large Detached | EWI Specialists',
+    titleTemplate: 'Frenchay Plastering & Rendering | Large Detached',
   },
   {
     slug: 'speedwell',
@@ -497,7 +497,7 @@ export const AREAS: Area[] = [
     transport: 'Close to the M32 junction 2. Bus routes into Bristol city centre take 15-20 minutes. Stapleton Road railway station within walking distance.',
     demographics: 'Mixed — owner-occupier and rental. Affordable entry into the Bristol market for first-time buyers. Average property value £260,000.',
     metaDescription: 'Plastering & rendering in Speedwell from £55/m². 1930s semis, post-war estates. Silicone, monocouche. 10-year warranty.',
-    titleTemplate: 'Speedwell Plastering & Rendering | Affordable Homes | From £55/m²',
+    titleTemplate: 'Speedwell Plastering & Rendering | Affordable Homes',
   },
   {
     slug: 'whitehall',
@@ -533,7 +533,7 @@ export const AREAS: Area[] = [
     transport: 'East of Bristol city centre. Bus routes into the centre take 10-15 minutes. Lawrence Hill railway station within walking distance.',
     demographics: 'Mix of long-term residents and gentrifying younger professionals. Conservation area status in some streets. Average property value £265,000.',
     metaDescription: 'Plastering & rendering in Whitehall from £55/m². Victorian terraces, conservation area specialists. 10-year warranty.',
-    titleTemplate: 'Whitehall Plastering & Rendering | Victorian Terraces | Conservation Area',
+    titleTemplate: 'Whitehall Plastering & Rendering | Victorian Terraces',
   },
   {
     slug: 'eastville',
@@ -570,7 +570,7 @@ export const AREAS: Area[] = [
     transport: 'East of Bristol city centre. Bus routes into the centre take 15-20 minutes. Stapleton Road railway station within walking distance.',
     demographics: 'Mixed — gentrifying younger professionals on the Victorian terraces, families on the 1920s semis, young renters in the new flats. Average property value £275,000.',
     metaDescription: 'Plastering & rendering in Eastville from £55/m². Victorian terraces, Edwardian homes. Silicone, monocouche. 10-year warranty.',
-    titleTemplate: 'Eastville Plastering & Rendering | Victorian & Edwardian | From £55/m²',
+    titleTemplate: 'Eastville Plastering & Rendering | Victorian & Edwardian',
   },
   {
     slug: 'knowle',
@@ -783,7 +783,7 @@ export const AREAS: Area[] = [
     transport: 'Bath Spa railway station (10-minute walk from most of the centre). Bus services throughout Bath. Bristol Airport 25km. Limited car access in the city centre — most work involves careful logistics.',
     demographics: 'Mix of owner-occupier period flats and pieds-à-terre, plus HMO student lets near the university. Average property value £550,000.',
     metaDescription: 'Plastering & rendering in Bath city centre from £70/m². Listed building specialists, lime-compatible systems. 10-year warranty.',
-    titleTemplate: 'Bath City Centre Plastering | Listed Building Specialists | From £70/m²',
+    titleTemplate: 'Bath City Centre Plastering | Listed Building Specialists',
   },
   {
     slug: 'bathwick',
@@ -819,7 +819,7 @@ export const AREAS: Area[] = [
     transport: 'Within walking distance of Bath Spa station. Bus services connect to the rest of Bath. Easy access to the A36 and A46.',
     demographics: 'Predominantly owner-occupier professional families. One of the more affluent BA postcodes. Average property value £650,000.',
     metaDescription: 'Plastering & rendering in Bathwick from £65/m². Georgian terraces, Holburne Park apartments. Lime-compatible specialists. 10-year warranty.',
-    titleTemplate: 'Bathwick Plastering & Rendering | Georgian & Modern | From £65/m²',
+    titleTemplate: 'Bathwick Plastering & Rendering | Georgian & Modern',
   },
   {
     slug: 'widcombe',
@@ -855,7 +855,7 @@ export const AREAS: Area[] = [
     transport: 'Right next to Bath Spa station — 10-minute walk to most properties. Bus services throughout Bath.',
     demographics: 'Mix of owner-occupier professional families and renters commuting to Bath or Bristol. Average property value £480,000.',
     metaDescription: 'Plastering & rendering in Widcombe from £60/m². Georgian cottages, Victorian villas. Lime-compatible systems. 10-year warranty.',
-    titleTemplate: 'Widcombe Plastering & Rendering | Georgian Cottages | From £60/m²',
+    titleTemplate: 'Widcombe Plastering & Rendering | Georgian Cottages',
   },
   {
     slug: 'newbridge',
@@ -890,7 +890,7 @@ export const AREAS: Area[] = [
     transport: 'A4 corridor with bus services into Bath (10-15 minutes) and Bristol (40-50 minutes). Bath Spa station within walking distance for some properties.',
     demographics: 'Mix of owner-occupier families and Bristol commuters. Average property value £380,000.',
     metaDescription: 'Plastering & rendering in Newbridge from £55/m². Inter-war semis, modern apartments. Silicone, monocouche. 10-year warranty.',
-    titleTemplate: 'Newbridge Plastering & Rendering | Inter-war Semis | From £55/m²',
+    titleTemplate: 'Newbridge Plastering & Rendering | Inter-war Semis',
   },
   {
     slug: 'odd-down',
@@ -926,7 +926,7 @@ export const AREAS: Area[] = [
     transport: 'Served by the A367. Odd Down Park & Ride connects to Bath city centre. Bus services run throughout the suburb.',
     demographics: 'Predominantly owner-occupier families, often multi-generational. One of the more affordable BA postcodes. Average property value £320,000.',
     metaDescription: 'Plastering & rendering in Odd Down from £55/m². 1960s-70s homes, family estates. Whole-street discounts. 10-year warranty.',
-    titleTemplate: 'Odd Down Plastering & Rendering | 1960s-70s Homes | From £55/m²',
+    titleTemplate: 'Odd Down Plastering & Rendering | 1960s-70s Homes',
   },
 ];
 

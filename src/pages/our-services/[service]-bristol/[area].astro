@@ -93,7 +93,7 @@ const schema = {
 
 <PageLayout
   title={`${prose} in ${area.name} ${area.postcode} | ${serviceHook(service)}`}
-  description={`${prose} in ${area.name}, Bristol ${area.postcode}. ${area.blurb} Free site visit, fixed written quote, 10-year warranty.`}
+  description={`${prose} in ${area.name}, Bristol ${area.postcode}. Free site visit, fixed written quote within 48 hours, 10-year warranty.`}
   preloadImage={`/heroes/${service.slug}.webp`}
   canonical={`/our-services/${service.slug}-bristol/${area.slug}/`}
   schema={schema}
@@ -112,7 +112,7 @@ const schema = {
     titleAccent={area.name}
     lede={area.intro}
     primaryCta={{ label: 'Get a Free Quote', href: '/contact/#lead-form-heading' }}
-    phone={{ number: '01174094116', display: '0117 409 4116' }}
+    phone={{ number: '+441174094116', display: '0117 409 4116' }}
     image={`/heroes/${service.slug}.webp`}
     imageAlt=""
     trust={['Free site visit', 'Fixed written quote', '10-year warranty']}

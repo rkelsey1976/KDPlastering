@@ -51,7 +51,7 @@ const services = [...new Set(projects.map((p) => p.service))].sort();
     titleAccent="Bristol & Bath"
     lede="Full house renders, pebbledash removals, EWI installations, heritage work and internal plastering — a sample of the 1,000+ projects delivered over the last ten years."
     primaryCta={{ label: 'Get a Free Quote', href: '/contact/#lead-form-heading' }}
-    phone={{ number: '01174094116', display: '0117 409 4116' }}
+    phone={{ number: '+441174094116', display: '0117 409 4116' }}
     image="/heroes/our-work.webp"
     imageAlt=""
     trust={['1,000+ projects', '10+ years', 'Bristol & Bath']}
@@ -90,7 +90,7 @@ const services = [...new Set(projects.map((p) => p.service))].sort();
                 alt={p.alt}
                 width="920"
                 height="613"
-                loading={i < 3 ? 'eager' : 'lazy'}
+                loading="lazy"
                 decoding="async"
               />
               <span class="gallery-item__meta">

@@ -61,11 +61,36 @@ const localBusiness = {
     postalCode: 'BS15 3FH',
     addressCountry: 'GB',
   },
+  // The same entity described three times must describe its service area
+  // the same way. Cities plus every named neighbourhood — more useful to
+  // Google than two city names, and it stays in step with lib/areas.
   areaServed: [
     { '@type': 'City', name: 'Bristol' },
     { '@type': 'City', name: 'Bath' },
+    ...AREAS.map((a) => ({ '@type': 'Place', name: a.name })),
   ],
   priceRange: '££',
+  geo: {
+    '@type': 'GeoCoordinates',
+    // Taken from the Google Business Profile itself. The previous values
+    // were 655m out, which undercuts the NAP match Google is checking.
+    latitude: 51.4427857,
+    longitude: -2.5122453,
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '08:00',
+      closes: '18:00',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Saturday',
+      opens: '09:00',
+      closes: '13:00',
+    },
+  ],
 };
 
 // Same card-sized WebP the homepage grid uses — the icons here were the
@@ -86,8 +111,8 @@ const bath = getBathAreas();
 ---
 
 <PageLayout
-  title="Plastering & Rendering Services in Bristol & Bath | KD Plastering"
-  description="All our plastering, rendering and external wall insulation services across Bristol and Bath. Silicone, monocouche, K Rend, Parex — 10-year warranty, fully insured, free quotes."
+  title="Our Services | Plastering & Rendering, Bristol & Bath"
+  description="Plastering, rendering and external wall insulation across Bristol and Bath. Silicone, monocouche, K Rend and Parex systems. 10-year warranty."
   preloadImage="/heroes/our-services.webp"
   canonical="/our-services/"
   schema={localBusiness}
@@ -103,7 +128,7 @@ const bath = getBathAreas();
     titleAccent="Bristol & Bath"
     lede="Six specialist services covering every type of internal plastering, external rendering and external wall insulation across 20 Bristol & Bath neighbourhoods."
     primaryCta={{ label: 'Get a Free Quote', href: '/contact/#lead-form-heading' }}
-    phone={{ number: '01174094116', display: '0117 409 4116' }}
+    phone={{ number: '+441174094116', display: '0117 409 4116' }}
     image="/heroes/our-services.webp"
     imageAlt=""
     trust={['Six specialist services', '20 neighbourhoods', 'Fully insured', 'Free site visits']}
