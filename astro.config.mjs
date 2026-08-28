@@ -17,7 +17,10 @@ export default defineConfig({
     sitemap({
       // The style guide is noindex — keep it out of the sitemap too, so we
       // aren't sending search engines contradictory signals.
-      filter: (page) => !['/style-guide', '/logo-lab'].some((p) => page.includes(p)),
+      // /thanks/ is noindex: it is a conversion confirmation, not a landing
+      // page. Left in the sitemap it can rank, and anyone arriving on it from
+      // search fires a conversion that never happened.
+      filter: (page) => !['/style-guide', '/logo-lab', '/thanks'].some((p) => page.includes(p)),
     }),
   ],
 });
