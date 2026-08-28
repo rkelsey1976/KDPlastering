@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /__forms.html
 
 Sitemap: https://www.kdplasteringrenderingservices.co.uk/sitemap-index.xml
