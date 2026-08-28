@@ -42,3 +42,56 @@ export const whatsappHref = (message: string = WHATSAPP_MESSAGE) =>
   WHATSAPP_NUMBER
     ? `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
     : null;
+
+
+/**
+ * Profiles that are demonstrably the same business, for schema.org `sameAs`.
+ *
+ * This is how Google consolidates the entity: the site, the Google Business
+ * Profile, Checkatrade and the rest are one business rather than several
+ * loosely-similar ones. It matters more than usual here because the name is
+ * currently inconsistent across those properties — Companies House has
+ * "K D Plastering Services Ltd", the GBP shows the same, Checkatrade has
+ * "K D Plastering & Rendering", and the site trades as "KD Plastering &
+ * Rendering Services".
+ *
+ * Only add a URL you have opened and confirmed. A sameAs pointing at a 404
+ * is worse than no sameAs — it asserts a relationship to a page that is not
+ * there, which is the opposite of what the property is for.
+ */
+export const COMPANY = {
+  legalName: 'K D Plastering Services Ltd',
+  number: '10957221',
+  /** Incorporated 11 September 2017 (Companies House). Kyran traded before
+      that, which is why the site says "since 2014" — the two are not in
+      conflict, but only the incorporation date belongs in schema. */
+  incorporated: '2017-09-11',
+};
+
+export const PROFILES: string[] = [
+  // Checkatrade — 9.8/10 from 194 reviews. The /trades/ segment matters;
+  // Google's breadcrumb display omits it, which is not the real URL.
+  'https://www.checkatrade.com/trades/kdplasteringservices',
+
+  // MyBuilder — 4.7 from 51 reviews. Supplied by Richard; MyBuilder returns
+  // 403 to automated requests so it could not be machine-checked here.
+  'https://www.mybuilder.com/profile/kd_plastering',
+
+  // Verified 200, "KDplastering | Bristol". The ?locale=en_GB parameter is
+  // dropped — sameAs wants the canonical profile URL, not a localised view.
+  'https://www.facebook.com/kdplasterin/',
+
+  // Verified 200, "K D Plastering Services Ltd (@kd.plastering)".
+  'https://www.instagram.com/kd.plastering/',
+
+  // Verified 200, "K D Plastering Services (@kd_plastering)". x.com, not
+  // twitter.com: both resolve, but x.com is canonical now.
+  'https://x.com/kd_plastering',
+
+  // Companies House. An authoritative third-party confirmation of the legal
+  // entity, which is worth more for entity consolidation than any social.
+  'https://find-and-update.company-information.service.gov.uk/company/10957221',
+
+  // TODO: the Google Business Profile — the maps.google.com/?cid=... link
+  // from the listing's Share option. The most valuable one still missing.
+];

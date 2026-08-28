@@ -1,5 +1,6 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
+import { PROFILES, COMPANY } from '../lib/contact';
 import Hero from '../components/Hero.astro';
 import { getBristolAreas, getBathAreas } from '../lib/areas';
 import AreaCoverage from '../components/AreaCoverage.astro';
@@ -39,7 +40,17 @@ const schema = {
     { '@type': 'ContactPoint', telephone: '+441174094116', contactType: 'customer service', areaServed: 'GB', availableLanguage: 'English' },
     { '@type': 'ContactPoint', telephone: '+447961114662', contactType: 'customer service', areaServed: 'GB', availableLanguage: 'English' },
   ],
-  email: nap.email,
+  // Consolidates this site with the same business elsewhere.
+  sameAs: PROFILES,
+  // The registered entity behind the trading name (Companies House 10957221).
+  legalName: COMPANY.legalName,
+  foundingDate: COMPANY.incorporated,
+  identifier: {
+    '@type': 'PropertyValue',
+    name: 'Company number',
+    value: COMPANY.number,
+  },
+    email: nap.email,
   address: {
     '@type': 'PostalAddress',
     streetAddress: nap.street,

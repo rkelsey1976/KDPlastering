@@ -1,5 +1,6 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
+import { PROFILES, COMPANY } from '../../lib/contact';
 import Hero from '../../components/Hero.astro';
 import ServiceCard from '../../components/ServiceCard.astro';
 import { SERVICES, getService } from '../../lib/services';
@@ -30,7 +31,17 @@ const localBusiness = {
         availableLanguage: 'English',
       },
     ],
-  email: 'kdplasteringltd@gmail.com',
+    // Consolidates this site with the same business elsewhere.
+    sameAs: PROFILES,
+    // The registered entity behind the trading name (Companies House 10957221).
+    legalName: COMPANY.legalName,
+    foundingDate: COMPANY.incorporated,
+    identifier: {
+      '@type': 'PropertyValue',
+      name: 'Company number',
+      value: COMPANY.number,
+    },
+      email: 'kdplasteringltd@gmail.com',
   address: {
     '@type': 'PostalAddress',
     streetAddress: '8 Roman Way, Hanham',
