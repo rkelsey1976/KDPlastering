@@ -11,10 +11,18 @@ import { REVIEWS } from '../lib/reviews';
 const featuredServices = SERVICES;
 const featuredReviews = REVIEWS.slice(0, 3);
 
+// Reviews: 50 on Google (4.9), 194 on Checkatrade (9.8/10), 51 on MyBuilder
+// (4.7) = 295. "180+ 5-Star" was both wrong and an undercount, and not all of
+// them are five-star — Checkatrade scores out of ten. "290+ verified" is the
+// claim that survives someone checking it.
 const heroStats = [
   { value: 10,  suffix: '+',   label: 'Years in Bristol' },
-  { value: 180, suffix: '+',   label: '5-Star Reviews' },
+  { value: 290, suffix: '+',   label: 'Verified Reviews' },
   { value: 20,                 label: 'Areas Covered' },
+  // TODO: 800 is unverified. Checkatrade has 194 reviews, which implies
+  // several hundred jobs at a normal review rate, but nothing on record
+  // supports a specific figure. Replace with a real number from the books
+  // or drop the stat.
   { value: 800, suffix: '+',   label: 'Projects Done' },
   { value: 25,  suffix: ' yr', label: 'System Warranty' },
 ];
