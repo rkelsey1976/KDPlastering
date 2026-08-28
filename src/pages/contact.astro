@@ -202,19 +202,33 @@ const mapQuery = encodeURIComponent(`${nap.street}, ${nap.locality} ${nap.postco
 </PageLayout>
 
 <script>
-  // Swap the facade for the real iframe only on click.
-  document.querySelectorAll<HTMLElement>('.map').forEach((wrap) => {
-    wrap.querySelector('.map__load')?.addEventListener('click', () => {
-      const src = wrap.dataset.mapSrc;
-      if (!src) return;
-      const frame = document.createElement('iframe');
-      frame.src = src;
-      frame.title = 'Map showing 8 Roman Way, Hanham, Bristol BS15 3FH';
-      frame.loading = 'lazy';
-      frame.referrerPolicy = 'no-referrer-when-downgrade';
-      frame.setAttribute('allowfullscreen', '');
-      wrap.replaceChildren(frame);
-    });
+  // The map is a Google embed and sets Google cookies. Two ways in: the
+  // visitor clicks "Load map", or they have already accepted cookies, in
+  // which case the consent banner announces it and the map loads without a
+  // second click. Rejecting — or not answering — leaves the facade up and
+  // requests nothing from Google.
+  const loadMap = (wrap: HTMLElement) => {
+    const src = wrap.dataset.mapSrc;
+    if (!src || wrap.dataset.loaded) return;
+    wrap.dataset.loaded = 'true';
+    const frame = document.createElement('iframe');
+    frame.src = src;
+    frame.title = 'Map showing 8 Roman Way, Hanham, Bristol BS15 3FH';
+    frame.loading = 'lazy';
+    frame.referrerPolicy = 'no-referrer-when-downgrade';
+    frame.setAttribute('allowfullscreen', '');
+    wrap.replaceChildren(frame);
+  };
+
+  const maps = () => document.querySelectorAll<HTMLElement>('.map');
+
+  maps().forEach((wrap) => {
+    wrap.querySelector('.map__load')?.addEventListener('click', () => loadMap(wrap));
+  });
+
+  if (document.documentElement.dataset.consent === 'accepted') maps().forEach(loadMap);
+  window.addEventListener('kd:consent', (e) => {
+    if ((e as CustomEvent).detail?.state === 'accepted') maps().forEach(loadMap);
   });
 </script>
 

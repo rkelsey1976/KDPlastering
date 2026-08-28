@@ -27,6 +27,11 @@ const services = [
     netlify-honeypot="_gotcha"
     class="lead-form__form"
   >
+    {/* Netlify attributes the submission to a form by this hidden field.
+        Without it the POST is accepted but nothing lands in the Forms
+        dashboard. */}
+    <input type="hidden" name="form-name" value="kd-quote" />
+
     <!-- Honeypot — hidden from users, visible to bots -->
     <p class="lead-form__honeypot" aria-hidden="true">
       <label>Don't fill this out: <input name="_gotcha" tabindex="-1" autocomplete="off" /></label>
