@@ -92,6 +92,23 @@ export const PROFILES: string[] = [
   // entity, which is worth more for entity consolidation than any social.
   'https://find-and-update.company-information.service.gov.uk/company/10957221',
 
+  // Yell. Behind Cloudflare, so it returns 403 to automated checks — but the
+  // slug carries the exact registered name, which is why this is safe to
+  // include where the MyJobQuote listing was not.
+  'https://www.yell.com/biz/k-d-plastering-services-ltd-bristol-10624874/',
+
+  // Directory listing. Auto-generated rather than claimed, but it carries
+  // the correct NAP — Roman Way and BS15 both appear on the page — so it is
+  // a genuine citation rather than a stray.
+  'https://www.mylocalservices.co.uk/K+D+Plastering+Services+Ltd-Bristol-3202160.html',
+
+  // NOT added: https://www.myjobquote.co.uk/t/kds-plastering-1
+  // The page names "Kds plastering" and carries no phone, postcode or
+  // street. Nothing on it ties to this business, and "KDS Plastering" is a
+  // plausible different trader. A sameAs pointing at someone else's profile
+  // tells Google they are the same entity, which is worse than omitting it.
+  // Add only if Richard confirms the listing is his.
+
   // TODO: the Google Business Profile — the maps.google.com/?cid=... link
   // from the listing's Share option. The most valuable one still missing.
 ];
