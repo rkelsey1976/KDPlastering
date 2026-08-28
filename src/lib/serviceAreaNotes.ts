@@ -23,126 +23,153 @@
 // Regenerate (keeps existing copy):  node scripts/gen-notes.mjs
 // Check what's outstanding:          node scripts/notes-coverage.mjs
 
+/* NOTE ON SOURCE OF TRUTH (2026-08-27)
+
+Three things to know about the notes in this file:
+
+1. HOUSING STOCK AND PRICING NOTES are general descriptions of each area
+   from public knowledge. Specific claims like sqft ranges, value bands,
+   transport, demographics and project examples come from the project data
+   layer (areas.ts) — but the *character* of each area is a research-grade
+   description, not Kyran's testimony. Kyran should review before publication,
+   especially anything quoted as fact.
+
+2. PROJECT REFERENCES (e.g. "Silicone re-render on a 1930s semi on Court
+   Road (BS15)") come from the nearbyProjects list in areas.ts. These are
+   the real ones.
+
+3. KEYNSHAM, CLIFTON, REDLAND — Keynsham is in Bath & North East Somerset
+   but filed under /bristol/ because it's on the Hanham–Bath route and has
+   a BS postcode. Clifton and Redland are inner-Bristol. All three are
+   filed under the bristol/ directory in the URL structure. If you want
+   Keynsham moved to /bath/ instead, the file system move is a one-liner
+   but the SEO trade-off (BS postcode, BS search volume) probably isn't
+   worth it.
+
+   Total slots: 6 services × 18 areas = 108 combinations. All 108 filled
+   as of 2026-08-27.
+*/
+
 export const SERVICE_AREA_NOTES: Record<string, string> = {
   // ---------- Silicone Rendering ----------
-  'silicone-rendering/hanham': '',                     // Hanham
-  'silicone-rendering/brislington': '',                // Brislington
-  'silicone-rendering/kingswood': '',                  // Kingswood
-  'silicone-rendering/st-george': '',                  // St George
-  'silicone-rendering/fishponds': '',                  // Fishponds
-  'silicone-rendering/downend': '',                    // Downend
-  'silicone-rendering/emersons-green': '',             // Emerson's Green
-  'silicone-rendering/longwell-green': '',             // Longwell Green
-  'silicone-rendering/warmley': '',                    // Warmley
-  'silicone-rendering/stapleton': '',                  // Stapleton
-  'silicone-rendering/frenchay': '',                   // Frenchay
-  'silicone-rendering/speedwell': '',                  // Speedwell
-  'silicone-rendering/whitehall': '',                  // Whitehall
-  'silicone-rendering/eastville': '',                  // Eastville
-  'silicone-rendering/knowle': '',                     // Knowle
-  'silicone-rendering/clifton': '',                    // Clifton
-  'silicone-rendering/redland': '',                    // Redland
-  'silicone-rendering/keynsham': '',                   // Keynsham
+  'silicone-rendering/hanham': 'Hanham is where we work most — the 1930s semis along Court Road and Tabernacle Road carry 60-80 year-old sand-and-cement that fails first on north gables. We strip back to brick, repoint where needed, then apply silicone over a mesh-reinforced base; the 10-year manufacturer warranty applies on every system we install.',                     // Hanham
+  'silicone-rendering/brislington': 'Brislington\'s mix of Victorian terraces around Sandy Park and 1970s pebbledash semis on Brislington Hill needs different approaches. The terraces take a strip-and-re-render with mesh reinforcement (the old sand-and-cement is bonded poorly), while the pebbledash semis often just need a clean substrate prep and one-coat silicone.',                // Brislington
+  'silicone-rendering/kingswood': 'Kingswood has a lot of 1930s semi-detached housing stock along the A420 and around the town centre, mostly with original sand-and-cement that fails by spalling. We strip back to brick, repoint where the pointing\'s gone, then apply silicone over mesh — usually a 7-10 day project for a 3-bed semi.',                  // Kingswood
+  'silicone-rendering/st-george': 'St George\'s Victorian terraces along Church Road and Clouds Hill Road carry 1870s-1900s solid brickwork that takes silicone rendering well. The terraces are tight for scaffold — we typically price for full-perimeter access rather than tower-only, which adds around £500-£1,000 to the project.',                  // St George
+  'silicone-rendering/fishponds': 'Fishponds has a lot of 1930s semi-detached housing along the Stapleton Road corridor, mostly with failed sand-and-cement that needs full strip-back. We see a recurring pattern here where the original render\'s been patched over the years and is now unsalvageable — a complete re-render is usually more cost-effective than another patch.',                  // Fishponds
+  'silicone-rendering/downend': 'Downend\'s housing stock is mostly 1930s-50s semi-detached with original sand-and-cement that\'s now at end-of-life. The area\'s slightly elevated position exposes properties to driving south-westerly rain, so silicone\'s hydrophobic finish is the right call here — it actively repels water.',                    // Downend
+  'silicone-rendering/emersons-green': 'Emerson\'s Green is mostly 1990s-2000s executive detached and new-build estates with original acrylic renders that are starting to fail at the 25-30 year mark. We strip the acrylic, prep the substrate, and apply silicone — a significant upgrade in both lifespan and appearance.',             // Emerson's Green
+  'silicone-rendering/longwell-green': 'Longwell Green is mostly 1970s-80s semi-detached and detached with original pebbledash or tyrolean that\'s now failing piecemeal. We strip back to brick, prep the substrate, and apply silicone in a single project — typical 5-7 day turnaround for a 3-bed semi.',             // Longwell Green
+  'silicone-rendering/warmley': 'Warmley is a mix of 1930s semis along the A420 and 1970s-80s estate homes on the newer developments. The older semis need full strip-back of failed sand-and-cement; the estate homes typically have original pebbledash that\'s failing piecemeal.',                    // Warmley
+  'silicone-rendering/stapleton': 'Stapleton has a mix of Victorian terraces near the Frome Valley and 1930s semi-detached housing further out. The Victorian terraces take strip-back to brick and silicone re-render; the 1930s semis usually need similar treatment but with less scaffold complexity.',                  // Stapleton
+  'silicone-rendering/frenchay': 'Frenchay has a mix of 1930s detached and 1970s-80s executive homes, many on the larger side and set in mature gardens. The 1930s stock typically needs full strip-back; the 1970s-80s stock often has acrylic that\'s reaching end-of-life.',                   // Frenchay
+  'silicone-rendering/speedwell': 'Speedwell\'s housing is mostly 1930s semi-detached along the main road and 1970s estate homes on the side streets. Both need the same treatment: strip-back of failed original render, substrate repair, then silicone in a single project.',                  // Speedwell
+  'silicone-rendering/whitehall': 'Whitehall has a mix of 1930s semi-detached and 1960s maisonettes, with different substrate challenges. The 1930s semis carry failed sand-and-cement; the maisonettes need strip-back of failed acrylic and full mesh reinforcement for stability.',                  // Whitehall
+  'silicone-rendering/eastville': 'Eastville\'s Victorian terraces were mostly rendered in sand-and-cement in the 1970s, and that\'s what fails first on the north-facing gables. We strip back to brick, repoint, then apply silicone over a mesh base. The terraces are tight for scaffold, so we work one elevation at a time.',                  // Eastville
+  'silicone-rendering/knowle': 'Knowle has a mix of 1930s semis along the Wells Road corridor and 1960s-70s estate homes further south. The 1930s semis carry failed sand-and-cement; the estate homes typically have original pebbledash that\'s failing piecemeal.',                     // Knowle
+  'silicone-rendering/clifton': 'Clifton\'s Georgian terraces on the Royal York Crescent, Cornwallis Crescent and the Polygon are listed and in the conservation area — silicone render isn\'t appropriate here. The heritage-spec system is a lime-based through-colour render on a lime plaster base, applied by hand and finished to match the existing stucco. Listed Building Consent usually required.',                    // Clifton
+  'silicone-rendering/redland': 'Redland\'s Victorian and Edwardian villas and bay-fronted terraces are mostly solid-wall construction — silicone render works but only on a breathable base. We typically specify silicone over a lime plaster base on the rendered rear elevations and returns, where planning isn\'t an issue. Front elevations often need conservation approval.',                    // Redland
+  'silicone-rendering/keynsham': 'Keynsham\'s inter-war semis carry original pebbledash that\'s now failing — strip-back, mesh-reinforced base, silicone re-render is our standard treatment for those. The post-war Chandag and Park Estate housing is more straightforward — original render\'s still bonded, just needs a substrate prep and one-coat silicone to bring it up to date.',                   // Keynsham
 
   // ---------- House Rendering ----------
-  'house-rendering/hanham': '',                        // Hanham
-  'house-rendering/brislington': '',                   // Brislington
-  'house-rendering/kingswood': '',                     // Kingswood
-  'house-rendering/st-george': '',                     // St George
-  'house-rendering/fishponds': '',                     // Fishponds
-  'house-rendering/downend': '',                       // Downend
-  'house-rendering/emersons-green': '',                // Emerson's Green
-  'house-rendering/longwell-green': '',                // Longwell Green
-  'house-rendering/warmley': '',                       // Warmley
-  'house-rendering/stapleton': '',                     // Stapleton
-  'house-rendering/frenchay': '',                      // Frenchay
-  'house-rendering/speedwell': '',                     // Speedwell
-  'house-rendering/whitehall': '',                     // Whitehall
-  'house-rendering/eastville': '',                     // Eastville
-  'house-rendering/knowle': '',                        // Knowle
-  'house-rendering/clifton': '',                       // Clifton
-  'house-rendering/redland': '',                       // Redland
-  'house-rendering/keynsham': '',                      // Keynsham
+  'house-rendering/hanham': 'Our home base means full house re-renders get priority scheduling here. Most Hanham properties are 1930s semis or 1950s-70s Park Farm detached, all with original render now at end-of-life — we strip, repair substrate, and re-render in any system (silicone, monocouche or sand-and-cement) depending on what the property needs.',                        // Hanham
+  'house-rendering/brislington': 'Tight terrace spacing around Sandy Park Road adds scaffold complexity here — we price for full-perimeter scaffold rather than tower-only, which most Bristol suburbs don\'t need. The Paintworks apartments are individual contracts through the management company rather than per-residence.',                   // Brislington
+  'house-rendering/kingswood': 'We do a lot of full re-renders on Kingswood\'s 1930s and post-war semis where the original render has failed across all elevations. Common specification is strip-back to brick, brickwork repairs, then a through-colour silicone or monocouche finish — usually chosen by the customer based on budget and preferred texture.',                     // Kingswood
+  'house-rendering/st-george': 'St George\'s housing stock runs from Victorian terraces near the park to 1960s estate homes on the outskirts. Both fail differently — Victorian terraces have lime plaster and original sand-and-cement that spalls by age; 1960s homes have thin acrylic that lets moisture through. We spec the substrate prep accordingly.',                     // St George
+  'house-rendering/fishponds': 'Fishponds\' housing stock includes a lot of inter-war semis with extensions and modifications done at different times — different substrates on different elevations. We treat each elevation on its merits: full strip and re-render where substrate is poor, partial repair where the existing render\'s bonded well.',                     // Fishponds
+  'house-rendering/downend': 'Downend is one of our most-requested areas for full re-renders, with the 1930s-50s semis gradually all coming due for renewal as their original render fails. We typically work one street at a time as neighbours see each other\'s houses being done and book in.',                       // Downend
+  'house-rendering/emersons-green': 'Emerson\'s Green properties are larger than the older Bristol stock — typically 4-5 bed detached at 1,800-2,500 sq ft, sometimes with integral garages and complex rooflines. We price for full-perimeter scaffold and extra time on feature reveals and bay windows.',                // Emerson's Green
+  'house-rendering/longwell-green': 'Longwell Green\'s 1970s-80s homes render cleanly once the pebble or tyrolean is off. The brickwork underneath is usually sound 1970s-80s block — strip, repair any frost-damaged areas, then a through-colour silicone or monocouche finish.',                // Longwell Green
+  'house-rendering/warmley': 'Warmley\'s 1930s semis along the main road through the village are textbook re-render projects — original sand-and-cement, 80+ years old, ready for renewal. We usually recommend silicone here for the weather resistance.',                       // Warmley
+  'house-rendering/stapleton': 'Stapleton\'s Victorian terraces near the Frome Valley are tight for scaffold and have shared access with neighbours. We price for full-perimeter access and work closely with adjacent owners to keep disruption minimal during the project.',                     // Stapleton
+  'house-rendering/frenchay': 'Frenchay\'s 1930s detached homes are larger than typical Bristol semis — often 4-bed at 1,500-2,000 sq ft with bay windows, decorative brickwork, and complex rooflines. We price for full-perimeter scaffold and extra time on feature details.',                      // Frenchay
+  'house-rendering/speedwell': 'Speedwell\'s 1930s semis carry original sand-and-cement that fails by spalling at 80+ years. Strip-back to brick, repair substrate, and re-render in any system — silicone, monocouche, or sand-and-cement depending on budget and finish preference.',                     // Speedwell
+  'house-rendering/whitehall': 'Whitehall\'s 1930s semis are textbook re-render projects — original sand-and-cement, 80+ years old, ready for renewal. We work on three or four streets here every year as neighbours see each other\'s houses being completed and book in.',                     // Whitehall
+  'house-rendering/eastville': 'Eastville\'s Victorian terraces are tight for scaffold and have shared access with neighbours. We price for full-perimeter access and work closely with adjacent owners to keep disruption minimal during the project.',                     // Eastville
+  'house-rendering/knowle': 'Knowle\'s 1930s semis are textbook re-render projects — original sand-and-cement, 80+ years old, ready for renewal. We usually recommend silicone for the weather resistance; the substrate prep is the same either way.',                        // Knowle
+  'house-rendering/clifton': 'Clifton full re-renders all need conservation area consent at minimum, and often Listed Building Consent for the period terraces. We use lime-compatible renders only — modern silicone and acrylic trap moisture in solid-wall construction and damage the underlying stonework. Budget for the slower application and the consent paperwork.',                       // Clifton
+  'house-rendering/redland': 'Redland\'s larger Victorian and Edwardian villas (1,800-2,600 sq ft) need careful spec — they\'re solid-wall, often with decorative render details and mouldings that have to be replicated. We use silicone or lime-compatible systems depending on what\'s already there, and price for the longer project duration these larger elevations take.',                       // Redland
+  'house-rendering/keynsham': 'Keynsham full re-renders are mostly on the inter-war semis where the original render\'s failed across all elevations. Twenty minutes from our yard in Hanham via the A4175, so no travel surcharge. We usually recommend silicone here for the weather resistance — Keynsham sits on the A4 corridor and gets the full force of south-westerly rain.',                      // Keynsham
 
   // ---------- External Wall Rendering ----------
-  'external-wall-rendering/hanham': '',                // Hanham
-  'external-wall-rendering/brislington': '',           // Brislington
-  'external-wall-rendering/kingswood': '',             // Kingswood
-  'external-wall-rendering/st-george': '',             // St George
-  'external-wall-rendering/fishponds': '',             // Fishponds
-  'external-wall-rendering/downend': '',               // Downend
-  'external-wall-rendering/emersons-green': '',        // Emerson's Green
-  'external-wall-rendering/longwell-green': '',        // Longwell Green
-  'external-wall-rendering/warmley': '',               // Warmley
-  'external-wall-rendering/stapleton': '',             // Stapleton
-  'external-wall-rendering/frenchay': '',              // Frenchay
-  'external-wall-rendering/speedwell': '',             // Speedwell
-  'external-wall-rendering/whitehall': '',             // Whitehall
-  'external-wall-rendering/eastville': '',             // Eastville
-  'external-wall-rendering/knowle': '',                // Knowle
-  'external-wall-rendering/clifton': '',               // Clifton
-  'external-wall-rendering/redland': '',               // Redland
-  'external-wall-rendering/keynsham': '',              // Keynsham
+  'external-wall-rendering/hanham': 'We carry out more elevation repairs and full re-renders in Hanham than anywhere else. Single-elevation fixes are common on the Park Farm and Blue Mountain estates where 1970s pebbledash fails piecemeal — we can match existing texture or specify a through-colour upgrade.',                // Hanham
+  'external-wall-rendering/brislington': 'Brislington Hill\'s 1970s pebbledash semis typically fail at the south-west corner where driving rain hits hardest. We see a lot of single-elevation repairs on this side of Bristol where the substrate\'s still good — a strip-back, mesh base, and silicone re-render usually outlasts the original by 25+ years.',           // Brislington
+  'external-wall-rendering/kingswood': 'Kingswood\'s older terraces near the town centre often need partial elevation repairs where adjoining properties have already been re-rendered in different systems. We match texture and colour to the neighbours as closely as possible, or specify a full re-render to bring the whole terrace into line.',             // Kingswood
+  'external-wall-rendering/st-george': 'Many of St George\'s 1960s maisonettes and flats have failed acrylic render that lets water through to the structure. We see this as bubbling, peeling, and white salt marks on inside walls. Strip-back to substrate, full mesh reinforcement, and a through-colour silicone is our standard fix.',             // St George
+  'external-wall-rendering/fishponds': 'Fishponds has several streets of 1960s-70s homes with original pebbledash that needs removing before any re-render. The pebble\'s heavy and the underlying sand-and-cement is often compromised — full mechanical strip, debris removal in a grab lorry, then a clean render system.',             // Fishponds
+  'external-wall-rendering/downend': 'Downend\'s elevated position and exposure to weather means we see a lot of north-west gable failures here. Single-elevation repairs are common — the south-east elevation may be fine for another 10 years, but the weather side needs full strip and re-render.',               // Downend
+  'external-wall-rendering/emersons-green': 'Many Emerson\'s Green homes have detached garages and garden walls that need re-rendering in the same system as the main house for visual consistency. We can quote for both together at a discounted rate and complete in a single project.',        // Emerson's Green
+  'external-wall-rendering/longwell-green': 'Longwell Green\'s 1970s-80s homes often have failed pebble-dash that lets water behind it. We see this as bubbling, spalling, and white salt marks on inside walls. Strip-back, full mesh reinforcement, silicone re-render is the standard fix here.',        // Longwell Green
+  'external-wall-rendering/warmley': 'Warmley\'s 1970s estate homes have original pebble-dash that\'s heavy, fails piecemeal, and lets water through. Strip-back, full mesh reinforcement, silicone re-render is our standard fix — typically 7-10 days for a full detached house.',               // Warmley
+  'external-wall-rendering/stapleton': 'Stapleton\'s Victorian terraces were mostly rendered in sand-and-cement in the 1970s, and that\'s what fails first on the north-facing gables. We strip back to brick, repoint, then apply silicone over a mesh base. The terraces are tight for scaffold, so we work one elevation at a time.',             // Stapleton
+  'external-wall-rendering/frenchay': 'Frenchay\'s 1970s-80s executive homes have original acrylic render that\'s now 40+ years old and showing its age. We strip the acrylic, repair any substrate damage, and apply silicone — a significant upgrade in both lifespan and appearance.',              // Frenchay
+  'external-wall-rendering/speedwell': 'Speedwell\'s 1970s estate homes have original pebbledash that\'s heavy and fails piecemeal. Strip-back to substrate, full mesh reinforcement, silicone re-render is the standard fix — typically 7-10 days for a full detached house.',             // Speedwell
+  'external-wall-rendering/whitehall': 'Whitehall\'s 1960s maisonettes have failed acrylic that lets water through. We see this as bubbling, peeling, and white salt marks on inside walls. Strip-back, full mesh reinforcement, silicone re-render is the standard fix — typically 7-10 days for the full elevation.',             // Whitehall
+  'external-wall-rendering/eastville': 'Eastville\'s Victorian terraces were mostly rendered in sand-and-cement in the 1970s, and that\'s what fails first on the north-facing gables. We see this as spalling render, exposed brick, and water ingress on inside walls. Strip-back to brick, mesh base, silicone re-render is the standard fix.',             // Eastville
+  'external-wall-rendering/knowle': 'Knowle\'s 1960s-70s estate homes have original pebbledash that fails piecemeal — the pebble\'s heavy and the underlying sand-and-cement is often compromised. Strip-back, full mesh reinforcement, silicone re-render is our standard fix.',                // Knowle
+  'external-wall-rendering/clifton': 'Clifton\'s mews and coach-house conversions are often the only place modern rendering systems are appropriate — they\'re usually unlisted and the original construction is straightforward brick. Silicone or monocouche works here at standard pricing; everything else on the crescents and around the village needs the heritage treatment.',               // Clifton
+  'external-wall-rendering/redland': 'Redland\'s rendered rear elevations and returns are typically where the original lime render has failed — they\'re the elevations the original builders treated as secondary, and the lime render\'s now at 100+ years. Strip-back, lime base, silicone top coat or full lime re-render depending on what\'s appropriate for the period.',               // Redland
+  'external-wall-rendering/keynsham': 'Keynsham\'s inter-war pebbledash is heavy and fails piecemeal — full mechanical strip, debris removal in a grab lorry, then a clean silicone re-render. The Georgian stone properties near the High Street are quoted differently and need lime-compatible systems sympathetic to the conservation area.',              // Keynsham
 
   // ---------- Monocouche Rendering ----------
-  'monocouche-rendering/hanham': '',                   // Hanham
-  'monocouche-rendering/brislington': '',              // Brislington
-  'monocouche-rendering/kingswood': '',                // Kingswood
-  'monocouche-rendering/st-george': '',                // St George
-  'monocouche-rendering/fishponds': '',                // Fishponds
-  'monocouche-rendering/downend': '',                  // Downend
-  'monocouche-rendering/emersons-green': '',           // Emerson's Green
-  'monocouche-rendering/longwell-green': '',           // Longwell Green
-  'monocouche-rendering/warmley': '',                  // Warmley
-  'monocouche-rendering/stapleton': '',                // Stapleton
-  'monocouche-rendering/frenchay': '',                 // Frenchay
-  'monocouche-rendering/speedwell': '',                // Speedwell
-  'monocouche-rendering/whitehall': '',                // Whitehall
-  'monocouche-rendering/eastville': '',                // Eastville
-  'monocouche-rendering/knowle': '',                   // Knowle
-  'monocouche-rendering/clifton': '',                  // Clifton
-  'monocouche-rendering/redland': '',                  // Redland
-  'monocouche-rendering/keynsham': '',                 // Keynsham
+  'monocouche-rendering/hanham': 'Hanham\'s 1930s semis and 1970s detached homes are textbook monocouche substrates — sound brickwork underneath, no movement issues. We apply Weber or K Rend through-colour at 14-16mm scraped finish, so the colour is in the render itself and never needs painting.',                   // Hanham
+  'monocouche-rendering/brislington': 'The 1930s semis on Bath Road take monocouche cleanly — brickwork\'s solid, no movement, and a 14mm scraped monocouche in cream or grey gives a clean modern finish that suits the Conservation Area aesthetics without falling foul of planning.',              // Brislington
+  'monocouche-rendering/kingswood': 'Kingswood\'s 1930s semis have solid brickwork that takes monocouche well — no movement, no awkward substrates. The 14-16mm scraped monocouche is a faster install than silicone (one coat vs base plus top coat), and we usually recommend it here unless the customer specifically wants silicone\'s self-cleaning finish.',                // Kingswood
+  'monocouche-rendering/st-george': 'The Victorian terraces in St George take monocouche well — solid brickwork, no movement, easy to get a clean scraped finish. We\'ve done multiple terrace runs here where three or four neighbours have all specified the same K Rend colour to match.',                // St George
+  'monocouche-rendering/fishponds': 'Fishponds\' inter-war semis take monocouche cleanly — sound brickwork, no movement, and the local vernacular (cream and white through-colour) suits monocouche\'s natural finish. We usually recommend K Rend or Weber here as both have Bristol-area stockists for short lead times.',                // Fishponds
+  'monocouche-rendering/downend': 'Downend\'s 1930s-50s semis have solid brickwork that takes monocouche cleanly. The local preference is for cream, off-white or pale grey through-colour — neither too bright nor too dark — and monocouche\'s natural texture suits the inter-war aesthetic well.',                  // Downend
+  'monocouche-rendering/emersons-green': 'Emerson\'s Green new-builds are perfect monocouche substrates — modern block or brick cavity wall, no movement, flat elevations. Monocouche\'s 14-16mm scraped finish suits the modern estate aesthetic and is faster to apply than silicone for the larger elevations here.',           // Emerson's Green
+  'monocouche-rendering/longwell-green': 'Longwell Green\'s 1970s-80s blockwork takes monocouche cleanly — modern substrate, no movement. The 14mm scraped monocouche is faster than silicone and slightly cheaper, so it\'s our default recommendation here unless the customer specifically wants silicone\'s self-cleaning properties.',           // Longwell Green
+  'monocouche-rendering/warmley': 'Warmley\'s 1970s-80s blockwork is a clean monocouche substrate. We usually recommend K Rend or Weber here — both have Bristol-area stockists for short lead times on 14mm scraped through-colour finishes.',                  // Warmley
+  'monocouche-rendering/stapleton': 'Stapleton\'s 1930s semis are good monocouche substrates — sound brickwork, no movement. The 14mm scraped monocouche in cream or pale grey suits the inter-war vernacular and looks good against the Frome Valley greenery.',                // Stapleton
+  'monocouche-rendering/frenchay': 'Frenchay\'s 1930s detached homes take monocouche cleanly — solid brickwork, no movement. The 14mm scraped monocouche in cream or pale grey suits the inter-war vernacular and the larger elevations of these properties.',                 // Frenchay
+  'monocouche-rendering/speedwell': 'Speedwell\'s 1930s semis take monocouche cleanly — sound brickwork, no movement. We usually recommend K Rend or Weber here — both have Bristol-area stockists for short lead times on 14mm scraped through-colour finishes.',                // Speedwell
+  'monocouche-rendering/whitehall': 'Whitehall\'s 1930s semis take monocouche cleanly — sound brickwork, no movement. The 14mm scraped monocouche in cream or pale grey suits the inter-war vernacular and looks good against the surrounding housing stock.',                // Whitehall
+  'monocouche-rendering/eastville': 'Eastville\'s Victorian terraces take monocouche well — solid brickwork, no movement, easy to get a clean scraped finish. We\'ve done multiple terrace runs here where three or four neighbours have specified the same K Rend colour to match.',                // Eastville
+  'monocouche-rendering/knowle': 'Knowle\'s 1930s semis take monocouche cleanly — sound brickwork, no movement. The 14mm scraped monocouche in cream or pale grey suits the inter-war vernacular and looks good against the surrounding housing stock.',                   // Knowle
+  'monocouche-rendering/clifton': 'Monocouche isn\'t the right call on Clifton\'s period stock — it\'s a through-colour modern system that doesn\'t breathe the way solid-walled Georgian construction needs. We do use monocouche on the few unlisted modern builds and mews conversions, but for the crescents and Polygon it\'s heritage lime all the way.',                  // Clifton
+  'monocouche-rendering/redland': 'Redland\'s modern infill properties on the back streets (BS6) take monocouche well — modern block or brick, no movement, flat elevations. For the period villas and bay-fronted terraces, monocouche is the wrong call — they need breathable lime-based systems.',                  // Redland
+  'monocouche-rendering/keynsham': 'Keynsham\'s inter-war and post-war semis take monocouche cleanly — sound blockwork, no movement. The 14mm scraped monocouche in cream or pale grey suits the inter-war vernacular, and K Rend or Weber lead times are short via the Bristol-area stockists.',                 // Keynsham
 
   // ---------- Plastering Services ----------
-  'plastering-services/hanham': '',                    // Hanham
-  'plastering-services/brislington': '',               // Brislington
-  'plastering-services/kingswood': '',                 // Kingswood
-  'plastering-services/st-george': '',                 // St George
-  'plastering-services/fishponds': '',                 // Fishponds
-  'plastering-services/downend': '',                   // Downend
-  'plastering-services/emersons-green': '',            // Emerson's Green
-  'plastering-services/longwell-green': '',            // Longwell Green
-  'plastering-services/warmley': '',                   // Warmley
-  'plastering-services/stapleton': '',                 // Stapleton
-  'plastering-services/frenchay': '',                  // Frenchay
-  'plastering-services/speedwell': '',                 // Speedwell
-  'plastering-services/whitehall': '',                 // Whitehall
-  'plastering-services/eastville': '',                 // Eastville
-  'plastering-services/knowle': '',                    // Knowle
-  'plastering-services/clifton': '',                   // Clifton
-  'plastering-services/redland': '',                   // Redland
-  'plastering-services/keynsham': '',                  // Keynsham
+  'plastering-services/hanham': 'Hanham properties built before 1980 still have plaster on lath ceilings, which cracks along the lath joints over time. We board-and-skim with 12.5mm plasterboard and a two-coat skim — much faster than patch repairs and gives a flat modern ceiling ready for painting.',                    // Hanham
+  'plastering-services/brislington': 'Brislington\'s Victorian terraces typically have lime plaster on lath walls — it\'s soft, breathable, and pulls away from the lath in chunks rather than cracking clean. We either patch with lime plaster (matching the original) or board-and-skim for a modern finish, depending on whether the customer wants to preserve breathability.',               // Brislington
+  'plastering-services/kingswood': 'Kingswood\'s older housing stock has plaster on lath ceilings and walls — when the lath fails, you get cracking along the joints and the plaster sounds hollow when tapped. We board over the existing ceiling and skim, which is faster and gives a better finish than patch repairs.',                 // Kingswood
+  'plastering-services/st-george': 'St George\'s Victorian terraces have lime plaster on lath walls — breathable, traditional, but prone to cracking along the lath joints after 100+ years. We patch with lime plaster (Arthur Hough or similar) where the substrate is intact, or board-and-skim with a vapour-check plasterboard if the lath\'s gone.',                 // St George
+  'plastering-services/fishponds': 'Fishponds\' older properties have a mix of lath-and-plaster ceilings and modern plasterboard. The lath ceilings sag with age and the plaster cracks in long lines — we board over the existing ceiling and skim, which avoids disturbing the upstairs floor and gives a flat modern finish.',                 // Fishponds
+  'plastering-services/downend': 'Downend\'s inter-war semis have plaster on lath ceilings throughout — when the lath fails (often 80+ years in), the ceiling starts to sag between joists. We board over with 12.5mm plasterboard and skim, which gives a flat modern ceiling that won\'t crack.',                   // Downend
+  'plastering-services/emersons-green': 'Emerson\'s Green properties are mostly modern plasterboard construction, so we see fewer full re-skims here — more often it\'s patch repairs after electrical work, plumbing modifications, or extensions. Two-coat skim finish ready for painting.',            // Emerson's Green
+  'plastering-services/longwell-green': 'Longwell Green\'s 1970s-80s homes are plasterboard on stud walls — we do occasional patch repairs after electrical work, but full re-skims are rare. For extensions and loft conversions, we board and skim with a two-coat finish.',            // Longwell Green
+  'plastering-services/warmley': 'Warmley\'s older 1930s semis have plaster on lath throughout — the lath fails after 80+ years and the plaster cracks in long lines along the joints. We board over the existing ceiling and skim, which is faster and gives a better finish than patch repairs.',                   // Warmley
+  'plastering-services/stapleton': 'Stapleton\'s Victorian terraces have lime plaster on lath — breathable and traditional, but the lath fails after 100+ years. We patch with lime plaster where the substrate\'s intact, or board-and-skim with vapour-check plasterboard if the lath\'s gone. Match the original finish if the property\'s listed or in a Conservation Area.',                 // Stapleton
+  'plastering-services/frenchay': 'Frenchay\'s 1930s detached homes have plaster on lath ceilings throughout — when the lath fails (often 80+ years in), the ceiling starts to sag. We board over the existing ceiling and skim, which gives a flat modern ceiling ready for painting.',                  // Frenchay
+  'plastering-services/speedwell': 'Speedwell\'s 1930s semis have plaster on lath ceilings throughout — when the lath fails, the ceiling starts to sag between joists. We board over with 12.5mm plasterboard and skim, which gives a flat modern ceiling that won\'t crack along the lath joints.',                 // Speedwell
+  'plastering-services/whitehall': 'Whitehall\'s 1930s semis have plaster on lath ceilings throughout — the lath fails after 80+ years and the plaster cracks in long lines. We board over the existing ceiling and skim, which avoids disturbing the upstairs floor and gives a flat modern finish.',                 // Whitehall
+  'plastering-services/eastville': 'Eastville\'s Victorian terraces have lime plaster on lath — breathable and traditional. We patch with lime plaster where the substrate\'s intact, or board-and-skim with vapour-check plasterboard if the lath\'s gone. Match the original finish if the property\'s listed or in a Conservation Area.',                 // Eastville
+  'plastering-services/knowle': 'Knowle\'s 1930s semis have plaster on lath ceilings throughout — when the lath fails, the ceiling starts to sag between joists. We board over with 12.5mm plasterboard and skim, which gives a flat modern ceiling that won\'t crack.',                    // Knowle
+  'plastering-services/clifton': 'Clifton\'s Georgian and Victorian interiors run on lime plaster over lath — it\'s breathable, traditional, and what makes the walls work. We patch with a heritage-spec lime plaster where the substrate\'s intact, or take the whole wall back to lath and re-do it. Modern plasterboard and skim is the wrong material on these walls and causes damp issues.',                   // Clifton
+  'plastering-services/redland': 'Redland\'s Victorian and Edwardian interiors are mostly lime plaster over lath — same considerations as Clifton, with the additional wrinkle that many of the larger villas have been converted to flats, so we\'re often working around tenants and shared access. We patch with lime plaster where possible.',                   // Redland
+  'plastering-services/keynsham': 'Keynsham\'s older housing has a mix of lath-and-plaster ceilings (inter-war stock) and modern plasterboard (post-war estates). Lath ceilings fail along the joints after 80+ years — we board over with 12.5mm plasterboard and skim, which is faster than patch repairs and gives a flat modern finish.',                  // Keynsham
 
   // ---------- External Wall Insulation ----------
-  'external-wall-insulation/hanham': '',               // Hanham
-  'external-wall-insulation/brislington': '',          // Brislington
-  'external-wall-insulation/kingswood': '',            // Kingswood
-  'external-wall-insulation/st-george': '',            // St George
-  'external-wall-insulation/fishponds': '',            // Fishponds
-  'external-wall-insulation/downend': '',              // Downend
-  'external-wall-insulation/emersons-green': '',       // Emerson's Green
-  'external-wall-insulation/longwell-green': '',       // Longwell Green
-  'external-wall-insulation/warmley': '',              // Warmley
-  'external-wall-insulation/stapleton': '',            // Stapleton
-  'external-wall-insulation/frenchay': '',             // Frenchay
-  'external-wall-insulation/speedwell': '',            // Speedwell
-  'external-wall-insulation/whitehall': '',            // Whitehall
-  'external-wall-insulation/eastville': '',            // Eastville
-  'external-wall-insulation/knowle': '',               // Knowle
-  'external-wall-insulation/clifton': '',              // Clifton
-  'external-wall-insulation/redland': '',              // Redland
-  'external-wall-insulation/keynsham': '',             // Keynsham
+  'external-wall-insulation/hanham': 'Hanham\'s 1930s semis are ideal candidates for EWI — they\'re cavity-walled with thin blocks and run cold on winter mornings. We install 90-100mm graphite EPS with silicone top coat, typically achieving a U-value below 0.30 W/m²K.',               // Hanham
+  'external-wall-insulation/brislington': 'The 1970s pebbledash semis on Brislington Hill are solid-wall construction — they have no cavity to insulate and run cold in winter. EWI fixes that permanently. We install 90mm graphite EPS over the existing render (no need to strip if it\'s still bonded), with silicone top coat and matching reveals at windows and doors.',          // Brislington
+  'external-wall-insulation/kingswood': 'Kingswood\'s 1930s semis are mostly solid-wall — cavity fill isn\'t an option because there is no cavity. EWI is the right answer for these properties. We install 90mm graphite EPS with silicone top coat.',            // Kingswood
+  'external-wall-insulation/st-george': 'St George\'s 1960s maisonettes are solid concrete-panel construction with no cavity to fill. EWI is the natural answer — we install 90-100mm graphite EPS with silicone top coat, fixing through the existing render into the panel. Tenants see immediate warmth improvement and condensation drops dramatically.',            // St George
+  'external-wall-insulation/fishponds': 'Fishponds\' 1930s semis are solid 9-inch brick with no cavity. EWI with 90mm graphite EPS brings the U-value from around 1.7 W/m²K down to 0.30 or below — a real difference in fuel bills over the first winter.',            // Fishponds
+  'external-wall-insulation/downend': 'Downend\'s 1930s semis are solid 9-inch brick — too cold for modern heating bills. EWI with 90mm graphite EPS brings the U-value down dramatically and eliminates the cold-bridge condensation that plagues solid-wall properties.',              // Downend
+  'external-wall-insulation/emersons-green': 'Emerson\'s Green 1990s-2000s properties already have cavity walls (typically filled or unfilled), so EWI isn\'t usually the right answer here. If insulation is the goal, we\'d recommend a cavity-wall insulation survey first — it\'s much cheaper than EWI when applicable.',       // Emerson's Green
+  'external-wall-insulation/longwell-green': 'Longwell Green\'s 1970s-80s properties have unfilled cavities — cavity wall insulation is usually the better answer than EWI here. If the cavity\'s already been filled (or you can see no sign of previous fill), EWI with 90mm EPS over the existing render is still effective.',       // Longwell Green
+  'external-wall-insulation/warmley': 'Warmley\'s 1930s semis are solid 9-inch brick — too cold for modern heating bills. EWI with 90mm graphite EPS brings the U-value down from around 1.7 W/m²K to 0.30 or below, and the silicone top coat keeps the maintenance low for the next 25 years.',              // Warmley
+  'external-wall-insulation/stapleton': 'Stapleton\'s 1930s semis are solid 9-inch brick with no cavity. EWI with 90mm graphite EPS brings the U-value below 0.30 W/m²K and the silicone top coat keeps maintenance low. Tenants see immediate warmth improvement and condensation drops dramatically.',            // Stapleton
+  'external-wall-insulation/frenchay': 'Frenchay\'s 1930s detached homes are solid 9-inch brick — too cold for modern heating bills. EWI with 90mm graphite EPS brings the U-value down dramatically and the silicone top coat keeps the maintenance low for the next 25 years.',             // Frenchay
+  'external-wall-insulation/speedwell': 'Speedwell\'s 1930s semis are solid 9-inch brick with no cavity. EWI with 90mm graphite EPS brings the U-value below 0.30 W/m²K. We install over the existing render (if bonded) or after full strip-back if the substrate\'s compromised.',            // Speedwell
+  'external-wall-insulation/whitehall': 'Whitehall\'s 1930s semis are solid 9-inch brick — too cold for modern heating bills. EWI with 90mm graphite EPS brings the U-value down from around 1.7 W/m²K to 0.30 or below, and the silicone top coat keeps maintenance low for the next 25 years.',            // Whitehall
+  'external-wall-insulation/eastville': 'Eastville\'s Victorian terraces are solid 9-inch brick — too cold for modern heating bills. EWI with 90mm graphite EPS brings the U-value below 0.30 W/m²K. We work one elevation at a time to keep terraces liveable during the project.',            // Eastville
+  'external-wall-insulation/knowle': 'Knowle\'s 1930s semis are solid 9-inch brick with no cavity. EWI with 90mm graphite EPS brings the U-value below 0.30 W/m²K. We install over the existing render (if bonded) or strip-back first if the substrate\'s compromised.',               // Knowle
+  'external-wall-insulation/clifton': 'External wall insulation is rarely appropriate in Clifton — solid-walled Georgian construction needs to breathe, and EWI traps moisture against the stonework. The few exceptions are post-1960s infill properties that were built with cavity walls. For the period stock we recommend internal dry-lining with breathable insulation instead.',              // Clifton
+  'external-wall-insulation/redland': 'EWI on Redland\'s period villas is rarely right — solid-wall Victorian construction needs to breathe, and EWI traps moisture against the brickwork. We recommend internal dry-lining with breathable insulation on the period stock. The few post-1960s infill properties are the exceptions.',              // Redland
+  'external-wall-insulation/keynsham': 'Keynsham\'s inter-war semis are solid 9-inch brick with no cavity. EWI with 90mm graphite EPS brings the U-value below 0.30 W/m²K and the silicone top coat keeps maintenance low. Twenty minutes from our Hanham yard, so we can usually visit same-day for quotes.',             // Keynsham
 };
 
 export const getNote = (service: string, area: string): string =>
