@@ -10,7 +10,7 @@ import CaseStudy from './CaseStudy.astro';
 import AuthorityBio from './AuthorityBio.astro';
 import { getArea, type Area } from '../lib/areas';
 import { SERVICES } from '../lib/services';
-import { REVIEWS } from '../lib/reviews';
+import { REVIEWS, reviewsFor } from '../lib/reviews';
 
 // The neighbourhood hub, shared by /bristol/[slug] and /bath/[slug].
 // Everything that differs between the two cities is derived from the
@@ -58,7 +58,7 @@ const materials = Array.from(
 const caseStudy = SERVICES.find((sv) => sv.caseStudy.location === area.slug)?.caseStudy ?? null;
 
 const localReviews = REVIEWS.filter((r) => r.area === area.name);
-const reviews = localReviews.length ? localReviews : REVIEWS.slice(0, 3);
+const reviews = localReviews.length ? localReviews : reviewsFor(area.slug);
 
 const schema = {
   '@context': 'https://schema.org',

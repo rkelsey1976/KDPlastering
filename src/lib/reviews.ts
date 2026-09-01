@@ -651,4 +651,140 @@ export const REVIEWS: Review[] = [
     // service pages. Worth more than any other review in this file.
     heritage: true,
   },
+  {
+    name: "Linda Lamb",
+    area: "",
+    rating: 5,
+    date: "August 2024",
+    service: "Plastering",
+    quote:
+      "Kyren and his team were absolutely amazing very clean tidy and very polite. The job was done to the highest of standards I would most definitely recommend these guys.",
+    source: 'Google',
+  },
+  {
+    name: "John Jones",
+    area: "",
+    rating: 5,
+    date: "February 2026",
+    service: "",
+    quote:
+      "Kyran was very professional. Gentlemen and fair prices! Great work",
+    source: 'Google',
+  },
+  {
+    name: "Leevi Andrews",
+    area: "",
+    rating: 5,
+    date: "April 2026",
+    service: "",
+    quote:
+      "Work to a great standard, excellent time keeping and reasonable pricing, would and have recommended to friends",
+    source: 'Google',
+  },
+  {
+    name: "Chloe Hopkins",
+    area: "",
+    rating: 5,
+    date: "February 2026",
+    service: "",
+    quote: "Fantastic work and great prices",
+    source: 'Google',
+  },
+  {
+    name: "Gemma Culross-Binding",
+    area: "",
+    rating: 5,
+    date: "August 2024",
+    service: "",
+    quote:
+      "Lovely guys and hard working. Came to quote, ended up doing the job there and then, working until it was getting dark. Can't ask for more than that. Really appreciate their hard work",
+    source: 'Google',
+  },
+  {
+    name: "Aleksandra",
+    area: "",
+    rating: 5,
+    date: "August 2024",
+    service: "Plastering",
+    quote:
+      "I am very happy with the plastering work. Reliable and hardworking. Would definitely recommend, in fact I am already planning to use them again.",
+    source: 'Google',
+  },
+  {
+    name: "Florin Barsan",
+    area: "",
+    rating: 5,
+    date: "August 2025",
+    service: "Plastering",
+    quote:
+      "All the team KD Plastering are the best ones. I give them a few jobs (all houses to be replastered) they are very good, hard workers, really faster, best quality. I highly recommend KD PLASTERING!!",
+    source: 'Google',
+  },
+  {
+    name: "Daniel Hipkiss",
+    area: "",
+    rating: 5,
+    date: "October 2025",
+    service: "",
+    quote: "Very reasonably priced and completed the work promptly",
+    source: 'Google',
+  },
+  {
+    name: "Lauren Hearle",
+    area: "",
+    rating: 5,
+    date: "August 2024",
+    service: "",
+    quote: "Amazing quality of work, quick and reliable. Definitely recommend",
+    source: 'Google',
+  },
+  {
+    name: "Mark Wynn",
+    area: "",
+    rating: 5,
+    date: "August 2024",
+    service: "",
+    quote: "Good price, good quality work, and fast. Highly recommended",
+    source: 'Google',
+  },
+  {
+    name: "Jamie Hart",
+    area: "",
+    rating: 5,
+    date: "August 2025",
+    service: "",
+    quote: "Good services offered, highly recommend",
+    source: 'Google',
+  },
+  {
+    name: "Jane Kershaw",
+    area: "",
+    rating: 5,
+    date: "August 2024",
+    service: "",
+    quote: "Happy to recommend",
+    source: 'Google',
+  },
 ];
+
+/**
+ * A stable, per-page selection of reviews.
+ *
+ * The templates previously fell back to REVIEWS.slice(0, 3), so every page
+ * without an area-matched review — around 90 of them — printed the same three
+ * testimonials. That was the single largest block of duplicated text on the
+ * site: 84% of the words on the service x area pages were shared boilerplate.
+ *
+ * Seeded by the page's own slug, so a given page always gets the same trio
+ * (stable across builds, no diff churn) while different pages get different
+ * ones. With 65 reviews in the pool the repetition across 108 pages drops from
+ * total to marginal.
+ */
+export function reviewsFor(seed: string, count = 3, pool: Review[] = REVIEWS): Review[] {
+  if (pool.length === 0) return [];
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) h = (Math.imul(h, 31) + seed.charCodeAt(i)) >>> 0;
+  const start = h % pool.length;
+  const n = Math.min(count, pool.length);
+  return Array.from({ length: n }, (_, i) => pool[(start + i) % pool.length]);
+}

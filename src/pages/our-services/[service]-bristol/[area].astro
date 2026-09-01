@@ -5,7 +5,7 @@ import ServiceBullets from '../../../components/ServiceBullets.astro';
 import ReviewCards from '../../../components/ReviewCards.astro';
 import { getBristolAreas, getArea } from '../../../lib/areas';
 import { SERVICES, getService, serviceHook } from '../../../lib/services';
-import { REVIEWS } from '../../../lib/reviews';
+import { REVIEWS, reviewsFor } from '../../../lib/reviews';
 import { getNote } from '../../../lib/serviceAreaNotes';
 import { getAreaCosts } from '../../../lib/areaCosts';
 
@@ -44,7 +44,7 @@ const matched = area.nearbyProjects.filter((p: string) =>
 // Reviews for this area, narrowed to this service where we have them.
 const areaReviews = REVIEWS.filter((r) => r.area === area.name);
 const exact = areaReviews.filter((r) => r.service.toLowerCase().includes(proseLower));
-const reviews = exact.length ? exact : areaReviews.length ? areaReviews : REVIEWS.slice(0, 3);
+const reviews = exact.length ? exact : areaReviews.length ? areaReviews : reviewsFor(`${service.slug}-${area.slug}`);
 const reviewScope = exact.length ? `${prose} in ${area.name}` : areaReviews.length ? area.name : 'Bristol & Bath';
 
 // The one block that is true of this service in this area and nowhere
