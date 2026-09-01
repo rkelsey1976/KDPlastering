@@ -6,7 +6,6 @@ import ReviewCards from './ReviewCards.astro';
 import ServiceCard from './ServiceCard.astro';
 import AreaIndex from './AreaIndex.astro';
 import MaterialGrid from './MaterialGrid.astro';
-import CaseStudy from './CaseStudy.astro';
 import AuthorityBio from './AuthorityBio.astro';
 import { getArea, type Area } from '../lib/areas';
 import { SERVICES } from '../lib/services';
@@ -55,7 +54,6 @@ const materials = Array.from(
 );
 
 // A real case study belongs to one area. Show it on that area's page.
-const caseStudy = SERVICES.find((sv) => sv.caseStudy.location === area.slug)?.caseStudy ?? null;
 
 const localReviews = REVIEWS.filter((r) => r.area === area.name);
 const reviews = localReviews.length ? localReviews : reviewsFor(area.slug);
@@ -218,13 +216,12 @@ const schema = {
     </div>
   </section>
 
-  {caseStudy && (
-    <section class="section section--alt">
-      <div class="container">
-        <CaseStudy caseStudy={caseStudy} areaName={area.name} />
-      </div>
-    </section>
-  )}
+  {/* "Real Project" case study removed 2026-09-02, pre-launch. The
+      CaseStudy component and the `caseStudy` entries in services.ts are
+      untouched — this is only the render call. The copy makes very
+      specific claims (a rival's £8,500 quote, 105m², 8 working days,
+      "25-year maintenance-free") that want evidencing before they go back
+      up, ideally alongside photographs of the job. */}
 
   <ReviewCards
     reviews={reviews}

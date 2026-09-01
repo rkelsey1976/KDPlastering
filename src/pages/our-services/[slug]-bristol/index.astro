@@ -3,7 +3,6 @@ import PageLayout from '../../../layouts/PageLayout.astro';
 import Hero from '../../../components/Hero.astro';
 import AreaCoverage from '../../../components/AreaCoverage.astro';
 import BenefitGrid from '../../../components/BenefitGrid.astro';
-import CaseStudy from '../../../components/CaseStudy.astro';
 import ProcessTimeline from '../../../components/ProcessTimeline.astro';
 import MaterialGrid from '../../../components/MaterialGrid.astro';
 import ReviewCards from '../../../components/ReviewCards.astro';
@@ -304,10 +303,12 @@ const schema = [
 
   <section class="section section--alt">
     <div class="container">
-      <CaseStudy
-        caseStudy={service.caseStudy}
-        areaName={caseStudyArea?.name}
-      />
+      {/* "Real Project" case study removed 2026-09-02, pre-launch. The
+          CaseStudy component and the `caseStudy` entries in services.ts are
+          untouched — this is only the render call. The copy makes very
+          specific claims (a rival's £8,500 quote, 105m², 8 working days,
+          "25-year maintenance-free") that want evidencing before they go back
+          up, ideally alongside photographs of the job. */}
     </div>
   </section>
 

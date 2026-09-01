@@ -60,7 +60,6 @@ const costRows = getAreaCosts(service, area);
 
 // Six of the ninety pages are the home of a real case study. Shown only
 // where it actually happened.
-const caseStudy = service.caseStudy.location === area.slug ? service.caseStudy : null;
 
 const otherServices = SERVICES.filter((s) => s.slug !== service.slug);
 // Capped at two. These ninety pages were sending 70% of their links
@@ -211,24 +210,12 @@ const schema = {
     </div>
   </section>
 
-  {caseStudy && (
-    <section class="section section--dark">
-      <div class="container container--reading">
-        <header class="section-header section-header--center">
-          <span class="eyebrow">Case study</span>
-          <h2>{caseStudy.title}</h2>
-        </header>
-        <dl class="sxa-case">
-          <div><dt>Property</dt><dd>{caseStudy.propertyType}</dd></div>
-          <div><dt>Problem</dt><dd>{caseStudy.problem}</dd></div>
-          <div><dt>What we did</dt><dd>{caseStudy.solution}</dd></div>
-          <div><dt>Time on site</dt><dd>{caseStudy.duration}</dd></div>
-          <div><dt>Cost</dt><dd>{caseStudy.costRange}</dd></div>
-          <div><dt>Result</dt><dd>{caseStudy.result}</dd></div>
-        </dl>
-      </div>
-    </section>
-  )}
+  {/* "Real Project" case study removed 2026-09-02, pre-launch. The
+      CaseStudy component and the `caseStudy` entries in services.ts are
+      untouched — this is only the render call. The copy makes very
+      specific claims (a rival's £8,500 quote, 105m², 8 working days,
+      "25-year maintenance-free") that want evidencing before they go back
+      up, ideally alongside photographs of the job. */}
 
   <!-- Local knowledge -->
   <section class="section section--alt">
