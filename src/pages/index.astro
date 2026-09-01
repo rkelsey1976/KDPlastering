@@ -53,6 +53,13 @@ const galleryImages = [
   { src: '/services/gallery/ewall-rendering-2.webp',      slug: 'external-wall-rendering',  service: 'External Wall Rendering', caption: 'Trowel finish, close up',                alt: 'Close-up of a steel trowel smoothing cream render' },
   { src: '/services/gallery/house-rendering-1.webp',      slug: 'house-rendering',          service: 'House Rendering',         caption: 'Rear elevation, render and dormer',      alt: 'Rear elevation with render, timber dormer and bi-fold doors' },
   { src: '/services/gallery/plastering-1.webp',           slug: 'plastering-services',      service: 'Plastering',              caption: 'Internal plastering, finished',          alt: 'Finished interior room with smooth white plastered walls' },
+  // Portrait interiors — these three keep their subject in the middle third, so
+  // the strip's 4:3 crop does not cut the point out of them. The Velux reveal
+  // and the stairwell are deliberately left to the service page, where they can
+  // run portrait.
+  { src: '/services/gallery/plastering-4.webp',           slug: 'plastering-services',      service: 'Plastering',              caption: 'Victorian room, skimmed throughout',     alt: 'Victorian bay-window room skimmed throughout with original coving and an exposed brick chimney breast' },
+  { src: '/services/gallery/plastering-3.webp',           slug: 'plastering-services',      service: 'Plastering',              caption: 'Loft room, ceilings and reveals',        alt: 'Loft room with three Velux windows and sloping ceilings, fully skimmed' },
+  { src: '/services/gallery/plastering-7.webp',           slug: 'plastering-services',      service: 'Plastering',              caption: 'Skimming a ceiling',                     alt: 'Plasterer on a mobile tower skimming a ceiling' },
   { src: '/services/gallery/monocouche-rendering-1.webp', slug: 'monocouche-rendering',     service: 'Monocouche Rendering',    caption: 'Textured render, hand applied',          alt: 'Applying textured beige render with a steel trowel' },
   { src: '/services/gallery/ewi-2.webp',                  slug: 'external-wall-insulation', service: 'External Wall Insulation', caption: 'Completed EWI and render',              alt: 'Completed cream rendered home following external wall insulation' },
   { src: '/services/gallery/house-rendering-3.webp',      slug: 'house-rendering',          service: 'House Rendering',         caption: 'Detached front, smooth render',          alt: 'Front of a detached house in smooth off-white render with a bow bay window' },
@@ -248,7 +255,11 @@ const schema = {
 
       <!-- BBA / manufacturer row -->
       <div class="trust-row">
-        <p class="trust-row__heading">BBA-approved installer for:</p>
+        {/* Was "BBA-approved installer for:". The BBA certifies products and
+            systems, not contractors — there is no such thing as a BBA-approved
+            installer, so the claim was both wrong and unverifiable. What is true
+            is that KD installs these manufacturers' BBA-certified systems. */}
+        <p class="trust-row__heading">We install BBA-certified systems from:</p>
         <ul class="trust-row__logos">
           <li><strong>Johnstone's</strong> Stormshield</li>
           <li><strong>K Rend</strong></li>

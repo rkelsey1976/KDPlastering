@@ -10,6 +10,7 @@ import ReviewCards from '../../../components/ReviewCards.astro';
 import AuthorityBio from '../../../components/AuthorityBio.astro';
 import ProblemList from '../../../components/ProblemList.astro';
 import RelatedServices from '../../../components/RelatedServices.astro';
+import { SERVICE_GALLERY } from '../../../lib/serviceGallery';
 import ServiceBullets from '../../../components/ServiceBullets.astro';
 import { getService, getRelatedServices } from '../../../lib/services';
 import { AREAS } from '../../../lib/areas';
@@ -73,6 +74,10 @@ const introAlt: Record<string, string> = {
   'plastering-services':      'Finished interior room with smooth white plastered walls',
   'external-wall-insulation': 'EPS insulation boards being mechanically fixed to an external wall',
 };
+
+// Recent-work grid. Empty for a service with no photos yet, and the section
+// is omitted rather than rendered as an empty box.
+const gallery = SERVICE_GALLERY[service.slug] ?? [];
 const reviewsForService = REVIEWS
   .filter((r) => r.service.toLowerCase().includes(service.shortName.toLowerCase().split(' ')[0]))
   // Bath jobs are the proof on the Bath page, not here. Filter before the
@@ -193,6 +198,32 @@ const schema = [
       />
     </div>
   </section>
+
+  {gallery.length > 0 && (
+    <section class="work-grid-section">
+      {/* .container is the global wrapper in global.css. .wrap is scoped to
+          another component, so using it here produced a zero-width box. */}
+      <div class="container">
+        <p class="work-grid__eyebrow">Recent work</p>
+        <h2 class="work-grid__heading">{serviceProse.charAt(0).toUpperCase() + serviceProse.slice(1)} we have done</h2>
+        <p class="work-grid__lede">Real jobs, photographed as we finished them. No stock photography.</p>
+        <ul class="work-grid">
+          {gallery.map((img) => (
+            <li class="work-grid__item">
+              <img
+                src={img.src}
+                alt={img.alt}
+                width={img.width}
+                height={img.height}
+                loading="lazy"
+                decoding="async"
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
 
   {/* Named jobs people search for individually — and that the Google
       Business Profile lists as separate services. Anchored so a GBP entry
@@ -514,4 +545,27 @@ const schema = [
   /* Areas inline detail grid (replaces 12-card grid + 120 matrix pages) */
   .area-group-heading:first-of-type { margin-top: var(--sp-5); }
   .area-detail:hover { border-color: var(--surface-inverse); }
+
+  /* ── Recent work grid ── */
+  .work-grid-section { padding: var(--space-3xl, 4rem) 0; background: var(--surface-2, #f6f6f4); }
+  .work-grid__eyebrow {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent-text); margin: 0 0 0.5rem;
+  }
+  .work-grid__heading { margin: 0 0 0.4rem; }
+  .work-grid__lede { margin: 0 0 1.75rem; color: var(--text-muted, #555); max-width: 60ch; }
+  .work-grid {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1rem;
+  }
+  .work-grid__item { margin: 0; }
+  /* Portrait interiors and landscape elevations sit in the same grid, so a
+     fixed ratio keeps the rows even without distorting either. */
+  .work-grid__item img {
+    display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover;
+    border-radius: 6px; background: var(--surface, #eee);
+  }
+  @media (max-width: 640px) {
+    .work-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+  }
 </style>
