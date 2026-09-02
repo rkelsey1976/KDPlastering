@@ -138,7 +138,7 @@ export default defineConfig({
       // /thanks/ is noindex: it is a conversion confirmation, not a landing
       // page. Left in the sitemap it can rank, and anyone arriving on it from
       // search fires a conversion that never happened.
-      filter: (page) => !['/style-guide', '/logo-lab', '/thanks'].some((p) => page.includes(p)),
+      filter: (page) => !['/style-guide', '/logo-lab', '/thanks', '/404'].some((p) => page.includes(p)),
       /** @param {import('@astrojs/sitemap').SitemapItem} item */
       serialize(item) {
         const path = pathOf(item.url);

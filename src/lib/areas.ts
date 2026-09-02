@@ -2,7 +2,7 @@
 // 15 Bristol neighbourhoods + 5 Bath neighbourhoods — total 20.
 //
 // Bristol is the home base (8 Roman Way, Hanham, Bristol BS15 3FH),
-// so 15 of the 20 areas are Bristol neighbourhoods. The 5 Bath
+// so 18 of the 23 areas are Bristol neighbourhoods. The 5 Bath
 // neighbourhoods extend the SEO matrix into the secondary service
 // area.
 //
