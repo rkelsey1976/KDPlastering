@@ -37,7 +37,6 @@ const service = getService(slug!);
 if (!service) throw new Error(`Service not found: ${slug}`);
 
 const relatedServices = getRelatedServices(slug!);
-const caseStudyArea = AREAS.find((a) => a.slug === service.caseStudy.location);
 
 // shortName is a label, not a noun phrase: "Plastering Services" reads
 // wrong mid-sentence ("the plastering services work we take on"). This is
@@ -109,28 +108,10 @@ const schema = [
       areaServed: { '@type': 'City', name: 'Bristol' },
     },
     areaServed: { '@type': 'City', name: 'Bristol' },
-    offers: {
-      '@type': 'AggregateOffer',
-      priceCurrency: 'GBP',
-      lowPrice: service.costGuide.perPropertyType[service.costGuide.perPropertyType.length - 1].lowEnd.replace(/[^\d]/g, ''),
-      highPrice: service.costGuide.perPropertyType[0].highEnd.replace(/[^\d]/g, ''),
-      offerCount: service.costGuide.perPropertyType.length,
-    },
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: `${service.shortName} by property type`,
-      itemListElement: service.costGuide.perPropertyType.map((p, i) => ({
-        '@type': 'Offer',
-        position: i + 1,
-        name: p.type,
-        priceSpecification: {
-          '@type': 'PriceSpecification',
-          priceCurrency: 'GBP',
-          minPrice: p.lowEnd.replace(/[^\d]/g, ''),
-          maxPrice: p.highEnd.replace(/[^\d]/g, ''),
-        },
-      })),
-    },
+    // AggregateOffer and OfferCatalog removed 2026-09-02. They published
+    // unconfirmed price bands as structured data, which Google can surface
+    // directly in results — worse than having them in copy. Restore with
+    // the on-page cost sections once the figures are signed off.
   },
   {
     '@context': 'https://schema.org',
@@ -301,16 +282,11 @@ const schema = [
     </div>
   </section>
 
-  <section class="section section--alt">
-    <div class="container">
-      {/* "Real Project" case study removed 2026-09-02, pre-launch. The
-          CaseStudy component and the `caseStudy` entries in services.ts are
-          untouched — this is only the render call. The copy makes very
-          specific claims (a rival's £8,500 quote, 105m², 8 working days,
-          "25-year maintenance-free") that want evidencing before they go back
-          up, ideally alongside photographs of the job. */}
-    </div>
-  </section>
+  {/* "Real Project" case study removed 2026-09-02, pre-launch. The CaseStudy
+      component and the `caseStudy` entries in services.ts are untouched — this
+      was the render call plus its own <section> wrapper, which was left behind
+      on the first pass and rendered as an empty padded band on all six Bristol
+      service pages. Restore both together when the claims can be evidenced. */}
 
   {reviewsForService.length > 0 && (
     <ReviewCards
@@ -363,7 +339,9 @@ const schema = [
 
   {guides.length > 0 && (
     <section class="section">
-      <div class="container container--reading">
+      {/* Not .container--reading — that anchors children to the left grid edge
+          at 800px, so the centred header sat 176px right of its own cards. */}
+      <div class="container">
         <header class="section-header section-header--center">
           <span class="eyebrow">Before you commit</span>
           <h2>Worth reading first</h2>
@@ -374,7 +352,12 @@ const schema = [
               <a href={`/blog/${g.id}/`}>
                 <span class="svc-guides__title">{g.data.title}</span>
                 <span class="svc-guides__desc">{g.data.description}</span>
-                <span class="svc-guides__meta">{g.data.minutes} min read</span>
+                <span class="svc-guides__meta">
+                  {g.data.minutes} min read
+                  <svg class="svc-guides__arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M1 7h11M7.5 2.5 12 7l-4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
               </a>
             </li>
           ))}
@@ -406,11 +389,23 @@ const schema = [
 </PageLayout>
 
 <style>
-  .svc-guides { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-3); }
+  .svc-guides {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    display: grid;
+    /* Two up on desktop. Full-width single-column cards were short and very
+       wide, which read as unfinished rows rather than cards. */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--sp-4);
+    max-width: 1000px;
+  }
+  .svc-guides li { display: flex; }
   .svc-guides a {
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    gap: 0.35rem;
+    width: 100%;
     padding: var(--sp-5);
     background: var(--surface-raised);
     border: 1px solid var(--border);
@@ -420,10 +415,23 @@ const schema = [
     transition: border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
   }
   .svc-guides a:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .svc-guides a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .svc-guides__arrow { transition: transform var(--dur-fast) var(--ease); }
+  .svc-guides a:hover .svc-guides__arrow { transform: translateX(3px); }
+  @media (prefers-reduced-motion: reduce) {
+    .svc-guides a, .svc-guides__arrow { transition: none; }
+    .svc-guides a:hover { transform: none; }
+  }
   .svc-guides__title { font-size: var(--fs-md); font-weight: var(--weight-bold); color: var(--text); }
   .svc-guides__desc { font-size: var(--fs-sm); line-height: 1.6; color: var(--text-muted); }
   .svc-guides__meta {
-    margin-top: var(--sp-2);
+    /* auto pushes the meta line to the bottom so the two cards agree on where
+       it sits, whatever the description length */
+    margin-top: auto;
+    padding-top: var(--sp-3);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
     font-size: var(--fs-xs);
     font-weight: var(--weight-bold);
     text-transform: uppercase;

@@ -178,28 +178,9 @@ const schema = {
   </section>
 
   <!-- Cost, with the Bath premium stated rather than buried -->
-  <section class="section">
-    <div class="container">
-      <header class="section-header section-header--center">
-        <span class="eyebrow">Cost</span>
-        <h2>What {proseLower} costs in Bath</h2>
-        <p class="lede">{service.costGuide.perSquareMetre}</p>
-      </header>
-      <ul class="bath-costs">
-        {service.costGuide.perPropertyType.map((b) => (
-          <li>
-            <span class="bath-costs__type">{b.type}</span>
-            <span class="bath-costs__price">{b.lowEnd} – {b.highEnd}</span>
-          </li>
-        ))}
-      </ul>
-      <p class="bath-foot">
-        Listed and conservation work in the Georgian areas typically adds 15–25%
-        over these bands — specialist materials, slower methods and consent.
-        Newbridge and Odd Down price as standard. Every job is quoted on survey.
-      </p>
-    </div>
-  </section>
+  {/* Cost section removed 2026-09-02 — the figures were not confirmed.
+      service.costGuide and lib/areaCosts.ts are untouched, so this is a
+      render call away from returning once the bands are signed off. */}
 
   <ReviewCards
     reviews={reviews}

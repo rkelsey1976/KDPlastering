@@ -286,7 +286,12 @@ const schema = {
 {/* Body link, not a nav link: a sitewide /blog/ entry would take ~3.5%
     of internal PageRank from the service pages. */}
 <section class="section section--alt">
-  <div class="container container--reading" style="text-align: center;">
+  {/* Not .container--reading: that class deliberately anchors a narrow column
+      to the left grid edge so long-form copy lines up with the logo, which is
+      right for /terms/, /blog/ and the rest. Here the block is meant to be
+      centred, and the two intentions fought — the column hung left while the
+      text centred inside it, putting this content 176px off centre. */}
+  <div class="container guides-cta">
     <span class="eyebrow">Guides</span>
     <h2>Not sure what's wrong with your wall?</h2>
     <p class="lede">
@@ -661,5 +666,11 @@ const schema = {
   .trust-row__logos strong {
     color: var(--text);
     font-weight: 700;
+  }
+
+  .guides-cta {
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    text-align: center;
   }
 </style>

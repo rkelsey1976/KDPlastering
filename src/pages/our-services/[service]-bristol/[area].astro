@@ -7,7 +7,6 @@ import { getBristolAreas, getArea } from '../../../lib/areas';
 import { SERVICES, getService, serviceHook } from '../../../lib/services';
 import { REVIEWS, reviewsFor } from '../../../lib/reviews';
 import { getNote } from '../../../lib/serviceAreaNotes';
-import { getAreaCosts } from '../../../lib/areaCosts';
 
 // service × neighbourhood, Bristol only: 6 × 15 = 90 pages.
 export function getStaticPaths() {
@@ -56,7 +55,6 @@ const note = getNote(service.slug, area.slug);
 // the few blocks that varies on both axes without anything being invented.
 // Plastering is quoted by room rather than house shape, so it falls back to
 // its own job-type guide.
-const costRows = getAreaCosts(service, area);
 
 // Six of the ninety pages are the home of a real case study. Shown only
 // where it actually happened.
@@ -182,33 +180,9 @@ const schema = {
     </div>
   </section>
 
-  <!-- Cost: this service against this area's housing stock -->
-  <section class="section">
-    <div class="container">
-      <header class="section-header section-header--center">
-        <span class="eyebrow">Cost</span>
-        <h2>What {proseLower} costs in {area.name}</h2>
-        <p class="lede">{service.costGuide.perSquareMetre}</p>
-      </header>
-
-      <ul class="sxa-costs">
-        {(costRows.length ? costRows : service.costGuide.perPropertyType.map((b) => ({
-          label: b.type, basis: '', lowEnd: b.lowEnd, highEnd: b.highEnd,
-        }))).map((row) => (
-          <li class="sxa-cost">
-            <span class="sxa-cost__type">{row.label}</span>
-            <span class="sxa-cost__price">{row.lowEnd} – {row.highEnd}</span>
-          </li>
-        ))}
-      </ul>
-
-      <p class="sxa-costs__note">
-        {costRows.length
-          ? `Bands for the property types most common in ${area.name}. `
-          : ''}{area.costVariation} Every job is priced on survey.
-      </p>
-    </div>
-  </section>
+  {/* Cost section removed 2026-09-02 — the figures were not confirmed.
+      service.costGuide and lib/areaCosts.ts are untouched, so this is a
+      render call away from returning once the bands are signed off. */}
 
   {/* "Real Project" case study removed 2026-09-02, pre-launch. The
       CaseStudy component and the `caseStudy` entries in services.ts are
