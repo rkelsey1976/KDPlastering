@@ -163,7 +163,7 @@ export const SERVICES: Service[] = [
         'Base coat and silicone top coat',
         '10-year manufacturer system warranty',
         '12-month aftercare inspection',
-        'Public liability insurance up to £2m',
+        'Public liability insurance',
       ],
       excludes: [
         'Repointing of brickwork beyond what the substrate needs (we can quote separately)',
@@ -227,7 +227,7 @@ export const SERVICES: Service[] = [
       {
         question: 'Do you offer a warranty on silicone rendering?',
         answer:
-          'Yes — 10-year manufacturer system warranty on all qualifying silicone installations (Johnstone\'s, K Rend, Parex, Weber). We also provide our own 10-year workmanship warranty as standard, backed by £2m public liability insurance. The 12-month aftercare inspection is included free.',
+          'Yes — 10-year manufacturer system warranty on all qualifying silicone installations (Johnstone\'s, K Rend, Parex, Weber). We also provide our own 10-year workmanship warranty as standard, backed by full public liability insurance. The 12-month aftercare inspection is included free.',
       },
       {
         question: 'Can silicone render go around my extension or new build?',
@@ -342,7 +342,7 @@ export const SERVICES: Service[] = [
         'Base coat and chosen top coat',
         '10-year manufacturer warranty',
         '12-month aftercare inspection',
-        '£2m public liability insurance',
+        'Public liability insurance',
       ],
       excludes: [
         'Major structural repairs beyond standard substrate prep',
@@ -396,7 +396,7 @@ export const SERVICES: Service[] = [
       {
         question: 'What warranty do you offer?',
         answer:
-          '10-year manufacturer system warranty on all qualifying installations (Johnstone\'s, K Rend, Parex, Weber) plus our own 10-year workmanship warranty. £2m public liability insurance as standard. Free 12-month aftercare inspection included on every job.',
+          '10-year manufacturer system warranty on all qualifying installations (Johnstone\'s, K Rend, Parex, Weber) plus our own 10-year workmanship warranty. Full public liability insurance as standard. Free 12-month aftercare inspection included on every job.',
       },
       {
         question: 'Can rendering fix my damp problem?',
@@ -508,7 +508,7 @@ export const SERVICES: Service[] = [
         'Base coat + top coat',
         '10-year manufacturer warranty',
         '12-month aftercare inspection',
-        '£2m public liability insurance',
+        'Public liability insurance',
       ],
       excludes: [
         'Major structural repairs',
@@ -552,7 +552,7 @@ export const SERVICES: Service[] = [
       {
         question: 'Do you handle insurance work?',
         answer:
-          'Yes — we work with most major insurers on storm damage, impact damage and escape-of-water claims. We can provide detailed quotes in the format insurers require and work with loss adjusters directly. £2m public liability insurance as standard.',
+          'Yes — we work with most major insurers on storm damage, impact damage and escape-of-water claims. We can provide detailed quotes in the format insurers require and work with loss adjusters directly. Full public liability insurance as standard.',
       },
       {
         question: 'What colours are available?',
@@ -567,7 +567,7 @@ export const SERVICES: Service[] = [
       {
         question: 'What warranty do you provide?',
         answer:
-          '10-year manufacturer system warranty on all qualifying installations plus our own 10-year workmanship warranty. £2m public liability insurance. Free 12-month aftercare inspection on every job.',
+          '10-year manufacturer system warranty on all qualifying installations plus our own 10-year workmanship warranty. Public liability insurance. Free 12-month aftercare inspection on every job.',
       },
     ],
     caseStudy: {
@@ -671,7 +671,7 @@ export const SERVICES: Service[] = [
         'Monocouche application',
         '10-year manufacturer warranty',
         '12-month aftercare inspection',
-        '£2m public liability insurance',
+        'Public liability insurance',
       ],
       excludes: [
         'Major structural repairs',
@@ -730,7 +730,7 @@ export const SERVICES: Service[] = [
       {
         question: 'What warranty do you provide?',
         answer:
-          '10-year manufacturer system warranty on all qualifying monocouche installations plus our own 10-year workmanship warranty. £2m public liability insurance. Free 12-month aftercare inspection.',
+          '10-year manufacturer system warranty on all qualifying monocouche installations plus our own 10-year workmanship warranty. Public liability insurance. Free 12-month aftercare inspection.',
       },
     ],
     caseStudy: {
@@ -896,7 +896,7 @@ export const SERVICES: Service[] = [
       {
         question: 'What warranty do you provide?',
         answer:
-          '5-year workmanship warranty on all internal plastering. British Gypsum, Knauf and Thistle products carry their own manufacturer warranties. £2m public liability insurance as standard.',
+          '5-year workmanship warranty on all internal plastering. British Gypsum, Knauf and Thistle products carry their own manufacturer warranties. Full public liability insurance as standard.',
       },
     ],
     caseStudy: {
@@ -1037,7 +1037,7 @@ export const SERVICES: Service[] = [
         '10-year manufacturer warranty',
         '25-year insurance-backed warranty option',
         '12-month aftercare inspection',
-        '£2m public liability insurance',
+        'Public liability insurance',
       ],
       excludes: [
         'Major structural repairs',
@@ -1081,7 +1081,7 @@ export const SERVICES: Service[] = [
       {
         question: 'What warranty do you provide?',
         answer:
-          '10-year manufacturer system warranty on all EWI installations, plus our own 10-year workmanship warranty. For qualifying installations we can offer an insurance-backed 25-year warranty through the Weber Kitemark scheme. £2m public liability insurance as standard. Free 12-month aftercare inspection.',
+          '10-year manufacturer system warranty on all EWI installations, plus our own 10-year workmanship warranty. For qualifying installations we can offer an insurance-backed 25-year warranty through the Weber Kitemark scheme. Full public liability insurance as standard. Free 12-month aftercare inspection.',
       },
       {
         question: 'Is EWI suitable for listed buildings?',
