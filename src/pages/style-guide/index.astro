@@ -164,7 +164,7 @@ const shadows = ['--shadow-xs','--shadow-sm','--shadow-md','--shadow-lg'];
             <span class="sg-swatch__use">{s.use}</span>
             {s.fill
               ? <span class="sg-fill-chip">Fill only — never type</span>
-              : <span class="sg-ratio" data-fg={s.check[0]} data-bg={s.check[1]} data-caption={s.caption}></span>}
+              : <span class="sg-ratio" data-fg={s.check?.[0]} data-bg={s.check?.[1]} data-caption={s.caption}></span>}
           </div>
         ))}
       </div>

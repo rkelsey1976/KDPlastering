@@ -131,7 +131,7 @@ const services = [
     window.addEventListener('scroll', () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          header.dataset.scrolled = window.scrollY > 60 ? 'true' : 'false';
+          (header as HTMLElement).dataset.scrolled = window.scrollY > 60 ? 'true' : 'false';
           ticking = false;
         });
         ticking = true;
@@ -212,7 +212,9 @@ const services = [
       );
     };
     setHeaderHeight();
-    if ('ResizeObserver' in window) new ResizeObserver(setHeaderHeight).observe(siteHeader);
+    // typeof rather than `in window`: the `in` form narrows window to never in
+    // the else branch, since ResizeObserver is declared on Window.
+    if (typeof ResizeObserver !== 'undefined') new ResizeObserver(setHeaderHeight).observe(siteHeader as Element);
     else window.addEventListener('resize', setHeaderHeight, { passive: true });
   }
 

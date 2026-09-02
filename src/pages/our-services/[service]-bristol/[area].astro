@@ -155,9 +155,13 @@ const schema = {
   <!-- What this service actually solves -->
   <section class="section section--alt">
     <div class="container">
+      {/* variant was "dont", which is not one of the component's variants
+          ('do' | 'problem' | 'benefit'). No icon set matched it and the variant
+          styling never applied. This block lists service.problems under
+          "Problems we fix", so 'problem' is the intended one. */}
       <ServiceBullets
         items={service.problems}
-        variant="dont"
+        variant="problem"
         columns={2}
         eyebrow="Problems we fix"
         heading={`When ${area.name} homeowners call us about ${proseLower}`}

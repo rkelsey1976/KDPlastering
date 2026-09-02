@@ -21,9 +21,11 @@ const BLOG = './src/content/blog';
 // drift from the site.
 // ─────────────────────────────────────────────────────────────────────────────
 
+/** @param {string} url */
 const pathOf = (url) => (url.replace(SITE, '').replace(/\/$/, '') || '/');
 
 /** Map a URL back to the file that produces it, so git can date it. */
+/** @param {string} path @returns {string | null} */
 function sourceFor(path) {
   if (path === '/') return join(PAGES, 'index.astro');
 
@@ -61,6 +63,7 @@ function sourceFor(path) {
   return null;
 }
 
+/** @param {string} file @returns {Date | null} */
 const gitDate = (file) => {
   try {
     const out = execSync(`git log -1 --format=%aI -- "${file}"`, {
@@ -70,6 +73,7 @@ const gitDate = (file) => {
   } catch { return null; }
 };
 
+/** @param {string} path @returns {Date | undefined} */
 function lastmodFor(path) {
   const src = sourceFor(path);
   if (!src) return undefined;
@@ -98,6 +102,7 @@ function lastmodFor(path) {
   try { return statSync(src).mtime; } catch { return undefined; }
 }
 
+/** @param {string} path @returns {number} */
 function priorityFor(path) {
   if (path === '/') return 1.0;
   const parts = path.replace(/^\//, '').split('/');
@@ -114,6 +119,7 @@ function priorityFor(path) {
   return 0.5;                                            // about-us, faqs, how-we-work
 }
 
+/** @param {string} path @returns {'weekly' | 'monthly'} */
 const changefreqFor = (path) => (path === '/' ? 'weekly' : 'monthly');
 
 
@@ -133,15 +139,15 @@ export default defineConfig({
       // page. Left in the sitemap it can rank, and anyone arriving on it from
       // search fires a conversion that never happened.
       filter: (page) => !['/style-guide', '/logo-lab', '/thanks'].some((p) => page.includes(p)),
+      /** @param {import('@astrojs/sitemap').SitemapItem} item */
       serialize(item) {
         const path = pathOf(item.url);
         const lastmod = lastmodFor(path);
-        return {
-          ...item,
-          ...(lastmod ? { lastmod } : {}),
-          priority: priorityFor(path),
-          changefreq: changefreqFor(path),
-        };
+        /** @type {import('@astrojs/sitemap').SitemapItem} */
+        const out = { ...item, priority: priorityFor(path),
+          changefreq: /** @type {import('@astrojs/sitemap').SitemapItem['changefreq']} */ (changefreqFor(path)) };
+        if (lastmod) out.lastmod = lastmod.toISOString();
+        return out;
       },
     }),
   ],
