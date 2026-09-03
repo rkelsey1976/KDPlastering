@@ -1,5 +1,6 @@
 ---
 import Logo from './Logo.astro';
+import { AREAS } from '../lib/areas';
 
 const pathname = Astro.url.pathname;
 const isActive = (path: string) => {
@@ -53,7 +54,7 @@ const services = [
             <div class="container mega-menu__container">
               <div class="mega-menu__header">
                 <p class="eyebrow eyebrow--clay">Our Services</p>
-                <h2 class="mega-menu__title">Six specialist services. Twenty neighbourhoods.</h2>
+                <h2 class="mega-menu__title">Six specialist services. {AREAS.length} neighbourhoods.</h2>
                 {/* The category page had no sitewide link — it was reached only by
                     breadcrumbs, all 102 of them reading "Our Services". */}
                 <a href="/our-services/" class="mega-menu__all">

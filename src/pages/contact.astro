@@ -195,7 +195,7 @@ const mapQuery = encodeURIComponent(`${nap.street}, ${nap.locality} ${nap.postco
         <AreaCoverage
           eyebrow="Coverage"
           heading="Areas we cover"
-          lede="Twenty neighbourhoods across Bristol and Bath. Not listed? Ask — we travel."
+          lede={`${bristol.length + bath.length} neighbourhoods across Bristol and Bath. Not listed? Ask — we travel.`}
         />
     </div>
   </section>
