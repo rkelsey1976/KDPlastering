@@ -4,7 +4,7 @@ import Hero from '../../../components/Hero.astro';
 import ServiceBullets from '../../../components/ServiceBullets.astro';
 import ReviewCards from '../../../components/ReviewCards.astro';
 import { getBristolAreas, getArea } from '../../../lib/areas';
-import { SERVICES, getService, serviceHook } from '../../../lib/services';
+import { SERVICES, getService, serviceHook, warrantyBadge } from '../../../lib/services';
 import { REVIEWS, reviewsFor } from '../../../lib/reviews';
 import { getNote } from '../../../lib/serviceAreaNotes';
 
@@ -90,7 +90,7 @@ const schema = {
 
 <PageLayout
   title={`${prose} in ${area.name} ${area.postcode} | ${serviceHook(service)}`}
-  description={`${prose} in ${area.name}, Bristol ${area.postcode}. Free site visit, fixed written quote within 48 hours, 10-year warranty.`}
+  description={`${prose} in ${area.name}, Bristol ${area.postcode}. Free site visit, fixed written quote within 48 hours, ${warrantyBadge(service)}.`}
   preloadImage={`/heroes/${service.slug}.webp`}
   canonical={`/our-services/${service.slug}-bristol/${area.slug}/`}
   schema={schema}
@@ -112,7 +112,7 @@ const schema = {
     phone={{ number: '+441174094116', display: '0117 409 4116' }}
     image={`/heroes/${service.slug}.webp`}
     imageAlt=""
-    trust={['Free site visit', 'Fixed written quote', '10-year warranty']}
+    trust={['Free site visit', 'Fixed written quote', warrantyBadge(service)]}
   />
 
   <!-- Area context, framed for this service -->

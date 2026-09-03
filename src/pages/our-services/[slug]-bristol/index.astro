@@ -11,7 +11,7 @@ import ProblemList from '../../../components/ProblemList.astro';
 import RelatedServices from '../../../components/RelatedServices.astro';
 import { SERVICE_GALLERY } from '../../../lib/serviceGallery';
 import ServiceBullets from '../../../components/ServiceBullets.astro';
-import { getService, getRelatedServices } from '../../../lib/services';
+import { getService, getRelatedServices, warrantyBadge } from '../../../lib/services';
 import { AREAS } from '../../../lib/areas';
 import { REVIEWS } from '../../../lib/reviews';
 import { getCollection } from 'astro:content';
@@ -147,7 +147,7 @@ const schema = [
     phone={{ number: '+441174094116', display: '0117 409 4116' }}
     image={`/heroes/${service.slug}.webp`}
     imageAlt={service.heroImageAlt ?? ''}
-    trust={['10+ years experience', '290+ verified reviews', 'Fully insured', '10-year warranty']}
+    trust={['10+ years experience', '290+ verified reviews', 'Fully insured', warrantyBadge(service)]}
   />
 
   <section class="section">

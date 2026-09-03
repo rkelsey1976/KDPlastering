@@ -1156,3 +1156,18 @@ export const getRelatedServices = (slug: string): Service[] => {
  */
 export const serviceHook = (service: Service): string =>
   service.titleTemplate.split('|').pop()!.trim();
+
+/**
+ * The workmanship-warranty trust badge for this service, specifically.
+ *
+ * Render and EWI carry a 10-year workmanship warranty (see terms.astro,
+ * about-us.astro). Plastering's own cost guide, benefits and FAQ all say
+ * 5-year -- it was the generic Hero trust badge on the service and
+ * service-x-area templates that hardcoded '10-year warranty' regardless of
+ * which service the page was for, so a plastering page could show "10-year
+ * warranty" in the hero and "5-year workmanship warranty" in its own FAQ a
+ * few sections later. This keeps the badge in sync with the figure the
+ * service's own content already commits to.
+ */
+export const warrantyBadge = (service: Service): string =>
+  service.category === 'plastering' ? '5-year warranty' : '10-year warranty';

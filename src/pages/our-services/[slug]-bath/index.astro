@@ -5,7 +5,7 @@ import ServiceBullets from '../../../components/ServiceBullets.astro';
 import ProblemList from '../../../components/ProblemList.astro';
 import MaterialGrid from '../../../components/MaterialGrid.astro';
 import ReviewCards from '../../../components/ReviewCards.astro';
-import { SERVICES, serviceHook } from '../../../lib/services';
+import { SERVICES, serviceHook, warrantyBadge } from '../../../lib/services';
 import { getBathAreas } from '../../../lib/areas';
 import { REVIEWS } from '../../../lib/reviews';
 import { getBathNote } from '../../../lib/bathServiceNotes';
@@ -97,7 +97,7 @@ const schema = {
     phone={{ number: '+441174094116', display: '0117 409 4116' }}
     image={`/heroes/${service.slug}.webp`}
     imageAlt=""
-    trust={['Free site visit', 'Fixed written quote', '10-year warranty']}
+    trust={['Free site visit', 'Fixed written quote', warrantyBadge(service)]}
   />
 
   <!-- What is different about Bath. This is the reason the page exists. -->
