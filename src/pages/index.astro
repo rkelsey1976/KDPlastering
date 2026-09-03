@@ -16,15 +16,15 @@ const featuredReviews = REVIEWS.slice(0, 3);
 // (4.7) = 295. "180+ 5-Star" was both wrong and an undercount, and not all of
 // them are five-star — Checkatrade scores out of ten. "290+ verified" is the
 // claim that survives someone checking it.
+// "Projects Done" (previously 800+) is dropped rather than guessed at --
+// nothing on record supports a specific figure. Checkatrade's 194 reviews
+// implies several hundred jobs at a normal review rate, but that is an
+// inference, not a count. Add it back with a real number from the books
+// when Richard has one.
 const heroStats = [
   { value: 10,  suffix: '+',   label: 'Years in Bristol' },
   { value: 290, suffix: '+',   label: 'Verified Reviews' },
   { value: 23,                 label: 'Areas Covered' },
-  // TODO: 800 is unverified. Checkatrade has 194 reviews, which implies
-  // several hundred jobs at a normal review rate, but nothing on record
-  // supports a specific figure. Replace with a real number from the books
-  // or drop the stat.
-  { value: 800, suffix: '+',   label: 'Projects Done' },
   { value: 25,  suffix: ' yr', label: 'System Warranty' },
 ];
 
@@ -162,8 +162,8 @@ const schema = {
 >
   <Hero
     eyebrow={['Bristol & Bath Plastering Specialists', 'Since 2014']}
-    title="We transform Bristol homes with a render that"
-    titleAccent="lasts 25 years."
+    title="We plaster and render Bristol homes to last"
+    titleAccent="25 years."
     lede="Silicone render, monocouche, house rendering and external wall insulation — fitted by Bristol's most reviewed plastering team."
     primaryCta={{ label: 'Get Your Free Quote', href: '/contact/#lead-form-heading' }}
     phone={{ number: '+441174094116', display: '0117 409 4116' }}

@@ -513,7 +513,9 @@ const heroSrcset = stem
   }
   .hero-x__stats-track {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    /* 4 by default now that the unverified "Projects Done" stat is gone;
+       stats.length still drives the actual count rendered. */
+    grid-template-columns: repeat(4, 1fr);
     padding-block: var(--sp-5);
   }
   .hero-x__stat {
