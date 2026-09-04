@@ -42,15 +42,20 @@ const serviceImages: Record<string, string> = {
 
 // Gallery photos for the "Recent work" section
 // Captions describe what is actually in each frame (see
-// public/services/MANIFEST.md) rather than inventing locations.
+// public/services/MANIFEST.md) rather than inventing locations. The
+// commercial-* slides name the client (Asda, HSBC — both Bristol, 2026);
+// Richard confirmed both may be named.
 // Each slide links to the service it demonstrates — real project photos
 // become internal links to the pages that need them.
 const galleryImages = [
+  { src: '/services/gallery/commercial-1.webp',           slug: 'external-wall-rendering',  service: 'External Wall Rendering', caption: 'Asda, Bristol — rendered from a scissor lift', alt: 'KD Plastering renderers on a scissor lift working along the external wall of an Asda store in Bristol' },
   { src: '/services/gallery/ewall-rendering-1.webp',      slug: 'external-wall-rendering',  service: 'External Wall Rendering', caption: 'Spraying monocouche render',            alt: 'KD Plastering applying sprayed cream monocouche render to a house exterior' },
+  { src: '/services/gallery/commercial-5.webp',           slug: 'external-wall-rendering',  service: 'External Wall Rendering', caption: 'HSBC, Bristol — ruling off a float coat', alt: 'KD Plastering plasterer ruling off a fresh float coat with a feather-edge on the HSBC bank building in Bristol' },
   { src: '/services/gallery/silicone-rendering-2.webp',   slug: 'silicone-rendering',       service: 'Silicone Rendering',      caption: 'Smooth silicone render, new build',      alt: 'New-build home finished in smooth off-white silicone render with anthracite cladding' },
   { src: '/services/gallery/ewi-1.webp',                  slug: 'external-wall-insulation', service: 'External Wall Insulation', caption: 'External wall insulation going on',     alt: 'EPS insulation boards being mechanically fixed to an external wall' },
   { src: '/services/gallery/monocouche-rendering-2.webp', slug: 'monocouche-rendering',     service: 'Monocouche Rendering',    caption: 'Traditional detached, finished',         alt: 'Large traditional detached house finished in cream monocouche render' },
   { src: '/services/gallery/ewall-rendering-2.webp',      slug: 'external-wall-rendering',  service: 'External Wall Rendering', caption: 'Trowel finish, close up',                alt: 'Close-up of a steel trowel smoothing cream render' },
+  { src: '/services/gallery/commercial-3.webp',           slug: 'external-wall-rendering',  service: 'External Wall Rendering', caption: 'Asda, Bristol — finished in white render', alt: 'Long external elevation of an Asda store in Bristol finished in smooth white render' },
   { src: '/services/gallery/house-rendering-1.webp',      slug: 'house-rendering',          service: 'House Rendering',         caption: 'Rear elevation, render and dormer',      alt: 'Rear elevation with render, timber dormer and bi-fold doors' },
   { src: '/services/gallery/plastering-1.webp',           slug: 'plastering-services',      service: 'Plastering',              caption: 'Internal plastering, finished',          alt: 'Finished interior room with smooth white plastered walls' },
   // Portrait interiors — these three keep their subject in the middle third, so

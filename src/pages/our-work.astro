@@ -9,13 +9,24 @@ import Hero from '../components/Hero.astro';
 // townhouse", "Apartments, Widcombe", "Commercial unit, Stapleton Road" —
 // each pointing at /placeholder-project.jpg, a file that does not exist.
 // All twelve rendered as broken images.
+//
+// commercial-1..4 are an Asda store and commercial-5..7 the HSBC bank
+// building, both in Bristol, rendered in 2026. Richard confirmed both
+// clients can be named on the site.
 const projects = [
   { src: 'ewall-rendering-1', service: 'External Wall Rendering',      alt: 'KD Plastering spraying cream monocouche render onto a house exterior',           caption: 'Spraying monocouche render' },
+  { src: 'commercial-1', service: 'External Wall Rendering',           alt: 'KD Plastering renderers on a scissor lift working along the external wall of an Asda store in Bristol', caption: 'Asda, Bristol — rendered from a scissor lift' },
   { src: 'silicone-rendering-2', service: 'Silicone Rendering',   alt: 'Modern new-build in smooth off-white silicone render with anthracite cladding',  caption: 'Smooth silicone render, new build' },
+  { src: 'commercial-5', service: 'External Wall Rendering',           alt: 'KD Plastering plasterer ruling off a fresh float coat with a feather-edge on the HSBC bank building in Bristol', caption: 'HSBC, Bristol — ruling off a float coat' },
   { src: 'monocouche-rendering-2', service: 'Monocouche Rendering', alt: 'Large traditional detached house finished in cream monocouche render',           caption: 'Traditional detached, finished in cream' },
   { src: 'ewi-1', service: 'External Wall Insulation',                  alt: 'EPS insulation boards being mechanically fixed to an external wall',             caption: 'External wall insulation going on' },
+  { src: 'commercial-2', service: 'External Wall Rendering',           alt: 'Precast wall panels on an Asda store in Bristol part-rendered, base coat and finish coat side by side', caption: 'Asda, Bristol — base and finish coat' },
   { src: 'ewi-hero', service: 'External Wall Insulation',               alt: 'Split view of external wall insulation in progress beside the finished render',  caption: 'EWI: during and after' },
   { src: 'ewall-rendering-2', service: 'External Wall Rendering',      alt: 'Close-up of a steel trowel smoothing cream render',                              caption: 'Trowel finish, close up' },
+  { src: 'commercial-3', service: 'External Wall Rendering',           alt: 'Long external elevation of an Asda store in Bristol finished in smooth white render, scissor lift at the far end', caption: 'Asda, Bristol — finished in white render' },
+  { src: 'commercial-6', service: 'External Wall Rendering',           alt: 'Scaffolded elevation of the HSBC bank building in Bristol with a freshly floated render coat, rooftops beyond', caption: 'HSBC, Bristol — floated coat on the scaffold' },
+  { src: 'commercial-4', service: 'External Wall Rendering',           alt: 'Completed white-rendered external elevation of an Asda store in Bristol behind site barriers', caption: 'Asda, Bristol — completed elevation' },
+  { src: 'commercial-7', service: 'External Wall Rendering',           alt: 'Freshly rendered wall on the HSBC bank building in Bristol with a sharp formed reveal around a masked sash window',   caption: 'HSBC, Bristol — formed reveal at a window' },
   { src: 'house-rendering-1', service: 'House Rendering',      alt: 'Rear elevation with render, timber dormer and bi-fold doors',                    caption: 'Rear elevation, render and dormer' },
   { src: 'house-rendering-2', service: 'House Rendering',      alt: 'Smooth white render with sharp reveals and anthracite windows',                  caption: 'Sharp reveals, anthracite windows' },
   { src: 'monocouche-rendering-1', service: 'Monocouche Rendering', alt: 'Applying textured beige render with a steel trowel',                             caption: 'Textured render, hand applied' },

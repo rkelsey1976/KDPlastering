@@ -37,10 +37,26 @@ All images live in `/public/services/` (web-optimised JPEGs, max 1600px wide).
 - **`ewi-1.jpg`** — KD worker installing pink EPS insulation boards with mechanical fixings (real EWI)
 - **`ewi-2.jpg`** — Completed cream rendered new-build (post-EWI result)
 
-## Total
-21 images, 8.7 MB total, all JPEG @ ~80% quality, max 1600px wide.
+### Commercial (Our Work gallery only — `commercial-*`)
+Two 2026 commercial contracts, both in Bristol: an **Asda** store (1–4) and
+the **HSBC** bank building (5–7). KD's own site photos; not on the old JWWB
+site. Richard confirmed both clients may be named — captions in
+`our-work.astro` read "Asda, Bristol — …" / "HSBC, Bristol — …".
+- **`commercial-1`** — Asda: two renderers on a scissor lift, elevation part-rendered
+- **`commercial-2`** — Asda: precast panels, base coat / finish coat checkerboard, cycle-parking sign
+- **`commercial-3`** — Asda: long elevation finished in smooth white render, scissor lift at far end
+- **`commercial-4`** — Asda: wide view, completed white-rendered elevation behind Heras barriers
+- **`commercial-5`** — HSBC: plasterer in KD cap + hi-vis ruling off a float coat (scaffold)
+- **`commercial-6`** — HSBC: scaffolded elevation, fresh floated coat, rooftops beyond
+- **`commercial-7`** — HSBC: formed reveal around a plastic-masked sash window, fresh render
+- **`commercial-8..10`** — held in `assets-src/services/` as backups, not wired in (weak crops / near-dupes)
+
+## Format
+`gallery/` webp 920×613 (3:2 cover-crop) · `full/` webp long-edge 1600 (aspect kept)
+· sources of record in `assets-src/services/*.jpg`.
 
 ## Source
-All images sourced from the existing JW Website Builder site at
+Original service set sourced from the old JW Website Builder site at
 `https://www.kdplasteringrenderingservices.co.uk/` (CDN: `primary.jwwb.nl`).
 Full URL inventory: `/Users/richardkelsey/kdscaff/research/service-images.md`.
+`commercial-*` are KD's own site photos (Sept 2026), supplied by Richard.

@@ -28,3 +28,6 @@ pnpm-debug.log*
 
 # Claude Code local dev config
 .claude/
+
+# Held-for-later source video (49 MB, never deployed) — see folder README
+assets-src/video-hsbc-bristol/
