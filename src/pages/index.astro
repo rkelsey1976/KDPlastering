@@ -24,7 +24,7 @@ const featuredReviews = REVIEWS.slice(0, 3);
 // inference, not a count. Add it back with a real number from the books
 // when Richard has one.
 const heroStats = [
-  { value: 10,  suffix: '+',   label: 'Years in Bristol' },
+  { value: 15,  suffix: '',    label: 'Years in the trade' },
   { value: 290, suffix: '+',   label: 'Google · Checkatrade · MyBuilder' },
   { value: 23,                 label: 'Areas Covered' },
   { value: 25,  suffix: ' yr', label: 'System Warranty' },
@@ -162,7 +162,7 @@ const schema = {
 
 <PageLayout
   title="Plastering & Rendering in Bristol & Bath | KD Plastering"
-  description="Plastering, rendering and external wall insulation across Bristol and Bath. 10+ years, fully insured, 4.9 on Google. Free quotes within 48 hours."
+  description="Plastering, rendering and external wall insulation across Bristol and Bath. 15 years' experience, £10m insured, 4.9 on Google. Free quotes within 48 hours."
   preloadImage="/hero-home.webp"
   canonical="/"
   schema={schema}
@@ -378,8 +378,8 @@ const schema = {
       let startY = 0;
       let startScroll = 0;
       let swiped = false;
-      const arm = (x, y) => { startX = x; startY = y; startScroll = track.scrollLeft; swiped = false; };
-      const move = (x, y) => {
+      const arm = (x: number, y: number) => { startX = x; startY = y; startScroll = track.scrollLeft; swiped = false; };
+      const move = (x: number, y: number) => {
         if (Math.abs(x - startX) > 8 || Math.abs(y - startY) > 8) swiped = true;
       };
       track.addEventListener('pointerdown', (e) => arm(e.clientX, e.clientY), { passive: true });
