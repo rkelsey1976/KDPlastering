@@ -106,6 +106,15 @@ const schema = [
       text: s.description,
     })),
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    url: `https://www.kdplasteringrenderingservices.co.uk/our-services/${service.slug}-bath/`,
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['.bath-lead', '.faq-section details:first-of-type'],
+    },
+  },
 ];
 ---
 

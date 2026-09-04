@@ -139,6 +139,15 @@ const schema = [
       text: s.description,
     })),
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    url: `https://www.kdplasteringrenderingservices.co.uk/our-services/${slug}-bristol/`,
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['.intro-split__copy p', '.faq-section details:first-of-type'],
+    },
+  },
 ];
 ---
 
