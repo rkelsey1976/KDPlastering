@@ -19,6 +19,7 @@ import { getBathAreas, getBristolAreas } from '../../../lib/areas';
 
 const BATH_AREA_NAMES = new Set(getBathAreas().map((a) => a.name));
 const bristolAreaCount = getBristolAreas().length;
+const bathAreaCount = getBathAreas().length;
 
 
 export function getStaticPaths() {
@@ -372,20 +373,17 @@ const schema = [
 
   <section class="section">
     <div class="container">
-      {/* Bath's six service pages were reachable only from /bath/ and the
-          five Bath area pages — an eighth of the authority their Bristol
-          equivalents carry. */}
       <p class="svc-othercity">
         Property in Bath? See <a href={`/our-services/${service.slug}-bath/`}>{service.shortName.replace(/\s+Services$/i, '').toLowerCase()} in Bath</a>,
         where most of the work is Georgian and lime-compatible.
       </p>
 
       <AreaCoverage
-        cities={['bristol']}
+        cities={['bristol', 'bath']}
         serviceSlug={service.slug}
         eyebrow="Coverage"
-        heading={`${serviceTitle} Across Bristol`}
-        lede={`We cover all ${bristolAreaCount} Bristol neighbourhoods, with consistent pricing within the BS postcodes.`}
+        heading={`${serviceTitle} Across Bristol & Bath`}
+        lede={`All ${bristolAreaCount} Bristol neighbourhoods with consistent BS-postcode pricing, plus ${bathAreaCount} Bath neighbourhoods where the work is mostly Georgian and lime-compatible.`}
         note="Free site visits within 10 miles of BS15. Properties outside our standard coverage area can be quoted by arrangement. Listed building consent, conservation area consent and Building Control notification are handled on your behalf where required."
       />
     </div>
