@@ -44,7 +44,7 @@ const {
   description,
   canonical,
   ogType = 'website',
-  ogImage = '/og-default.png',
+  ogImage = '/og-default.jpg',
   schema,
   breadcrumbs = [],
   preloadImage,
@@ -126,6 +126,10 @@ const breadcrumbSchema =
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalAbsolute} />
     <meta property="og:image" content={ogImageAbsolute} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${siteName} — ${title}`} />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:locale" content="en_GB" />
 
@@ -134,6 +138,7 @@ const breadcrumbSchema =
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageAbsolute} />
+    <meta name="twitter:image:alt" content={`${siteName} — ${title}`} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />

@@ -135,6 +135,7 @@ const schema = [
   description={service.metaDescription}
   preloadImage={`/heroes/${service.slug}.webp`}
   canonical={`/our-services/${slug}-bristol/`}
+  ogImage={`/og/${service.slug}.jpg`}
   breadcrumbs={[{ name: 'Our Services', href: '/our-services/' }, { name: service.shortName, href: `/our-services/${service.slug}-bristol/` }]}
   prefillService={service.shortName}
   schema={schema}
