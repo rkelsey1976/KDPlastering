@@ -366,19 +366,28 @@ const schema = {
 
       // On a touch device a horizontal swipe of the carousel ends in a
       // click on whichever slide is under the finger when it lifts — after
-      // the scroll, usually not the one the user was looking at, so they
-      // land on a service page they never meant to open. If the track
-      // moved (or the pointer travelled sideways) between press and click,
-      // the gesture was a swipe: cancel the navigation.
-      let downX = 0;
-      let downScroll = 0;
-      track.addEventListener('pointerdown', (e) => {
-        downX = e.clientX;
-        downScroll = track.scrollLeft;
-      }, { passive: true });
+      // the scroll, usually not the slide the user was looking at, so they
+      // land on a service page they never meant to open. If the finger
+      // moved, or the track scrolled, between press and click, the gesture
+      // was a swipe: swallow the click. Both pointer and touch events are
+      // wired because some mobile browsers stop firing pointer events once
+      // they take over the scroll.
+      let startX = 0;
+      let startY = 0;
+      let startScroll = 0;
+      let swiped = false;
+      const arm = (x, y) => { startX = x; startY = y; startScroll = track.scrollLeft; swiped = false; };
+      const move = (x, y) => {
+        if (Math.abs(x - startX) > 8 || Math.abs(y - startY) > 8) swiped = true;
+      };
+      track.addEventListener('pointerdown', (e) => arm(e.clientX, e.clientY), { passive: true });
+      track.addEventListener('pointermove', (e) => move(e.clientX, e.clientY), { passive: true });
+      track.addEventListener('touchstart', (e) => { const t = e.touches[0]; if (t) arm(t.clientX, t.clientY); }, { passive: true });
+      track.addEventListener('touchmove', (e) => { const t = e.touches[0]; if (t) move(t.clientX, t.clientY); }, { passive: true });
       track.addEventListener('click', (e) => {
-        if (Math.abs(track.scrollLeft - downScroll) > 8 || Math.abs(e.clientX - downX) > 10) {
+        if (swiped || Math.abs(track.scrollLeft - startScroll) > 8) {
           e.preventDefault();
+          e.stopPropagation();
         }
       }, true);
     }
