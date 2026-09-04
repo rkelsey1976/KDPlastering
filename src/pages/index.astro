@@ -254,6 +254,33 @@ const schema = {
     </div>
   </section>
 
+  <!-- 3b. COMMERCIAL — named-client trust band -->
+  <section class="section section--dark">
+    <div class="container commercial-band">
+      <div class="commercial-band__copy">
+        <span class="eyebrow eyebrow--clay">Commercial</span>
+        <h2>Not just homes</h2>
+        <p>
+          KD renders commercial premises across Bristol &mdash; retail units, offices and
+          large elevations &mdash; worked around your trading hours, site rules and the main
+          contractor&rsquo;s programme. We own our scaffold and access plant and carry
+          &pound;10m public liability.
+        </p>
+        <p class="commercial-band__clients">
+          Commercial clients include <strong>Asda</strong> and <strong>HSBC</strong>.
+        </p>
+        <a href="/our-work/" class="btn btn--ghost">See recent projects</a>
+      </div>
+      <figure class="commercial-band__media">
+        <img
+          src="/services/gallery/commercial-3.webp"
+          alt="Long external elevation of an Asda store in Bristol finished in smooth white render"
+          width="920" height="613" loading="lazy" decoding="async"
+        />
+      </figure>
+    </div>
+  </section>
+
   <!-- 4. REVIEWS + TRUST — combined trust block -->
   <section class="section">
     <div class="container">
@@ -724,4 +751,41 @@ const schema = {
     font-size: var(--fs-sm);
   }
   .services-more a { color: var(--accent-text); font-weight: var(--weight-semi); }
+
+  /* Commercial band — named-client trust block on the dark section */
+  .commercial-band {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: var(--sp-7);
+    align-items: center;
+  }
+  .commercial-band__copy h2 { margin: var(--sp-2) 0 var(--sp-3); }
+  .commercial-band__copy p {
+    margin: 0 0 var(--sp-3);
+    color: var(--text-inverse-muted);
+    line-height: 1.7;
+    max-width: 46ch;
+  }
+  .commercial-band__clients {
+    color: var(--text-inverse) !important;
+  }
+  .commercial-band__clients strong { color: var(--text-inverse); }
+  .commercial-band__copy .btn { margin-top: var(--sp-2); }
+  .commercial-band__media {
+    margin: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface-inverse-raised);
+  }
+  .commercial-band__media img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+  @media (max-width: 860px) {
+    .commercial-band { grid-template-columns: 1fr; gap: var(--sp-5); }
+    .commercial-band__media { order: -1; }
+  }
 </style>
