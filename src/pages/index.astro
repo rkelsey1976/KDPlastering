@@ -363,6 +363,24 @@ const schema = {
       track.addEventListener('scroll', sync, { passive: true });
       window.addEventListener('resize', sync, { passive: true });
       sync();
+
+      // On a touch device a horizontal swipe of the carousel ends in a
+      // click on whichever slide is under the finger when it lifts — after
+      // the scroll, usually not the one the user was looking at, so they
+      // land on a service page they never meant to open. If the track
+      // moved (or the pointer travelled sideways) between press and click,
+      // the gesture was a swipe: cancel the navigation.
+      let downX = 0;
+      let downScroll = 0;
+      track.addEventListener('pointerdown', (e) => {
+        downX = e.clientX;
+        downScroll = track.scrollLeft;
+      }, { passive: true });
+      track.addEventListener('click', (e) => {
+        if (Math.abs(track.scrollLeft - downScroll) > 8 || Math.abs(e.clientX - downX) > 10) {
+          e.preventDefault();
+        }
+      }, true);
     }
 
   });
