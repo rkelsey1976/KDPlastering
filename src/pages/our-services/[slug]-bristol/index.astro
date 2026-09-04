@@ -127,6 +127,18 @@ const schema = [
       },
     })),
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: `The ${serviceProse} process, step by step`,
+    description: `How KD Plastering & Rendering Services delivers a ${serviceProse} project in Bristol, from the free site visit to the 12-month aftercare check.`,
+    step: service.processSteps.map((s, i) => ({
+      '@type': 'HowToStep',
+      position: i + 1,
+      name: s.title,
+      text: s.description,
+    })),
+  },
 ];
 ---
 

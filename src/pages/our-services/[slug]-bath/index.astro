@@ -70,29 +70,43 @@ const areaNotes = areas.map((a) => ({
   listed: /listed|conservation/i.test(a.costVariation),
 }));
 
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'Service',
-  // service.name carries the city ('Silicone Rendering Bristol'), which is
-  // wrong here and inconsistent with the Bristol pages' bare service type.
-  serviceType: prose,
-  name: `${prose} in Bath`,
-  provider: {
-    '@type': 'LocalBusiness',
-    '@id': 'https://www.kdplasteringrenderingservices.co.uk/#organization',
-    name: 'KD Plastering & Rendering Services',
-    telephone: '+441174094116',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: '8 Roman Way, Hanham',
-      addressLocality: 'Bristol',
-      postalCode: 'BS15 3FH',
-      addressCountry: 'GB',
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    // service.name carries the city ('Silicone Rendering Bristol'), which is
+    // wrong here and inconsistent with the Bristol pages' bare service type.
+    serviceType: prose,
+    name: `${prose} in Bath`,
+    provider: {
+      '@type': 'LocalBusiness',
+      '@id': 'https://www.kdplasteringrenderingservices.co.uk/#organization',
+      name: 'KD Plastering & Rendering Services',
+      telephone: '+441174094116',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: '8 Roman Way, Hanham',
+        addressLocality: 'Bristol',
+        postalCode: 'BS15 3FH',
+        addressCountry: 'GB',
+      },
     },
+    areaServed: { '@type': 'City', name: 'Bath' },
+    description: `${prose} across Bath and the BA postcodes, including Georgian and listed properties.`,
   },
-  areaServed: { '@type': 'City', name: 'Bath' },
-  description: `${prose} across Bath and the BA postcodes, including Georgian and listed properties.`,
-};
+  {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: `The ${proseLower} process, step by step`,
+    description: `How KD Plastering & Rendering Services delivers a ${proseLower} project on a Bath property, from the free site visit to the 12-month aftercare check.`,
+    step: service.processSteps.map((s, i) => ({
+      '@type': 'HowToStep',
+      position: i + 1,
+      name: s.title,
+      text: s.description,
+    })),
+  },
+];
 ---
 
 <PageLayout
