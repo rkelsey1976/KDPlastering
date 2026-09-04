@@ -33,7 +33,7 @@ const schema = {
 
 <PageLayout
   title="Plastering & Rendering in Bristol | Areas We Cover"
-  description="KD Plastering & Rendering covers 15 Bristol neighbourhoods from our yard in Hanham. Find your area for local housing stock, access notes and recent work."
+  description={`KD Plastering & Rendering covers ${bristol.length} Bristol neighbourhoods from our yard in Hanham. Find your area for local housing stock, access notes and recent work.`}
   preloadImage="/heroes/our-services.webp"
   canonical="/bristol/"
   schema={schema}
@@ -43,15 +43,15 @@ const schema = {
 >
   <Hero
     size="compact"
-    eyebrow={['Coverage', '18 neighbourhoods']}
+    eyebrow={['Coverage', `${bristol.length} neighbourhoods`]}
     title="Plastering and rendering across"
     titleAccent="Bristol"
-    lede="We work across 15 Bristol neighbourhoods from our base in Hanham. Each area page covers the local housing stock, access and parking, and recent work nearby."
+    lede={`We work across ${bristol.length} Bristol neighbourhoods from our base in Hanham. Each area page covers the local housing stock, access and parking, and recent work nearby.`}
     primaryCta={{ label: 'Get a Free Quote', href: '/contact/#lead-form-heading' }}
     phone={{ number: '+441174094116', display: '0117 409 4116' }}
     image="/heroes/our-services.webp"
     imageAlt=""
-    trust={['15 Bristol areas', 'Bath covered too', 'Free site visits']}
+    trust={[`${bristol.length} Bristol areas`, 'Bath covered too', 'Free site visits']}
   />
 
   <!-- Services first: someone landing on a city page wants to know what we

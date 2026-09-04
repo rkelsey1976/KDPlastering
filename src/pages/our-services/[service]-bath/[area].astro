@@ -3,14 +3,18 @@ import PageLayout from '../../../layouts/PageLayout.astro';
 import Hero from '../../../components/Hero.astro';
 import ServiceBullets from '../../../components/ServiceBullets.astro';
 import ReviewCards from '../../../components/ReviewCards.astro';
-import { getBristolAreas, getArea } from '../../../lib/areas';
-import { SERVICES, getService, serviceHook, warrantyBadge } from '../../../lib/services';
+import { getBathAreas, getArea } from '../../../lib/areas';
+import { SERVICES, serviceHook, warrantyBadge } from '../../../lib/services';
 import { REVIEWS, reviewsFor } from '../../../lib/reviews';
-import { getNote } from '../../../lib/serviceAreaNotes';
+import { SERVICE_GALLERY } from '../../../lib/serviceGallery';
 
-// service × neighbourhood, Bristol only: 6 services × every Bristol area.
+// service × neighbourhood, Bath only: 6 services × every Bath area.
+// Mirrors the Bristol [area].astro so the two silos feel like one site.
+// The per-page differentiation is the same: the area's own housing stock,
+// access, landmarks, pricing note and nearby projects, plus this service's
+// problems — all two-axis, none invented.
 export function getStaticPaths() {
-  const areas = getBristolAreas();
+  const areas = getBathAreas();
   return SERVICES.flatMap((service) =>
     areas.map((area) => ({
       params: { service: service.slug, area: area.slug },
@@ -21,18 +25,17 @@ export function getStaticPaths() {
 
 const { service, area } = Astro.props;
 
-// Prose form: "Plastering Services" reads wrong mid-sentence.
 const prose = service.shortName.replace(/\s+Services$/i, '');
 const proseLower = prose.toLowerCase();
 
-// Projects in this area that match this service. This is the one block that
-// varies by BOTH axes, so it carries most of the per-page differentiation.
+// Projects in this area that match this service — the one block that varies
+// on both axes.
 const KEYWORDS: Record<string, string[]> = {
   'silicone-rendering':       ['silicone'],
   'monocouche-rendering':     ['monocouche'],
   'external-wall-insulation': ['ewi', 'insulation'],
   'house-rendering':          ['re-render', 'full re-render', 'render on'],
-  'external-wall-rendering':  ['render', 'ashlar', 'elevation'],
+  'external-wall-rendering':  ['render', 'lime render', 'elevation'],
   'plastering-services':      ['plaster', 'skim', 'artex'],
 };
 const keys = KEYWORDS[service.slug] ?? [];
@@ -40,41 +43,45 @@ const matched = area.nearbyProjects.filter((p: string) =>
   keys.some((k) => p.toLowerCase().includes(k))
 );
 
-// Reviews for this area, narrowed to this service where we have them.
+// Reviews for this area, then this service, then any heritage / lime work
+// (the claim these Bath pages rest on), then city-wide — labelled honestly.
 const areaReviews = REVIEWS.filter((r) => r.area === area.name);
 const exact = areaReviews.filter((r) => r.service.toLowerCase().includes(proseLower));
-const reviews = exact.length ? exact : areaReviews.length ? areaReviews : reviewsFor(`${service.slug}-${area.slug}`);
-const reviewScope = exact.length ? `${prose} in ${area.name}` : areaReviews.length ? area.name : 'Bristol & Bath';
-
-// The one block that is true of this service in this area and nowhere
-// else. Written by hand in src/lib/serviceAreaNotes.ts; the block is
-// omitted until it exists rather than padded with something generic.
-const note = getNote(service.slug, area.slug);
-
-// This service's prices against this area's actual housing stock — one of
-// the few blocks that varies on both axes without anything being invented.
-// Plastering is quoted by room rather than house shape, so it falls back to
-// its own job-type guide.
-
-// Six of the ninety pages are the home of a real case study. Shown only
-// where it actually happened.
+const heritage = REVIEWS.filter((r) => r.heritage);
+const reviews = exact.length
+  ? exact
+  : areaReviews.length
+    ? areaReviews
+    : heritage.length
+      ? heritage.slice(0, 3)
+      : reviewsFor(`${service.slug}-${area.slug}`);
+const reviewScope = exact.length
+  ? `${prose} in ${area.name}`
+  : areaReviews.length
+    ? area.name
+    : heritage.length
+      ? 'heritage & listed'
+      : 'Bristol & Bath';
 
 const otherServices = SERVICES.filter((s) => s.slug !== service.slug);
-// Capped at two. These ninety pages were sending 70% of their links
-// sideways to each other, which recirculated authority inside the weakest
-// tier of the site instead of passing it back up. Two is enough for a
-// reader; the rest of the budget goes to the hubs below.
+
+// Capped at two, same as the Bristol pages — a route back up matters more
+// than a wide spread sideways through the weakest tier.
 const nearby = area.nearbyAreas
   .map((s: string) => getArea(s))
-  .filter((a): a is NonNullable<typeof a> => Boolean(a) && a!.city === 'bristol')
+  .filter((a): a is NonNullable<typeof a> => Boolean(a) && a!.city === 'bath')
   .slice(0, 2);
 
-const bristolAreaCount = getBristolAreas().length;
+const bathAreaCount = getBathAreas().length;
+
+// Recent-work photos for this service. Same set the service hubs use — a
+// supporting strip here, capped so it doesn't take over a two-axis page.
+const gallery = (SERVICE_GALLERY[service.slug] ?? []).slice(0, 3);
 
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  name: `${prose} in ${area.name}, Bristol`,
+  name: `${prose} in ${area.name}, Bath`,
   serviceType: prose,
   provider: {
     '@type': 'LocalBusiness',
@@ -84,7 +91,7 @@ const schema = {
   },
   areaServed: {
     '@type': 'Place',
-    name: `${area.name}, Bristol`,
+    name: `${area.name}, Bath`,
     address: { '@type': 'PostalAddress', addressLocality: area.name, postalCode: area.postcode, addressCountry: 'GB' },
   },
 };
@@ -92,17 +99,18 @@ const schema = {
 
 <PageLayout
   title={`${prose} in ${area.name} ${area.postcode} | ${serviceHook(service)}`}
-  description={`${prose} in ${area.name}, Bristol ${area.postcode}. Free site visit, fixed written quote within 48 hours, ${warrantyBadge(service)}.`}
+  description={`${prose} in ${area.name}, Bath ${area.postcode}. Georgian and listed work, lime-compatible systems, a free site visit and a fixed written quote within 48 hours.`}
   preloadImage={`/heroes/${service.slug}.webp`}
-  canonical={`/our-services/${service.slug}-bristol/${area.slug}/`}
+  canonical={`/our-services/${service.slug}-bath/${area.slug}/`}
   schema={schema}
   breadcrumbs={[
     { name: 'Our Services', href: '/our-services/' },
     { name: service.shortName, href: `/our-services/${service.slug}-bristol/` },
-    { name: area.name, href: `/our-services/${service.slug}-bristol/${area.slug}/` },
+    { name: 'Bath', href: `/our-services/${service.slug}-bath/` },
+    { name: area.name, href: `/our-services/${service.slug}-bath/${area.slug}/` },
   ]}
   ctaHeading={`${prose} in ${area.name}?`}
-  ctaText={`Free site visit across ${area.name} ${area.postcode}, a fixed written quote within 48 hours, and no pressure either way.`}
+  ctaText={`Free site visit across ${area.name} ${area.postcode}, a fixed written quote within 48 hours, and a straight answer on whether consent is needed.`}
 >
   <Hero
     size="compact"
@@ -117,15 +125,19 @@ const schema = {
     trust={['Free site visit', 'Fixed written quote', warrantyBadge(service)]}
   />
 
-  <!-- Area context, framed for this service -->
+  <!-- Area context, framed for Bath rather than reused from the Bristol copy -->
   <section class="section">
     <div class="container">
       <div class="media-split">
         <div class="media-split__copy">
-          {note && (
-            <p class="sxa-note">{note}</p>
-          )}
-          <p class="sxa-lead">{service.longIntro}</p>
+          <p class="sxa-note">
+            Most {proseLower} work in {area.name} sits on Georgian limestone rather than
+            the brick and pebbledash that dominates Bristol. That changes the
+            specification before it changes the price — a solid lime-built wall
+            needs a breathable system, and listed or conservation-area status is
+            common here. We survey every property before quoting and say plainly
+            whether {proseLower} is the right answer for your wall.
+          </p>
           <p class="sxa-lead">{area.longIntro}</p>
         </div>
         <figure class="media-split__media">
@@ -157,10 +169,6 @@ const schema = {
   <!-- What this service actually solves -->
   <section class="section section--alt">
     <div class="container">
-      {/* variant was "dont", which is not one of the component's variants
-          ('do' | 'problem' | 'benefit'). No icon set matched it and the variant
-          styling never applied. This block lists service.problems under
-          "Problems we fix", so 'problem' is the intended one. */}
       <ServiceBullets
         items={service.problems}
         variant="problem"
@@ -186,16 +194,27 @@ const schema = {
     </div>
   </section>
 
-  {/* Cost section removed 2026-09-02 — the figures were not confirmed.
-      service.costGuide and lib/areaCosts.ts are untouched, so this is a
-      render call away from returning once the bands are signed off. */}
-
-  {/* "Real Project" case study removed 2026-09-02, pre-launch. The
-      CaseStudy component and the `caseStudy` entries in services.ts are
-      untouched — this is only the render call. The copy makes very
-      specific claims (a rival's £8,500 quote, 105m², 8 working days,
-      "25-year maintenance-free") that want evidencing before they go back
-      up, ideally alongside photographs of the job. */}
+  {gallery.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <header class="section-header section-header--center">
+          <span class="eyebrow">Recent work</span>
+          <h2>{prose} we have done</h2>
+          <p class="lede">Real jobs across Bristol and Bath, photographed as we finished them.</p>
+        </header>
+        <ul class="sxa-gallery">
+          {gallery.map((img) => (
+            <li>
+              <img src={img.src} alt={img.alt} width={img.width} height={img.height} loading="lazy" decoding="async" />
+            </li>
+          ))}
+        </ul>
+        <p class="sxa-gallery__more">
+          <a href="/our-work/">More {proseLower} projects in the gallery</a>
+        </p>
+      </div>
+    </section>
+  )}
 
   <!-- Local knowledge -->
   <section class="section section--alt">
@@ -218,7 +237,7 @@ const schema = {
           <ul class="sxa-chips">{area.landmarks.map((l: string) => <li>{l}</li>)}</ul>
         </div>
         <div class="sxa-fact">
-          <h3>Pricing notes</h3>
+          <h3>Pricing &amp; consent</h3>
           <p>{area.costVariation}</p>
         </div>
       </div>
@@ -241,7 +260,7 @@ const schema = {
           <ul class="sxa-links__list">
             {otherServices.map((s) => (
               <li>
-                <a href={`/our-services/${s.slug}-bristol/${area.slug}/`}>
+                <a href={`/our-services/${s.slug}-bath/${area.slug}/`}>
                   {s.shortName.replace(/\s+Services$/i, '')} in {area.name}
                 </a>
               </li>
@@ -253,7 +272,7 @@ const schema = {
           <ul class="sxa-links__list">
             {nearby.map((a) => (
               <li>
-                <a href={`/our-services/${service.slug}-bristol/${a.slug}/`}>
+                <a href={`/our-services/${service.slug}-bath/${a.slug}/`}>
                   {prose} in {a.name} <span>{a.postcode}</span>
                 </a>
               </li>
@@ -263,26 +282,29 @@ const schema = {
       </div>
       <p class="sxa-faq">Questions about {proseLower}? See the <a href="/faqs/">FAQs</a>.</p>
 
-      {/* Upward links. This page pointed at its service landing page and nothing
-          else — no route back to the neighbourhood hub or the city, so the tail
-          held authority it had no way to pass on. */}
       <ul class="sxa-up">
         <li>
-          <a href={`/our-services/${service.slug}-bristol/`}>
-            <span class="sxa-up__label">All {proseLower}</span>
-            <span class="sxa-up__sub">All {bristolAreaCount} Bristol neighbourhoods</span>
+          <a href={`/our-services/${service.slug}-bath/`}>
+            <span class="sxa-up__label">All {proseLower} in Bath</span>
+            <span class="sxa-up__sub">All {bathAreaCount} Bath neighbourhoods</span>
           </a>
         </li>
         <li>
-          <a href={`/bristol/${area.slug}/`}>
+          <a href={`/bath/${area.slug}/`}>
             <span class="sxa-up__label">Plastering &amp; rendering in {area.name}</span>
             <span class="sxa-up__sub">All six services, {area.postcode}</span>
           </a>
         </li>
         <li>
-          <a href="/bristol/">
-            <span class="sxa-up__label">Bristol coverage</span>
-            <span class="sxa-up__sub">18 neighbourhoods</span>
+          <a href="/bath/">
+            <span class="sxa-up__label">Bath coverage</span>
+            <span class="sxa-up__sub">{bathAreaCount} neighbourhoods</span>
+          </a>
+        </li>
+        <li>
+          <a href={`/our-services/${service.slug}-bristol/`}>
+            <span class="sxa-up__label">{prose} in Bristol</span>
+            <span class="sxa-up__sub">Where most of our work is</span>
           </a>
         </li>
       </ul>
@@ -316,53 +338,6 @@ const schema = {
   .sxa-up__label { font-weight: var(--weight-semi); color: var(--text); font-size: var(--fs-sm); }
   .sxa-up__sub { font-size: var(--fs-xs); color: var(--text-muted); }
 
-  .sxa-costs { list-style: none; margin: 0 auto; padding: 0; max-width: 780px; }
-  .sxa-cost {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--sp-4);
-    padding: var(--sp-4) 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .sxa-cost:first-child { border-top: 1px solid var(--border); }
-  .sxa-cost__type { font-weight: var(--weight-semi); color: var(--text); }
-  .sxa-cost__price {
-    font-weight: var(--weight-bold);
-    color: var(--accent-text);
-    font-variant-numeric: tabular-nums;
-    white-space: nowrap;
-  }
-  .sxa-costs__note {
-    max-width: 780px;
-    margin: var(--sp-4) auto 0;
-    font-size: var(--fs-sm);
-    line-height: 1.65;
-    color: var(--text-muted);
-  }
-
-  .sxa-case { margin: 0; display: grid; gap: var(--sp-4); }
-  .sxa-case > div {
-    display: grid;
-    grid-template-columns: 8.5rem 1fr;
-    gap: var(--sp-4);
-    align-items: baseline;
-  }
-  .sxa-case dt {
-    font-size: var(--fs-xs);
-    font-weight: var(--weight-bold);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--accent-on-dark);
-  }
-  .sxa-case dd { margin: 0; line-height: 1.7; }
-  @media (max-width: 600px) {
-    .sxa-case > div { grid-template-columns: 1fr; gap: var(--sp-1); }
-    .sxa-cost { flex-direction: column; gap: var(--sp-1); }
-  }
-
-  /* Leads the page when present — it is the part that is specific to this
-     service in this area. */
   .sxa-note {
     margin: 0 0 var(--sp-5);
     padding-left: var(--sp-5);
@@ -371,7 +346,6 @@ const schema = {
     line-height: 1.7;
     color: var(--text);
   }
-
   .sxa-lead { font-size: var(--fs-md); line-height: 1.75; color: var(--text-secondary); }
 
   .sxa-faq {
@@ -381,15 +355,39 @@ const schema = {
   }
   .sxa-faq a { color: var(--accent-text); font-weight: var(--weight-semi); }
 
+  .sxa-gallery {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--sp-3);
+    max-width: var(--container-narrow);
+  }
+  .sxa-gallery li { margin: 0; }
+  .sxa-gallery img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    background: var(--surface-sunken);
+  }
+  .sxa-gallery__more {
+    text-align: center;
+    margin: var(--sp-4) 0 0;
+    font-size: var(--fs-sm);
+  }
+  .sxa-gallery__more a { color: var(--accent-text); font-weight: var(--weight-semi); }
+
   .sxa-projects {
     list-style: none;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: var(--sp-3);
     max-width: var(--container-narrow);
-    margin-inline: auto;
   }
   .sxa-projects li {
     position: relative;
@@ -473,5 +471,4 @@ const schema = {
     color: var(--accent-text);
     font-variant-numeric: tabular-nums;
   }
-
 </style>

@@ -27,9 +27,11 @@ type Props = {
   services: Service[];
   heading?: string;
   lede?: string;
+  /** Which city hub the cards link to. Defaults to Bristol. */
+  city?: 'bristol' | 'bath';
 };
 
-const { eyebrow, services, heading = 'Related Services', lede = 'Customers who book this service often add one of these.' } = Astro.props as Props;
+const { eyebrow, services, heading = 'Related Services', lede = 'Customers who book this service often add one of these.', city = 'bristol' } = Astro.props as Props;
 ---
 
 <section class="related-services" aria-labelledby="related-services-heading">
@@ -46,6 +48,7 @@ const { eyebrow, services, heading = 'Related Services', lede = 'Customers who b
           shortName={s.shortName}
           tagline={s.tagline}
           imageSrc={cardImages[s.slug]}
+          href={`/our-services/${s.slug}-${city}/`}
         />
       ))}
     </div>

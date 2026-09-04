@@ -3,19 +3,27 @@ import PageLayout from '../../../layouts/PageLayout.astro';
 import Hero from '../../../components/Hero.astro';
 import ServiceBullets from '../../../components/ServiceBullets.astro';
 import ProblemList from '../../../components/ProblemList.astro';
+import BenefitGrid from '../../../components/BenefitGrid.astro';
+import ProcessTimeline from '../../../components/ProcessTimeline.astro';
 import MaterialGrid from '../../../components/MaterialGrid.astro';
 import ReviewCards from '../../../components/ReviewCards.astro';
-import { SERVICES, serviceHook, warrantyBadge } from '../../../lib/services';
-import { getBathAreas } from '../../../lib/areas';
+import RelatedServices from '../../../components/RelatedServices.astro';
+import AuthorityBio from '../../../components/AuthorityBio.astro';
+import AreaCoverage from '../../../components/AreaCoverage.astro';
+import { SERVICES, serviceHook, warrantyBadge, getRelatedServices, getTagline } from '../../../lib/services';
+import { getBathAreas, getBristolAreas } from '../../../lib/areas';
 import { REVIEWS } from '../../../lib/reviews';
 import { getBathNote } from '../../../lib/bathServiceNotes';
+import { SERVICE_GALLERY } from '../../../lib/serviceGallery';
+import { getCollection } from 'astro:content';
 
-// Six Bath service pages. Deliberately shorter than their Bristol
-// counterparts: the technical spec is the same trade in both cities, so
-// repeating all of it here would produce six near-duplicates. What these
-// pages lead with is the part that genuinely differs — Georgian limestone
-// instead of brick and pebbledash, listed and conservation constraints,
-// and the pricing that follows from both.
+const bristolAreaCount = getBristolAreas().length;
+
+// Bath service pages. They open with what genuinely differs — Georgian
+// limestone, listed and conservation constraints, the pricing that follows
+// — then run the same spec sections as the Bristol hub so the two cities
+// feel like one site. The Bath areas, constraints, reviews and coverage
+// keep each page distinct.
 export function getStaticPaths() {
   return SERVICES.map((service) => ({ params: { slug: service.slug }, props: { service } }));
 }
@@ -26,6 +34,21 @@ const proseLower = prose.toLowerCase();
 
 const areas = getBathAreas();
 const note = getBathNote(service.slug);
+const gallery = SERVICE_GALLERY[service.slug] ?? [];
+
+// Related services, taglines swapped to the Bath wording, cards pointed at
+// the Bath hubs so the link equity stays in this silo.
+const relatedServices = getRelatedServices(service.slug).map((s) => ({
+  slug: s.slug,
+  shortName: s.shortName,
+  tagline: getTagline(s, 'bath'),
+}));
+
+// Guides naming this service — the same link down / link back up the
+// Bristol hub carries. Capped at two.
+const guides = (await getCollection('blog', ({ data }) =>
+  !data.draft && (data.service === service.slug || data.alsoService === service.slug)
+)).slice(0, 2);
 
 // Bath reviews, where we have them. Two of the twelve are Bath jobs.
 const bathNames = new Set(areas.map((a) => a.name));
@@ -157,6 +180,26 @@ const schema = {
     </div>
   </section>
 
+  {gallery.length > 0 && (
+    <section class="work-grid-section">
+      <div class="container">
+        <p class="work-grid__eyebrow">Recent work</p>
+        <h2 class="work-grid__heading">{prose} we have done</h2>
+        <p class="work-grid__lede">Real jobs across Bristol and Bath, photographed as we finished them. No stock photography.</p>
+        <ul class="work-grid">
+          {gallery.map((img) => (
+            <li class="work-grid__item">
+              <img src={img.src} alt={img.alt} width={img.width} height={img.height} loading="lazy" decoding="async" />
+            </li>
+          ))}
+        </ul>
+        <p class="work-grid__more">
+          <a href="/our-work/">See more {proseLower} projects in the gallery</a>
+        </p>
+      </div>
+    </section>
+  )}
+
   <section class="section">
     <div class="container">
       <ProblemList
@@ -167,12 +210,35 @@ const schema = {
     </div>
   </section>
 
+  <section class="section">
+    <div class="container">
+      <BenefitGrid
+        eyebrow="Why us"
+        benefits={service.benefits}
+        heading={`Why Choose ${prose}`}
+        lede={`We've completed hundreds of ${proseLower} projects across Bristol and Bath. Here's what makes them last.`}
+      />
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container">
+      <ProcessTimeline
+        eyebrow="How it works"
+        steps={service.processSteps}
+        heading="Our Process"
+        lede={`Every ${proseLower} project follows the same process, in Bath as in Bristol — from your free site visit to your 12-month aftercare check.`}
+      />
+    </div>
+  </section>
+
   <section class="section section--alt">
     <div class="container">
       <MaterialGrid
         materials={service.materials}
         eyebrow="Systems"
-        heading={`Materials we use for ${proseLower}`}
+        heading={`Materials & Systems We Use for ${prose}`}
+        lede="Only BBA-certified systems from leading UK and European manufacturers. Every installation carries a manufacturer warranty as standard."
       />
     </div>
   </section>
@@ -191,29 +257,84 @@ const schema = {
       : 'Verified reviews from recent work across Bristol and Bath.'}
   />
 
-  <section class="section section--alt">
+  <section class="section">
     <div class="container">
       <header class="section-header section-header--center">
-        <span class="eyebrow">Coverage</span>
-        <h2>{prose} across Bath</h2>
+        <span class="eyebrow">Questions</span>
+        <h2>Frequently Asked Questions</h2>
+        <p class="lede">Everything you need to know about our {proseLower} service.</p>
       </header>
-      <ul class="bath-areas">
-        {areas.map((a) => (
-          <li>
-            <a href={`/bath/${a.slug}/`}>
-              <span class="bath-areas__name">{a.name}</span>
-              <span class="bath-areas__pc">{a.postcode}</span>
-              <span class="bath-areas__blurb">{a.blurb}</span>
-            </a>
-          </li>
+      <div class="faq-section">
+        {service.faq.map((f) => (
+          <details>
+            <summary>{f.question}</summary>
+            <div class="faq-answer">
+              <p>{f.answer}</p>
+            </div>
+          </details>
         ))}
-      </ul>
+      </div>
+    </div>
+  </section>
+
+  <RelatedServices services={relatedServices} city="bath" eyebrow="What else" />
+
+  <section class="section section--alt">
+    <div class="container">
+      <AuthorityBio
+        compact={true}
+        name="Kyran"
+        role="Founder & Lead Installer"
+        qualifications={[
+          'NVQ Level 3 in Plastering',
+          "Johnstone's Stormshield Registered Installer",
+          'Parex Approved Applicator',
+          'Weber EWI Certified Installer',
+          '10+ years plastering and rendering across Bristol & Bath',
+        ]}
+        bio={`Kyran founded KD Plastering & Rendering Services in 2014. Based in Hanham, he specifies every quote himself and is on site for the key stages of every installation — including the heritage and lime-compatible work that most Bath jobs involve.`}
+      />
+    </div>
+  </section>
+
+  <section class="section section--alt">
+    <div class="container">
+      <AreaCoverage
+        cities={['bath', 'bristol']}
+        serviceSlug={service.slug}
+        eyebrow="Coverage"
+        heading={`${prose} across Bath & Bristol`}
+        lede={`Every neighbourhood has its own ${proseLower} page — ${areas.length} across Bath and ${bristolAreaCount} across Bristol, where most of our work is.`}
+        note="Based in Hanham (BS15), covering the BA and BS postcodes. Free site visits within 10 miles; further afield by arrangement. Listed building consent, conservation area consent and Building Control notification are handled on your behalf where required."
+      />
       <p class="bath-foot">
-        Based in Bristol? See <a href={`/our-services/${service.slug}-bristol/`}>{proseLower} in Bristol</a>,
-        where we cover 18 neighbourhoods.
+        See the full <a href={`/our-services/${service.slug}-bristol/`}>{proseLower} in Bristol</a> page,
+        or browse <a href="/our-work/">recent work</a> across both cities.
       </p>
     </div>
   </section>
+
+  {guides.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <header class="section-header section-header--center">
+          <span class="eyebrow">Before you commit</span>
+          <h2>Worth reading first</h2>
+        </header>
+        <ul class="bath-guides">
+          {guides.map((g) => (
+            <li>
+              <a href={`/blog/${g.id}/`}>
+                <span class="bath-guides__title">{g.data.title}</span>
+                <span class="bath-guides__desc">{g.data.description}</span>
+                <span class="bath-guides__meta">{g.data.minutes} min read</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
 </PageLayout>
 
 <style>
@@ -314,36 +435,66 @@ const schema = {
     white-space: nowrap;
   }
 
-  .bath-areas {
+
+  .bath-guides {
     list-style: none;
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: var(--sp-3);
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--sp-4);
+    max-width: 1000px;
   }
-  .bath-areas a {
+  .bath-guides li { display: flex; }
+  .bath-guides a {
     display: flex;
     flex-direction: column;
-    gap: var(--sp-2);
-    height: 100%;
+    gap: 0.35rem;
+    width: 100%;
     padding: var(--sp-5);
     background: var(--surface-raised);
     border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
     border-radius: var(--radius-md);
     text-decoration: none;
     transition: border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
   }
-  .bath-areas a:hover { border-color: var(--accent); transform: translateY(-2px); }
-  .bath-areas__name { font-size: var(--fs-md); font-weight: var(--weight-semi); color: var(--text); }
-  .bath-areas__pc {
+  .bath-guides a:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .bath-guides__title { font-size: var(--fs-md); font-weight: var(--weight-bold); color: var(--text); }
+  .bath-guides__desc { font-size: var(--fs-sm); line-height: 1.6; color: var(--text-muted); }
+  .bath-guides__meta {
+    margin-top: auto;
+    padding-top: var(--sp-3);
     font-size: var(--fs-xs);
     font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
     color: var(--accent-text);
-    font-variant-numeric: tabular-nums;
   }
-  .bath-areas__blurb { font-size: var(--fs-sm); line-height: 1.55; color: var(--text-muted); }
 
+  /* Recent-work grid — same treatment as the Bristol service hubs. */
+  .work-grid-section { padding: var(--space-3xl, 4rem) 0; background: var(--surface-2, #f6f6f4); }
+  .work-grid__eyebrow {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent-text); margin: 0 0 0.5rem;
+  }
+  .work-grid__heading { margin: 0 0 0.4rem; }
+  .work-grid__lede { margin: 0 0 1.75rem; color: var(--text-muted, #555); max-width: 60ch; }
+  .work-grid__more { margin: 1.5rem 0 0; font-size: var(--fs-sm); }
+  .work-grid__more a { color: var(--accent-text); font-weight: var(--weight-semi); }
+  .work-grid {
+    list-style: none; margin: 0; padding: 0;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1rem;
+  }
+  .work-grid__item { margin: 0; }
+  .work-grid__item img {
+    display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover;
+    border-radius: 6px; background: var(--surface, #eee);
+  }
+
+  @media (max-width: 640px) {
+    .work-grid { grid-template-columns: repeat(2, 1fr); gap: 0.6rem; }
+  }
   @media (max-width: 600px) {
     .bath-costs li { flex-direction: column; gap: var(--sp-1); }
   }

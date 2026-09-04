@@ -31,6 +31,9 @@ export type Service = {
   shortName: string;
   city: 'bristol' | 'bath';
   tagline: string;
+  // Bath-side tagline. Set only where `tagline` names Bristol; Bath pages
+  // fall back to `tagline` when this is absent. See getTagline().
+  bathTagline?: string;
   // Above-the-fold, H1-subheading paragraph (1-2 sentences)
   intro: string;
   // Long-form intro used as the meaty first paragraph under the H1.
@@ -84,6 +87,7 @@ export const SERVICES: Service[] = [
     shortName: 'Silicone Rendering',
     city: 'bristol',
     tagline: 'Durable, weather-resistant silicone render systems for Bristol homes and businesses.',
+    bathTagline: "Breathable, weather-resistant silicone render for Bath's Georgian and modern homes.",
     intro:
       'Modern silicone render gives a property a clean, low-maintenance finish that shrugs off the British weather. Applied in one colour-through coat over a reinforced base, silicone render is breathable, water-resistant and keeps its colour for decades.',
     longIntro:
@@ -263,6 +267,7 @@ export const SERVICES: Service[] = [
     shortName: 'House Rendering',
     city: 'bristol',
     tagline: 'Transform the look of your Bristol home with a fresh, modern render finish.',
+    bathTagline: 'A fresh, breathable render finish for period and modern Bath homes.',
     intro:
       "Whether you're replacing cracked, blown 1970s rendering or upgrading bare brickwork, a full house render is the single biggest exterior upgrade you can give a property.",
     longIntro:
@@ -1171,3 +1176,12 @@ export const serviceHook = (service: Service): string =>
  */
 export const warrantyBadge = (service: Service): string =>
   service.category === 'plastering' ? '5-year warranty' : '10-year warranty';
+
+/**
+ * Tagline for the city the page is on. The base `tagline` is Bristol-written
+ * (some name Bristol outright); Bath pages take `bathTagline` where it is set
+ * and fall back to the base otherwise, so a Bath card never reads
+ * "for Bristol homes and businesses".
+ */
+export const getTagline = (service: Service, city: 'bristol' | 'bath'): string =>
+  city === 'bath' ? service.bathTagline ?? service.tagline : service.tagline;

@@ -1,10 +1,10 @@
 // Areas covered by KD Plastering & Rendering Services.
-// 15 Bristol neighbourhoods + 5 Bath neighbourhoods — total 20.
+// 18 Bristol neighbourhoods + 5 Bath neighbourhoods — total 23.
 //
-// Bristol is the home base (8 Roman Way, Hanham, Bristol BS15 3FH),
-// so 18 of the 23 areas are Bristol neighbourhoods. The 5 Bath
-// neighbourhoods extend the SEO matrix into the secondary service
-// area.
+// Bristol is the home base (8 Roman Way, Hanham, Bristol BS15 3FH).
+// The 5 Bath neighbourhoods extend the SEO matrix into the secondary
+// service area. Do not hardcode these counts in page copy — derive them
+// from getBristolAreas().length / getBathAreas().length / AREAS.length.
 //
 // Each area has full data: costVariation, typicalProperties (with
 // sqft/value ranges), landmarks (6-8 real, locally-known points),

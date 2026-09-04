@@ -12,9 +12,9 @@ type Props = {
       lists Bath's five neighbourhoods competes with the Bath page for the
       same terms, and wins — which is the wrong page to win. */
   cities?: ('bristol' | 'bath')[];
-  /** When set, Bristol areas link to that service's page for the area (the
-      more specific match on a service page). Without it — and for Bath, which
-      has no service × area pages — they link to the neighbourhood hub. */
+  /** When set, area chips link to that service's page for the area in the
+      chip's own city (the more specific match on a service page). Without
+      it they link to the neighbourhood hub. */
   serviceSlug?: string;
   eyebrow?: string;
   heading?: string;
@@ -49,13 +49,13 @@ const groups = [
       <ul class="area-coverage__list">
         {g.areas.map((a) => (
           <li>
-            {/* Every area now has a hub page. On a service page the more
-                specific service × area page exists for Bristol only, so Bath
-                keeps the hub. */}
+            {/* On a service page every area now has its own service × area
+                page in both cities, so link to the more specific match;
+                otherwise link to the neighbourhood hub. */}
             <a
               class="area-coverage__area area-coverage__area--link"
-              href={serviceSlug && a.city === 'bristol'
-                ? `/our-services/${serviceSlug}-bristol/${a.slug}/`
+              href={serviceSlug
+                ? `/our-services/${serviceSlug}-${a.city}/${a.slug}/`
                 : `/${a.city}/${a.slug}/`}
             >
               {a.name}

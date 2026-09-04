@@ -15,9 +15,10 @@ import { getService, getRelatedServices, warrantyBadge } from '../../../lib/serv
 import { AREAS } from '../../../lib/areas';
 import { REVIEWS } from '../../../lib/reviews';
 import { getCollection } from 'astro:content';
-import { getBathAreas } from '../../../lib/areas';
+import { getBathAreas, getBristolAreas } from '../../../lib/areas';
 
 const BATH_AREA_NAMES = new Set(getBathAreas().map((a) => a.name));
+const bristolAreaCount = getBristolAreas().length;
 
 
 export function getStaticPaths() {
@@ -201,6 +202,9 @@ const schema = [
             </li>
           ))}
         </ul>
+        <p class="work-grid__more">
+          <a href="/our-work/">See more {serviceProse} projects in the gallery</a>
+        </p>
       </div>
     </section>
   )}
@@ -381,7 +385,7 @@ const schema = [
         serviceSlug={service.slug}
         eyebrow="Coverage"
         heading={`${serviceTitle} Across Bristol`}
-        lede="We cover all 15 Bristol neighbourhoods, with consistent pricing within the BS postcodes."
+        lede={`We cover all ${bristolAreaCount} Bristol neighbourhoods, with consistent pricing within the BS postcodes.`}
         note="Free site visits within 10 miles of BS15. Properties outside our standard coverage area can be quoted by arrangement. Listed building consent, conservation area consent and Building Control notification are handled on your behalf where required."
       />
     </div>
@@ -563,6 +567,8 @@ const schema = [
   }
   .work-grid__heading { margin: 0 0 0.4rem; }
   .work-grid__lede { margin: 0 0 1.75rem; color: var(--text-muted, #555); max-width: 60ch; }
+  .work-grid__more { margin: 1.5rem 0 0; font-size: var(--fs-sm); }
+  .work-grid__more a { color: var(--accent-text); font-weight: var(--weight-semi); }
   .work-grid {
     list-style: none; margin: 0; padding: 0;
     display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1rem;

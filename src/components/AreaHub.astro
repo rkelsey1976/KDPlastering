@@ -8,7 +8,7 @@ import AreaIndex from './AreaIndex.astro';
 import MaterialGrid from './MaterialGrid.astro';
 import AuthorityBio from './AuthorityBio.astro';
 import { getArea, type Area } from '../lib/areas';
-import { SERVICES } from '../lib/services';
+import { SERVICES, getTagline } from '../lib/services';
 import { REVIEWS, reviewsFor } from '../lib/reviews';
 
 // The neighbourhood hub, shared by /bristol/[slug] and /bath/[slug].
@@ -20,12 +20,9 @@ const { area } = Astro.props as Props;
 const cityName = area.city === 'bath' ? 'Bath' : 'Bristol';
 const citySlug = area.city;
 
-// Bristol drills all the way to service × area; Bath stops at the city
-// service page, which is as deep as that side of the site goes.
+// Both cities now drill all the way to service × area.
 const serviceHref = (slug: string) =>
-  area.city === 'bristol'
-    ? `/our-services/${slug}-bristol/${area.slug}/`
-    : `/our-services/${slug}-bath/`;
+  `/our-services/${slug}-${area.city}/${area.slug}/`;
 
 const serviceImages: Record<string, string> = {
   'silicone-rendering':       '/services/cards/silicone-rendering.webp',
@@ -155,7 +152,7 @@ const schema = {
           <ServiceCard
             slug={svc.slug}
             shortName={`${svc.shortName.replace(/\s+Services$/i, '')} in ${area.name}`}
-            tagline={svc.tagline}
+            tagline={getTagline(svc, area.city)}
             imageSrc={serviceImages[svc.slug]}
             number={String(i + 1).padStart(2, '0')}
             variant="default"

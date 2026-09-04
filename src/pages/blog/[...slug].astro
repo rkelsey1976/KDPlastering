@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import PageLayout from '../../layouts/PageLayout.astro';
 import Hero from '../../components/Hero.astro';
 import { getService } from '../../lib/services';
+import { getBristolAreas, getBathAreas } from '../../lib/areas';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -100,7 +101,9 @@ const fmt = (dt: Date) =>
             <a href={`/${d.city}/`}>
               <span class="post__up-name">Areas we cover in {cityName}</span>
               <span class="post__up-sub">
-                {d.city === 'bath' ? '5 Bath neighbourhoods, BA postcodes' : '15 Bristol neighbourhoods, BS postcodes'}
+                {d.city === 'bath'
+                  ? `${getBathAreas().length} Bath neighbourhoods, BA postcodes`
+                  : `${getBristolAreas().length} Bristol neighbourhoods, BS postcodes`}
               </span>
             </a>
           </li>
