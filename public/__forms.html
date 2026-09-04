@@ -18,8 +18,13 @@
 
     If a field is added to LeadForm.astro, add it here too or that field
     will be missing from the submission notification.
+
+    action="/thanks/" here too: Astro strips data-netlify / action off the
+    real form during the build, so Netlify falls back to THIS registered
+    definition for the post-submit redirect. Without it a no-JS submission
+    lands on Netlify's default success page.
   -->
-  <form name="kd-quote" data-netlify="true" netlify-honeypot="_gotcha" hidden>
+  <form name="kd-quote" action="/thanks/" method="POST" data-netlify="true" netlify-honeypot="_gotcha" hidden>
     <input type="hidden" name="form-name" value="kd-quote" />
     <input name="_gotcha" />
     <input type="hidden" name="page_source" />
