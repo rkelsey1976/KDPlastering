@@ -14,8 +14,10 @@ const featuredReviews = REVIEWS.slice(0, 3);
 
 // Reviews: 50 on Google (4.9), 194 on Checkatrade (9.8/10), 51 on MyBuilder
 // (4.7) = 295. "180+ 5-Star" was both wrong and an undercount, and not all of
-// them are five-star — Checkatrade scores out of ten. "290+ verified" is the
-// claim that survives someone checking it.
+// them are five-star — Checkatrade scores out of ten. "290+" is the claim
+// that survives someone checking it — but only if the tile names the three
+// platforms, so a reader can't take it for a single-site count (Google
+// alone is 50).
 // "Projects Done" (previously 800+) is dropped rather than guessed at --
 // nothing on record supports a specific figure. Checkatrade's 194 reviews
 // implies several hundred jobs at a normal review rate, but that is an
@@ -23,7 +25,7 @@ const featuredReviews = REVIEWS.slice(0, 3);
 // when Richard has one.
 const heroStats = [
   { value: 10,  suffix: '+',   label: 'Years in Bristol' },
-  { value: 290, suffix: '+',   label: 'Verified Reviews' },
+  { value: 290, suffix: '+',   label: 'Google · Checkatrade · MyBuilder' },
   { value: 23,                 label: 'Areas Covered' },
   { value: 25,  suffix: ' yr', label: 'System Warranty' },
 ];
