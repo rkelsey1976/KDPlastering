@@ -1,0 +1,52 @@
+name: IndexNow
+
+# Ping IndexNow (Bing, Yandex, Seznam, Naver — not Google) after a content
+# change lands on main. Netlify builds the same push; this waits for the new
+# sitemap to go live, then submits its URLs.
+#
+# No secrets: IndexNow authenticates by the key file already served at
+# https://www.kdplasteringrenderingservices.co.uk/<KEY>.txt
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'astro.config.mjs'
+  workflow_dispatch: {}
+
+concurrency:
+  group: indexnow
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wait for Netlify to publish the new sitemap
+        run: |
+          set -euo pipefail
+          START=$(date -u +%s)
+          SITEMAP="https://www.kdplasteringrenderingservices.co.uk/sitemap-0.xml"
+          for i in $(seq 1 30); do
+            LASTMOD=$(curl -fsS --max-time 20 "$SITEMAP" \
+              | grep -oE '<lastmod>[^<]+</lastmod>' | head -1 \
+              | sed -E 's#</?lastmod>##g' || true)
+            if [ -n "$LASTMOD" ]; then
+              MOD_EPOCH=$(date -u -d "$LASTMOD" +%s 2>/dev/null || echo 0)
+              if [ "$MOD_EPOCH" -ge "$((START - 900))" ]; then
+                echo "sitemap lastmod $LASTMOD looks current"
+                break
+              fi
+              echo "sitemap lastmod $LASTMOD is stale, waiting… ($i/30)"
+            else
+              echo "no sitemap yet, waiting… ($i/30)"
+            fi
+            sleep 20
+          done
+
+      - name: Submit sitemap URLs to IndexNow
+        run: node scripts/indexnow.mjs

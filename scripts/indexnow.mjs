@@ -11,7 +11,7 @@
 // for one-off events — a migration, a mass content change — not routine.
 
 const HOST = 'www.kdplasteringrenderingservices.co.uk';
-const KEY = 'edf9d6242fa37d7cbcb97e32cd581f54';
+const KEY = '347eb67fbda4474fbd703fef5e878afe';
 const KEY_LOCATION = `https://${HOST}/${KEY}.txt`;
 const ENDPOINT = 'https://api.indexnow.org/indexnow';
 const SITEMAP = `https://${HOST}/sitemap-0.xml`;
