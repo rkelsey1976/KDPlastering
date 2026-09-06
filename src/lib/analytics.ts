@@ -10,12 +10,12 @@
 
 /**
  * GA4 Measurement ID, e.g. 'G-XXXXXXXXXX'.
+ * From Google Analytics → Admin → Data Streams.
  *
- * TODO: paste the real ID from Google Analytics → Admin → Data Streams.
- * Until then the site loads no analytics and the banner still governs the
- * map, which is the other consent-gated feature.
+ * Set empty to make the whole analytics path inert again (no script, no
+ * cookies); the banner still governs the Google Maps embed.
  */
-export const GA4_ID = '';
+export const GA4_ID = 'G-QYJ0MV76GF';
 
 /** localStorage key holding the visitor's decision. */
 export const CONSENT_KEY = 'kd-cookie-consent';
