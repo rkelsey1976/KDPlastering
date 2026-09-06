@@ -1,8 +1,8 @@
 name: IndexNow
 
 # Ping IndexNow (Bing, Yandex, Seznam, Naver — not Google) after a content
-# change lands on main. Netlify builds the same push; this waits for the new
-# sitemap to go live, then submits its URLs.
+# change lands on main. Netlify builds the same push; this waits for that
+# exact commit to be published, then submits the sitemap's URLs.
 #
 # No secrets: IndexNow authenticates by the key file already served at
 # https://www.kdplasteringrenderingservices.co.uk/<KEY>.txt
@@ -26,27 +26,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Wait for Netlify to publish the new sitemap
+      - name: Wait for Netlify to publish this commit
         run: |
           set -euo pipefail
-          START=$(date -u +%s)
-          SITEMAP="https://www.kdplasteringrenderingservices.co.uk/sitemap-0.xml"
-          for i in $(seq 1 30); do
-            LASTMOD=$(curl -fsS --max-time 20 "$SITEMAP" \
-              | grep -oE '<lastmod>[^<]+</lastmod>' | head -1 \
-              | sed -E 's#</?lastmod>##g' || true)
-            if [ -n "$LASTMOD" ]; then
-              MOD_EPOCH=$(date -u -d "$LASTMOD" +%s 2>/dev/null || echo 0)
-              if [ "$MOD_EPOCH" -ge "$((START - 900))" ]; then
-                echo "sitemap lastmod $LASTMOD looks current"
-                break
-              fi
-              echo "sitemap lastmod $LASTMOD is stale, waiting… ($i/30)"
-            else
-              echo "no sitemap yet, waiting… ($i/30)"
+          URL="https://www.kdplasteringrenderingservices.co.uk/version.txt"
+          for i in $(seq 1 40); do
+            LIVE=$(curl -fsS --max-time 20 "$URL" 2>/dev/null | tr -d '[:space:]' || true)
+            if [ "$LIVE" = "${GITHUB_SHA}" ]; then
+              echo "published: $LIVE"
+              exit 0
             fi
-            sleep 20
+            echo "live=${LIVE:-<none>} want=${GITHUB_SHA} ($i/40)"
+            sleep 15
           done
+          echo "::warning::commit not confirmed published after 10 min; submitting anyway"
 
       - name: Submit sitemap URLs to IndexNow
         run: node scripts/indexnow.mjs
