@@ -1,14 +1,11 @@
-# Netlify build & post-processing config, version-controlled instead of living
+# Netlify build config, version-controlled instead of living
 # only in the dashboard.
 
 [build]
   command = "npm run build"
   publish = "dist"
 
-# The site is built directory-style (/page/index.html) and every canonical,
-# internal link and sitemap <loc> carries a trailing slash. "Pretty URLs"
-# post-processing strips trailing slashes, which would turn every canonical and
-# sitemap URL into a 301. Keep it off so Netlify's default directory handling
-# (/page -> /page/) is what runs.
-[build.processing.html]
-  pretty_urls = false
+# Pretty URLs is left at its default (on): with the directory-style build
+# (/page/index.html) it is what issues the single /page -> /page/ 301, so
+# the slashless form of every URL redirects to the canonical trailing-slash
+# version in one hop instead of serving duplicate 200s.
