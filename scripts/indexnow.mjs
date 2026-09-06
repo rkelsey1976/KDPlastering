@@ -16,7 +16,7 @@
 // a failure, so it starts working automatically once BWT is fixed.
 
 const HOST = 'www.kdplasteringrenderingservices.co.uk';
-const KEY = '347eb67fbda4474fbd703fef5e878afe';
+const KEY = '20e965efe84b46f8bea807703e4ac16a';
 const KEY_LOCATION = `https://${HOST}/${KEY}.txt`;
 const SITEMAP = `https://${HOST}/sitemap-0.xml`;
 const BATCH = 10000; // IndexNow hard limit per request
