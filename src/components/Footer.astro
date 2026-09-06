@@ -95,7 +95,7 @@ const year = new Date().getFullYear();
       </div>
 
       <details class="footer-col" open>
-        <summary><h3>Services</h3><svg class="footer-col__chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+        <summary><span class="footer-col__bar"><h3>Services</h3><svg class="footer-col__chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary>
         <ul>
           {services.map((slug) => (
             <li><a href={`/our-services/${slug}-bristol/`}>{slug.split('-').map(w => w[0].toUpperCase() + w.slice(1)).join(' ')}</a></li>
@@ -104,7 +104,7 @@ const year = new Date().getFullYear();
       </details>
 
       <details class="footer-col" open>
-        <summary><h3>Service Areas</h3><svg class="footer-col__chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+        <summary><span class="footer-col__bar"><h3>Service Areas</h3><svg class="footer-col__chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary>
         <p class="footer-area-note">
           Bristol — 18 neighbourhoods across BS postcodes. Bath — 5 neighbourhoods across BA postcodes. South Gloucestershire &amp; North Somerset by arrangement.
         </p>
@@ -114,7 +114,7 @@ const year = new Date().getFullYear();
       </details>
 
       <details class="footer-col" open>
-        <summary><h3>Company</h3><svg class="footer-col__chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></summary>
+        <summary><span class="footer-col__bar"><h3>Company</h3><svg class="footer-col__chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary>
         <ul>
           <li><a href="/our-services/">All Services</a></li>
           <li><a href="/about-us/">About Us</a></li>
@@ -215,20 +215,27 @@ const year = new Date().getFullYear();
      forced visible regardless of open state and the summary stops behaving
      like a control, so the footer looks and works exactly as it did. */
   .footer-col > summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--sp-3);
+    display: block;
     cursor: pointer;
     list-style: none;
+    /* Must not be flex/grid: that disables the native disclosure toggle in
+       iOS Safari (WebKit bug), so the accordion never opens on iPhone. The
+       flex row lives in .footer-col__bar inside the summary. */
   }
   .footer-col > summary::-webkit-details-marker { display: none; }
+  .footer-col > summary::marker { content: ''; }
   .footer-col > summary:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 4px;
     border-radius: 2px;
   }
-  .footer-col > summary h3 { margin-bottom: 0; }
+  .footer-col__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-3);
+  }
+  .footer-col__bar h3 { margin-bottom: 0; }
   .footer-col__chev {
     flex: none;
     color: var(--accent-on-dark);
@@ -385,7 +392,7 @@ const year = new Date().getFullYear();
       border-top: 1px solid rgba(255, 255, 255, 0.12);
       padding-top: var(--sp-4);
     }
-    .footer-col > summary { min-height: 44px; }
+    .footer-col__bar { min-height: 44px; }
     .footer-brand { margin-bottom: var(--sp-5); }
     .footer-accreditations {
       gap: var(--sp-3);
