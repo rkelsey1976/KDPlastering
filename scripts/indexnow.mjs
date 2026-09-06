@@ -9,13 +9,23 @@
 //
 // IndexNow expects only changed URLs in normal use. A full-sitemap submit is
 // for one-off events — a migration, a mass content change — not routine.
+//
+// Endpoints are hit independently. The run succeeds if any one accepts.
+// Bing currently returns 403 UserForbiddedToAccessSite until the domain's
+// Bing Webmaster Tools ownership is sorted — that's logged as a warning, not
+// a failure, so it starts working automatically once BWT is fixed.
 
 const HOST = 'www.kdplasteringrenderingservices.co.uk';
 const KEY = '347eb67fbda4474fbd703fef5e878afe';
 const KEY_LOCATION = `https://${HOST}/${KEY}.txt`;
-const ENDPOINT = 'https://api.indexnow.org/indexnow';
 const SITEMAP = `https://${HOST}/sitemap-0.xml`;
 const BATCH = 10000; // IndexNow hard limit per request
+
+const ENDPOINTS = [
+  'https://api.indexnow.org/indexnow',
+  'https://yandex.com/indexnow',
+  'https://www.bing.com/indexnow',
+];
 
 async function urlsFromSitemap() {
   const res = await fetch(SITEMAP);
@@ -24,16 +34,23 @@ async function urlsFromSitemap() {
   return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1].trim());
 }
 
-async function submit(urlList) {
-  const res = await fetch(ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    body: JSON.stringify({ host: HOST, key: KEY, keyLocation: KEY_LOCATION, urlList }),
-  });
-  const body = await res.text();
-  // 200 = accepted, 202 = accepted pending key validation.
-  console.log(`  ${res.status} ${res.statusText}${body ? ` — ${body.trim()}` : ''}`);
-  if (![200, 202].includes(res.status)) process.exitCode = 1;
+async function submit(endpoint, urlList) {
+  let res;
+  try {
+    res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      body: JSON.stringify({ host: HOST, key: KEY, keyLocation: KEY_LOCATION, urlList }),
+    });
+  } catch (err) {
+    console.log(`  ${endpoint} — network error: ${err.message}`);
+    return false;
+  }
+  const body = (await res.text()).trim();
+  const ok = res.status === 200 || res.status === 202;
+  const tag = ok ? 'ok' : res.status === 403 ? 'not authorised (warn)' : 'FAILED';
+  console.log(`  ${endpoint} — ${res.status} ${res.statusText} [${tag}]${body ? ` ${body}` : ''}`);
+  return ok;
 }
 
 const args = process.argv.slice(2);
@@ -45,8 +62,16 @@ if (!urls.length) {
 }
 
 console.log(`Submitting ${urls.length} URL(s) to IndexNow as ${HOST}`);
+let anyAccepted = false;
 for (let i = 0; i < urls.length; i += BATCH) {
   const chunk = urls.slice(i, i + BATCH);
   console.log(`batch ${i / BATCH + 1} (${chunk.length} URLs):`);
-  await submit(chunk);
+  for (const ep of ENDPOINTS) {
+    if (await submit(ep, chunk)) anyAccepted = true;
+  }
+}
+
+if (!anyAccepted) {
+  console.error('No endpoint accepted the submission.');
+  process.exit(1);
 }
