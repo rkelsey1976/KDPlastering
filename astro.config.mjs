@@ -127,6 +127,13 @@ const changefreqFor = (path) => (path === '/' ? 'weekly' : 'monthly');
 export default defineConfig({
   site: 'https://www.kdplasteringrenderingservices.co.uk',
 
+  // Every canonical, internal link and sitemap entry carries a trailing slash,
+  // and the build is directory-style (/page/index.html). Declared rather than
+  // left to defaults so dev/preview 404 the slashless form instead of serving
+  // both, and so Netlify has one policy to match.
+  trailingSlash: 'always',
+  build: { format: 'directory' },
+
   vite: {
     plugins: [tailwindcss()],
   },

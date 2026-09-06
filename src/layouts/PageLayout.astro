@@ -66,7 +66,10 @@ const {
 
 const siteName = 'KD Plastering & Rendering Services';
 const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? 'https://www.kdplasteringrenderingservices.co.uk';
-const canonicalAbsolute = new URL(canonical, siteUrl).toString();
+// Force the trailing slash so a page can't ship a slashless canonical that then
+// 301s on Netlify — matches trailingSlash: 'always' in astro.config.mjs.
+const canonicalPath = canonical === '/' ? '/' : canonical.replace(/\/?$/, '/');
+const canonicalAbsolute = new URL(canonicalPath, siteUrl).toString();
 const ogImageAbsolute = new URL(ogImage, siteUrl).toString();
 // Must match the ladder in Hero.astro.
 const HERO_WIDTHS = [480, 800, 1200, 1600];
