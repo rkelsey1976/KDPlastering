@@ -39,21 +39,36 @@ const services = [
 
     <input type="hidden" name="page_source" value={Astro.url.pathname} />
 
-    <div class="lead-form__row">
-      <div class="lead-form__field">
-        <label for="kd-name">Full name <span class="lead-form__required" aria-hidden="true">*</span></label>
-        <input id="kd-name" name="name" type="text" required autocomplete="name" />
-      </div>
-
-      <div class="lead-form__field">
-        <label for="kd-phone">Phone <span class="lead-form__required" aria-hidden="true">*</span></label>
-        <input id="kd-phone" name="phone" type="tel" required autocomplete="tel" />
-      </div>
+    {/* Full name is its own full-width row: sat next to another text input,
+        browser autofill (and people) split "First Last" across the two,
+        which is how a surname once landed in the phone field. */}
+    <div class="lead-form__field">
+      <label for="kd-name">Full name <span class="lead-form__required" aria-hidden="true">*</span></label>
+      <input id="kd-name" name="name" type="text" required autocomplete="name" />
     </div>
 
-    <div class="lead-form__field">
-      <label for="kd-email">Email <span class="lead-form__required" aria-hidden="true">*</span></label>
-      <input id="kd-email" name="email" type="email" required autocomplete="email" />
+    <div class="lead-form__row">
+      <div class="lead-form__field">
+        <label for="kd-phone">Phone <span class="lead-form__required" aria-hidden="true">*</span></label>
+        <input
+          id="kd-phone"
+          name="phone"
+          type="tel"
+          required
+          autocomplete="tel"
+          inputmode="tel"
+          pattern="[\d\s+\-\(\)]{10,20}"
+          placeholder="e.g. 07700 900123"
+          title="Enter a phone number we can call you back on — digits, spaces and + only."
+          aria-describedby="kd-phone-hint"
+        />
+        <span id="kd-phone-hint" class="lead-form__hint">Best number to reach you on — mobile or landline.</span>
+      </div>
+
+      <div class="lead-form__field">
+        <label for="kd-email">Email <span class="lead-form__required" aria-hidden="true">*</span></label>
+        <input id="kd-email" name="email" type="email" required autocomplete="email" />
+      </div>
     </div>
 
     <div class="lead-form__row">
@@ -106,8 +121,31 @@ const services = [
   // caught by Netlify and redirected via the __forms.html definition.
   const form = document.querySelector<HTMLFormElement>('.lead-form__form');
   if (form) {
+    // Belt-and-braces phone check. type="tel" + required only rejects an
+    // empty box, so a mistyped surname ("Baker") sails through. Require a
+    // realistic count of actual digits (UK: 10-11, allow a little slack
+    // for +44 / country-code forms).
+    const phone = form.querySelector<HTMLInputElement>('#kd-phone');
+    if (phone) {
+      const checkPhone = () => {
+        const digits = phone.value.replace(/\D/g, '');
+        phone.setCustomValidity(
+          !phone.value || (digits.length >= 10 && digits.length <= 13)
+            ? ''
+            : 'Please enter a phone number we can call you back on.'
+        );
+      };
+      phone.addEventListener('input', checkPhone);
+      phone.addEventListener('blur', checkPhone);
+    }
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (phone) phone.dispatchEvent(new Event('input'));
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
       const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
       if (submit) submit.disabled = true;
       try {
@@ -181,6 +219,12 @@ const services = [
 
   .lead-form__required {
     color: var(--accent-text);
+  }
+
+  .lead-form__hint {
+    font-size: var(--fs-xs);
+    font-weight: 400;
+    color: var(--text-muted);
   }
 
   .lead-form__field input,
