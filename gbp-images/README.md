@@ -39,6 +39,8 @@ upload. The names here are for our own filing; they won't help rankings. What
 ### Photos → category "At work"
 - `at-work/kd-plastering-skimming-bristol-01…02.jpg`
 - `at-work/kd-plastering-plastering-in-progress-bristol-01…06.jpg` (portrait)
+- `at-work/kd-plastering-changing-rooms-corsham-01…04.jpg` (Corsham changing-rooms fit-out, Sept 2026 — partitions boarded + skimmed, base-coat walls; real WhatsApp shots, letterbox bars trimmed)
+- `at-work/kd-plastering-artex-skimming-corsham-01…08.jpg` (Corsham Artex ceilings skimmed, 8 Sept 2026 — 01–04 bedroom skimming fresh; 05 = swirl Artex BEFORE, 06 = wet skim over it, 07–08 = skimmed bathroom + landing after; genuine before/during/after sequence)
 
 ### Photos → category "At work" (or a dedicated EWI note in the caption)
 - `ewi/kd-plastering-external-wall-insulation-bristol-01…02.jpg`
