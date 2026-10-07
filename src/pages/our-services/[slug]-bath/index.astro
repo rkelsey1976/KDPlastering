@@ -213,7 +213,20 @@ const schema = [
         <ul class="work-grid">
           {gallery.map((img) => (
             <li class="work-grid__item">
-              <img src={img.src} alt={img.alt} width={img.width} height={img.height} loading="lazy" decoding="async" />
+              {img.isVideo ? (
+                <video
+                  src={img.src}
+                  poster={img.poster}
+                  width={img.width}
+                  height={img.height}
+                  controls
+                  playsinline
+                  preload="none"
+                  aria-label={img.alt}
+                />
+              ) : (
+                <img src={img.src} alt={img.alt} width={img.width} height={img.height} loading="lazy" decoding="async" />
+              )}
             </li>
           ))}
         </ul>
@@ -511,7 +524,8 @@ const schema = [
     display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1rem;
   }
   .work-grid__item { margin: 0; }
-  .work-grid__item img {
+  .work-grid__item img,
+  .work-grid__item video {
     display: block; width: 100%; aspect-ratio: 3 / 4; object-fit: cover;
     border-radius: 6px; background: var(--surface, #eee);
   }

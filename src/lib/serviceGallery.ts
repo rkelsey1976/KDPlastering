@@ -16,6 +16,10 @@ export type GalleryImage = {
   alt: string;
   width: number;
   height: number;
+  // Optional poster frame + video flag. When isVideo is true, consumers
+  // render a <video> with poster instead of an <img>.
+  poster?: string;
+  isVideo?: boolean;
 };
 
 export const SERVICE_GALLERY: Record<string, GalleryImage[]> = {
@@ -24,6 +28,15 @@ export const SERVICE_GALLERY: Record<string, GalleryImage[]> = {
       alt: 'Splayed Velux reveal, freshly skimmed, with sky through the opening' },
     { src: '/services/gallery/plastering-3.webp', width: 690, height: 920,
       alt: 'Loft room with three Velux windows and sloping ceilings, fully skimmed' },
+    // Lockleaze, Bristol — vaulted-ceiling extension skim, walk-through videos
+    { src: '/services/gallery/lockleaze-plastering-1.mp4', poster: '/services/gallery/lockleaze-plastering-1-poster.jpg',
+      width: 720, height: 1280, isVideo: true,
+      alt: 'Video walk-through of a vaulted-ceiling extension in Lockleaze, Bristol, fully skimmed with LED panel and Velux windows' },
+    { src: '/services/gallery/lockleaze-plastering-2.mp4', poster: '/services/gallery/lockleaze-plastering-2-poster.jpg',
+      width: 720, height: 1280, isVideo: true,
+      alt: 'Video of a fresh ceiling and wall skim drying in a Lockleaze extension, plastering in Bristol' },
+    { src: '/services/gallery/lockleaze-plastering-3.webp', width: 690, height: 920,
+      alt: 'Open-plan Lockleaze extension skimmed throughout, screed floor and bi-fold doors' },
     { src: '/services/gallery/plastering-4.webp', width: 690, height: 920,
       alt: 'Victorian bay-window room skimmed throughout, original coving and exposed brick chimney breast' },
     { src: '/services/gallery/plastering-5.webp', width: 690, height: 920,
