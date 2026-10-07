@@ -208,7 +208,7 @@ export const AREAS: Area[] = [
     postcode: 'BS16',
     type: 'East Bristol suburb',
     blurb: '1930s semis and post-war estates along the Frome Valley — east Bristol.',
-    intro: "Fishponds sits along the Frome Valley in east Bristol, with a mix of 1930s semis on the older streets and larger post-war council estates towards the edges.",
+    intro: "Renderers in Fishponds, working east Bristol from our Hanham yard — 1930s semis along the Frome Valley, larger post-war estates towards the edges, and plenty of ex-council stock whose 1990s acrylic render is now failing and needs stripping and re-rendering.",
     longIntro:
       "Fishponds is a long suburb running along the Frome Valley between Eastville and Downend. The western end (closer to the city centre) has the older 1930s semis on streets like Stapleton Road and the Frome Valley Road, while the eastern end has the larger post-war council estates — particularly the estates around the old Stapleton Road hospital and the new-build infill. Many of the council properties were re-rendered in the 1990s with acrylic systems that are now failing. We work on a lot of these — typically strip and re-render with a BBA-approved silicone system.",
     propertyTypes: [
@@ -237,8 +237,8 @@ export const AREAS: Area[] = [
     ],
     transport: 'On the A432 corridor east of Bristol. Bus routes 5, 24, 48 connect to the city centre. Stapleton Road railway station is within walking distance for the western parts.',
     demographics: 'Mixed — owner-occupier on the 1930s semis, rental and ex-counil on the post-war estates. The regeneration of the Frome Valley is bringing in younger buyers. Average property value £280,000.',
-    metaDescription: 'Plastering & rendering in Fishponds from £55/m². 1930s semis, ex-council re-renders. Silicone systems. 10-year warranty.',
-    titleTemplate: 'Fishponds Plastering & Rendering | From £55/m²',
+    metaDescription: 'Renderers in Fishponds BS16 — rendering and plastering by K D Plastering. 1930s semis, ex-council re-renders, silicone systems. Free quotes.',
+    titleTemplate: 'Renderers Fishponds | Rendering & Plastering BS16 | KD',
   },
   {
     slug: 'downend',
@@ -710,7 +710,7 @@ export const AREAS: Area[] = [
     blurb:
       'Between Bristol and Bath on the A4 — inter-war and post-war housing with a Georgian core around the High Street.',
     intro:
-      'Keynsham sits halfway between Bristol and Bath, and the housing reflects both: a small Georgian and Victorian core near the High Street, then substantial inter-war and post-war estates spreading out from it. We work here regularly from Hanham, twenty minutes down the A4175.',
+      'Renderers in Keynsham, covering the town weekly from Hanham — twenty minutes down the A4175. The housing splits cleanly: a Georgian and Victorian core near the High Street that wants sympathetic systems, then substantial inter-war and post-war estates spreading out from it, much of it on original pebbledash now at end of life.',
     longIntro:
       "Keynsham is a market town in Bath and North East Somerset, roughly equidistant between Bristol and Bath, and the housing stock spans both traditions. Around the High Street and Temple Street there is a modest Georgian and Victorian core, some of it stone-built and some in conservation area. Beyond that the town is dominated by inter-war semi-detached housing and post-war estates on the Chandag, Park Estate and Queens Road sides, with a growing amount of modern development on the old Cadbury's factory site and the edges of the town. That means the work splits cleanly: breathable, sympathetic systems on the older core, and standard silicone or monocouche on the far larger inter-war and post-war stock, much of which still carries original pebbledash or sand-and-cement that is now at end of life.",
     propertyTypes: [
@@ -741,8 +741,8 @@ export const AREAS: Area[] = [
     demographics:
       'Predominantly owner-occupier families and retired households, with commuters into both Bristol and Bath. A steady stream of renovation work on the inter-war stock as it changes hands.',
     metaDescription:
-      'Plastering & rendering in Keynsham BS31. Inter-war semis, pebbledash removal, post-war estates. 20 minutes from our Hanham yard. Free survey.',
-    titleTemplate: 'Keynsham Plastering & Rendering | BS31 | Free Survey',
+      'Renderers in Keynsham BS31 — rendering and plastering by K D Plastering, 20 minutes from our Hanham yard. Free survey, fixed written quote.',
+    titleTemplate: 'Renderers Keynsham | Rendering & Plastering BS31 | KD',
   },
 
   // =================== BATH AREAS (5) ===================

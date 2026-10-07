@@ -425,7 +425,7 @@ export const SERVICES: Service[] = [
     heroImageAlt: 'Fresh monocouche render finish on a Victorian terrace in St George, Bristol',
     category: 'rendering',
     metaDescription: 'House rendering in Bristol. Silicone, monocouche & acrylic systems. Free quotes, 10-year warranty. 25-year lifespan. Insured.',
-    titleTemplate: 'House Rendering Bristol | 25-Year Lifespan',
+    titleTemplate: 'Renderers Bristol | Silicone & Monocouche Rendering | KD',
   },
 
   // =================================================================
@@ -946,7 +946,7 @@ export const SERVICES: Service[] = [
     heroImageAlt: 'Smooth plaster finish on walls and ceilings of a Fishponds home after rewiring',
     category: 'plastering',
     metaDescription: 'Plastering services in Bristol. Full re-skims, extensions, patching, airless spray. British Gypsum & Knauf. 5-year warranty.',
-    titleTemplate: 'Plastering Services Bristol | Airless Spray',
+    titleTemplate: 'Plasterers Bristol | Fixed Written Quotes | KD',
   },
 
   // =================================================================
